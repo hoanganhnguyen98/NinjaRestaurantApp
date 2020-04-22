@@ -71,7 +71,7 @@ export default class Login extends Component {
                 <Content style={{padding: 10}}>
                     <Form>
                     <Item floatingLabel>
-                        <Label>Username</Label>
+                        <Label>Email</Label>
                         <Input keyboardType='email-address' onChangeText={email=>this.setState({email})} />
                     </Item>
                     <Item floatingLabel last>

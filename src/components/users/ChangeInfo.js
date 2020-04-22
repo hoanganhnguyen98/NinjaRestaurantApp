@@ -28,11 +28,6 @@ export default class ChangeInfo extends Component
 
     save = async () =>
     {
-        console.log(this.props.navigation.getParam('changeEmail'));
-        console.log(this.state.name);
-        console.log(this.state.phone);
-        console.log(this.state.address);
-
         try {
             fetch(Urls.APIUrl+'user/update',{
                 method: 'POST',
