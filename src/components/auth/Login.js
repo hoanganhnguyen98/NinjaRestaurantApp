@@ -74,7 +74,7 @@ export default class Login extends Component {
                         <Label>Email</Label>
                         <Input keyboardType='email-address' onChangeText={email=>this.setState({email})} />
                     </Item>
-                    <Item floatingLabel last>
+                    <Item floatingLabel>
                         <Label>Password</Label>
                         <Input secureTextEntry={true} onChangeText={password=>this.setState({password})} />
                     </Item>

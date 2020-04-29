@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Content, Text, Button, Icon, Left, Body, Right, Thumbnail, List, ListItem } from 'native-base';
+import { Content, Text, Button, Icon, Left, Body, Right, Thumbnail, List, ListItem, Col } from 'native-base';
 import NumberFormat from 'react-number-format';
+import FAIcon from 'react-native-vector-icons/FontAwesome';
 
-import { Styles } from '../common';
+import { Styles, Colors } from '../common';
 
 export default class FoodDetail extends Component
 {
+    constructor (props)
+    {
+        super(props);
+
+        this.state = {
+            favourite : true,
+        }
+    }
+
+    changeFavourite = () =>
+    {
+        this.setState({favourite: !this.state.favourite});
+    }
+
     render() {
         return (
             <Content>
@@ -17,7 +32,7 @@ export default class FoodDetail extends Component
                         </ListItem>
                         <ListItem noBorder thumbnail>
                             <Body>
-                                <Text style={{fontSize: 20, fontWeight: "bold", color: '#3F51B5'}}>{this.props.navigation.getParam('detailName')}</Text>            
+                                <Text style={{fontSize: 20, fontWeight: "bold", color: Colors.appColor}}>{this.props.navigation.getParam('detailName')}</Text>            
                             </Body>
                             <Right>
                                 <NumberFormat
@@ -26,7 +41,7 @@ export default class FoodDetail extends Component
                                     thousandSeparator="."
                                     decimalSeparator=","
                                     suffix={' VND'}
-                                    renderText={value => <Text style={{fontWeight: "bold"}}>{value}</Text>}
+                                    renderText={value => <Text style={{fontWeight: "bold", color: Colors.appColor}}>{value}</Text>}
                                 />
                             </Right>
                         </ListItem>
@@ -34,11 +49,23 @@ export default class FoodDetail extends Component
                             <Body>
                                 <Text>{this.props.navigation.getParam('detailMaterial')}</Text>
                             </Body>
+                            <Right>
+                                <Button transparent onPress={this.changeFavourite}>
+                                    <FAIcon name={this.state.favourite ? 'heart' : 'heart-o'} color='red' size={20} />
+                                </Button>
+                            </Right>
                         </ListItem>
                         <ListItem noBorder style={{justifyContent: 'center'}}>
-                            <Button rounded>
-                                <Text>Add to cart</Text>
-                            </Button>
+                            <Left>
+                                <FAIcon name='minus' />
+                                <Text>Number</Text>
+                                <FAIcon name='plus' />
+                            </Left>
+                            <Body>
+                                <Button rounded block>
+                                    <Text>Add to cart</Text>
+                                </Button>
+                            </Body>
                         </ListItem>
                     </View>
                 </List>

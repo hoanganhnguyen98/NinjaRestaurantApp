@@ -10,7 +10,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import I18n from '../i18n/i18n';
-
+import { Colors } from '../common';
 import SearchNav from '../components/CartNav';
 import AboutUsNav from '../components/AboutUsNav';
 import MenuToFoodDetail from './MenuNavigator';
@@ -25,7 +25,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
             title: I18n.t('nav.menu'),
             activeColor: '#f4f4f4',
             inactiveColor: '#62B1F6',
-            barStyle: {backgroundColor: '#3F51B5'},
+            barStyle: {backgroundColor: Colors.appColor},
             tabBarIcon: ({ tintColor, focused }) => (
                 <MCIcon
                     name={'food'}
@@ -41,7 +41,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
             title: I18n.t('nav.cart'),
             activeColor: '#f4f4f4',
             inactiveColor: '#62B1F6',
-            barStyle: {backgroundColor: '#3F51B5'},
+            barStyle: {backgroundColor: Colors.appColor},
             tabBarIcon: ({ tintColor, focused }) => (
                 <Ionicons
                     name={'md-cart'}
@@ -57,7 +57,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
             title: I18n.t('nav.aboutus'),
             activeColor: '#f4f4f4',
             inactiveColor: '#62B1F6',
-            barStyle: {backgroundColor: '#3F51B5'},
+            barStyle: {backgroundColor: Colors.appColor},
             tabBarIcon: ({ tintColor, focused }) => (
                 <Ionicons
                     name={'ios-restaurant'}
@@ -73,7 +73,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
             title: I18n.t('nav.profile'),
             activeColor: '#f4f4f4',
             inactiveColor: '#62B1F6',
-            barStyle: {backgroundColor: '#3F51B5'},
+            barStyle: {backgroundColor: Colors.appColor},
             tabBarIcon: ({ tintColor, focused }) => (
                 <Ionicons
                     name={'ios-person'}
