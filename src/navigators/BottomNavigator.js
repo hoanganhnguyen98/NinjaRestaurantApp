@@ -11,7 +11,7 @@ import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import I18n from '../i18n/i18n';
 
-import SearchNav from '../components/SearchNav';
+import SearchNav from '../components/CartNav';
 import AboutUsNav from '../components/AboutUsNav';
 import MenuToFoodDetail from './MenuNavigator';
 import ProfileNavigator from './ProfileNavigator';
@@ -38,13 +38,13 @@ const TabNavigator = createMaterialBottomTabNavigator(
     Search : {
         screen:SearchNav,
         navigationOptions: {
-            title: I18n.t('nav.search'),
+            title: I18n.t('nav.cart'),
             activeColor: '#f4f4f4',
             inactiveColor: '#62B1F6',
             barStyle: {backgroundColor: '#3F51B5'},
             tabBarIcon: ({ tintColor, focused }) => (
                 <Ionicons
-                    name={'ios-search'}
+                    name={'md-cart'}
                     size={focused ? 25 : 20}
                     style={{ color: tintColor }}
                 />

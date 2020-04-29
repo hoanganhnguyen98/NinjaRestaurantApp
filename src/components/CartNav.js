@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Container, Header, Item, Input, Icon, Button, Text, Content, Body } from 'native-base';
+import { Container, Header, Item, Input, Icon, Button, Text, Content, Body, Tabs, Tab, TabHeading } from 'native-base';
 
-import CustomHeader from './CustomHeader';
+import FAIcon from 'react-native-vector-icons/FontAwesome';
 
 export default class SearchNav extends Component
 {
@@ -9,7 +9,9 @@ export default class SearchNav extends Component
     {
         super(props);
 
-        this.state={food:''};
+        this.state={
+            food:''
+        };
     }
 
     Search=()=>{
@@ -31,9 +33,14 @@ export default class SearchNav extends Component
                         <Text>Search</Text>
                     </Button>
                 </Header>
-                <Body>
-
-                </Body>
+                <Tabs>
+                    <Tab heading={ <TabHeading><FAIcon name="cart-plus" color='#ffffff' size={20} /></TabHeading>}>
+                    </Tab>
+                    <Tab heading={ <TabHeading><FAIcon name="history" color='#ffffff' size={20} /></TabHeading>}>
+                    </Tab>
+                    <Tab heading={ <TabHeading><FAIcon name="heart" color='#ffffff' size={20} /></TabHeading>}>
+                    </Tab>
+                </Tabs>
             </Container>
         );
     }
