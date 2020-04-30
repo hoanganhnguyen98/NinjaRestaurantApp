@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Content, Text, Button, Icon, Left, Body, Right, Thumbnail, List, ListItem, Col } from 'native-base';
+import { Content, Text, Button, Icon, Left, Body, Right, Thumbnail, List, ListItem } from 'native-base';
 import NumberFormat from 'react-number-format';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 
@@ -33,6 +33,7 @@ export default class FoodDetail extends Component
                     "user_id": await AsyncStorage.getItem('userId'),
                     "food_id": this.props.navigation.getParam('detailId'),
                     "food_name": this.props.navigation.getParam('detailName'),
+                    "image": this.props.navigation.getParam('detailImage'),
                     "number": this.state.number,
                     "price": this.props.navigation.getParam('detailPrice')
                 })
@@ -106,7 +107,7 @@ export default class FoodDetail extends Component
                                     <FAIcon name='minus-square' size={35} color={Colors.appColor} />
                                 </Button>
                             <Body style={{marginLeft: 50, marginRight: 50}}>
-                                <Button rounded block>
+                                <Button rounded block onPress={this.addToCart}>
                                     <Text>Add <Text style={{color: 'red'}}>{this.state.number}</Text> to cart</Text>
                                 </Button>
                             </Body>
