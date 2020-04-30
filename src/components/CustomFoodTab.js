@@ -40,6 +40,7 @@ export default class CustomFoodTab extends Component
 
     renderItem=(data)=>
         <ListItem thumbnail noBorder onPress={() =>this.props.navigation.navigate('FoodDetail',{
+            detailId: data.item.id,
             detailImage: data.item.image,
             detailName: data.item.name,
             detailMaterial: data.item.material,

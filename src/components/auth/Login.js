@@ -51,6 +51,7 @@ export default class Login extends Component {
         .then((response) => response.json())
         .then((json)=>{
             if (json.success === true) {
+                AsyncStorage.setItem('userId', json.data.user_id);
                 AsyncStorage.setItem('userEmail', this.state.email);
                 AsyncStorage.setItem('userPassword', this.state.password);
                 AsyncStorage.setItem('userName', json.data.name);

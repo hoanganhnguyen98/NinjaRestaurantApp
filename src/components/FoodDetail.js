@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Content, Text, Button, Icon, Left, Body, Right, Thumbnail, List, ListItem, Col } from 'native-base';
 import NumberFormat from 'react-number-format';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 
-import { Styles, Colors } from '../common';
+import { Styles, Colors, Urls } from '../common';
 
 export default class FoodDetail extends Component
 {
@@ -14,12 +15,57 @@ export default class FoodDetail extends Component
 
         this.state = {
             favourite : true,
+            number : 1,
+        }
+    }
+
+
+    addToCart = async() =>
+    {
+        try {
+            fetch(Urls.APIUrl+'addtocart',{
+                method: 'POST',
+                headers:{
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "user_id": await AsyncStorage.getItem('userId'),
+                    "food_id": this.props.navigation.getParam('detailId'),
+                    "food_name": this.props.navigation.getParam('detailName'),
+                    "number": this.state.number,
+                    "price": this.props.navigation.getParam('detailPrice')
+                })
+            })
+            .then((response) => response.json())
+            .then((json)=>{
+                if (json.success === true) {
+                    alert('Add to cart successfully');
+                } else {
+                    alert('Add to cart fail');
+                }
+            })
+            .catch((error) => console.error(error));
+        } catch (error) {
+            alert(error);
         }
     }
 
     changeFavourite = () =>
     {
         this.setState({favourite: !this.state.favourite});
+    }
+
+    foodPlus= () =>
+    {
+        this.setState({number: this.state.number + 1});
+    }
+
+    foodMinus = () =>
+    {
+        if (this.state.number > 1) {
+            this.setState({number: this.state.number - 1});
+        }
     }
 
     render() {
@@ -55,17 +101,18 @@ export default class FoodDetail extends Component
                                 </Button>
                             </Right>
                         </ListItem>
-                        <ListItem noBorder style={{justifyContent: 'center'}}>
-                            <Left>
-                                <FAIcon name='minus' />
-                                <Text>Number</Text>
-                                <FAIcon name='plus' />
-                            </Left>
-                            <Body>
+                        <ListItem noBorder style={{justifyContent: 'center', alignContent: 'center'}}>
+                                <Button transparent onPress={this.foodMinus}>
+                                    <FAIcon name='minus-square' size={35} color={Colors.appColor} />
+                                </Button>
+                            <Body style={{marginLeft: 50, marginRight: 50}}>
                                 <Button rounded block>
-                                    <Text>Add to cart</Text>
+                                    <Text>Add <Text style={{color: 'red'}}>{this.state.number}</Text> to cart</Text>
                                 </Button>
                             </Body>
+                                <Button transparent onPress={this.foodPlus}>
+                                    <FAIcon name='plus-square' size={35} color={Colors.appColor} />
+                                </Button>
                         </ListItem>
                     </View>
                 </List>
