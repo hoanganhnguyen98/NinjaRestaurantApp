@@ -84,30 +84,30 @@ export default class CustomFoodTab extends Component
         return (
             <View style={Styles.menu.foodList}>
                 <List>
-                {isLoading ? <ActivityIndicator/> : (
-                    <FlatList
-                        data={
-                            this.props.sortBy == 0 ?
-                            data.sort((after, before) => after.name.localeCompare(before.name)) :
-                            this.props.sortBy == 1 ?
-                            data.sort((after, before) => before.name.localeCompare(after.name)) :
-                            this.props.sortBy == 2?
-                            data.sort((after, before) => after.price.localeCompare(before.price)) :
-                            this.props.sortBy == 3 ?
-                            data.sort((after, before) => before.price.localeCompare(after.price)) :
-                            data
-                        }
-                        keyExtractor={({ id }, index) => id}
-                        renderItem={ item=>this.renderItem(item) }
-                        refreshControl={
-                            <RefreshControl
-                              //refresh control used for the Pull to Refresh
-                              refreshing={this.state.refreshing}
-                              onRefresh={this.onRefresh.bind(this)}
-                            />
-                        }
-                    />
-                )}
+                    {isLoading ? <ActivityIndicator/> : (
+                        <FlatList
+                            data={
+                                this.props.sortBy == 0 ?
+                                data.sort((after, before) => after.name.localeCompare(before.name)) :
+                                this.props.sortBy == 1 ?
+                                data.sort((after, before) => before.name.localeCompare(after.name)) :
+                                this.props.sortBy == 2?
+                                data.sort((after, before) => after.price.localeCompare(before.price)) :
+                                this.props.sortBy == 3 ?
+                                data.sort((after, before) => before.price.localeCompare(after.price)) :
+                                data
+                            }
+                            keyExtractor={({ id }, index) => id}
+                            renderItem={ item=>this.renderItem(item) }
+                            refreshControl={
+                                <RefreshControl
+                                //refresh control used for the Pull to Refresh
+                                refreshing={this.state.refreshing}
+                                onRefresh={this.onRefresh.bind(this)}
+                                />
+                            }
+                        />
+                    )}
                 </List>
             </View>
         );

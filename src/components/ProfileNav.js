@@ -122,36 +122,6 @@ export default class ProfileNav extends Component
                     </ListItem>
 
                     {/* End of information */}
-                    {/* Start of purchase history */}
-
-                    <ListItem icon itemDivider noBorder>
-                        <Left />
-                        <Body>
-                            <Text>History</Text>
-                        </Body>
-                    </ListItem>
-                    <ListItem icon>
-                        <Left>
-                            <Button style={{ backgroundColor: "#ffffff" }}>
-                                <FAIcon name="files-o" size={20} style={{color: Colors.appColor}} />
-                            </Button>
-                        </Left>
-                        <Body>
-                            <Text>Bill List</Text>
-                        </Body>
-                    </ListItem>
-                    <ListItem icon noBorder>
-                        <Left>
-                            <Button style={{ backgroundColor: "#ffffff" }}>
-                                <FAIcon name="heart" size={20} style={{color: Colors.appColor}}/>
-                            </Button>
-                        </Left>
-                        <Body>
-                            <Text>Favorite Food</Text>
-                        </Body>
-                    </ListItem>
-
-                    {/* End of history */}
                     {/* Start of function */}
 
                     <ListItem icon itemDivider noBorder>

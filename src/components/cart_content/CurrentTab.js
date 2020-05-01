@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { Container, Header, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
 import NumberFormat from 'react-number-format';
 
-import { Urls, Styles } from '../../common';
+import { Urls, Styles, Colors } from '../../common';
 
 export default class CurrentTab extends Component {
     constructor(props) {
@@ -13,7 +13,8 @@ export default class CurrentTab extends Component {
         this.state = {
             data:'',
             isLoading: true,
-            refreshing: true
+            refreshing: true,
+            totalPrice: 0
         };
 
         this.GetData();
@@ -35,6 +36,13 @@ export default class CurrentTab extends Component {
                 refreshing: false,
                 data: json.data
             });
+
+            for (const iterator of this.state.data) {
+                this.setState({
+                    totalPrice: this.state.totalPrice + iterator.number*iterator.price
+                })
+            }
+            console.log(this.state.totalPrice);
         })
         .catch((error) => console.error(error))
         .finally(() => {
@@ -48,7 +56,8 @@ export default class CurrentTab extends Component {
     {
         //Clear old data of the list
         this.setState({
-            data: []
+            data: [],
+            totalPrice: 0
         });
         //Call the Service to get the latest data
         this.GetData();
@@ -91,20 +100,40 @@ export default class CurrentTab extends Component {
         return (
             <View>
                 <List>
-                {isLoading ? <ActivityIndicator/> : (
-                    <FlatList
-                        data={data}
-                        keyExtractor={({ id }, index) => id}
-                        renderItem={ item=>this.renderItem(item) }
-                        refreshControl={
-                            <RefreshControl
-                              //refresh control used for the Pull to Refresh
-                              refreshing={this.state.refreshing}
-                              onRefresh={this.onRefresh.bind(this)}
+                    <ListItem>
+                        <Left>
+                            <NumberFormat
+                                value={this.state.totalPrice}
+                                displayType={'text'}
+                                thousandSeparator="."
+                                decimalSeparator=","
+                                suffix={' VND'}
+                                renderText={value => <Text
+                                style={{color: 'red', fontWeight: "bold", fontSize: 20}} note numberOfLines={1}>{value}</Text>}
                             />
-                        }
-                    />
-                )}
+                        </Left>
+                        <Body>
+                            <Button block rounded>
+                                <Text>Order</Text>
+                            </Button>
+                        </Body>
+                    </ListItem>
+                </List>
+                <List>
+                    {isLoading ? <ActivityIndicator/> : (
+                        <FlatList
+                            data={data.sort((after, before) => after.created_at.localeCompare(before.created_at))}
+                            keyExtractor={({ id }, index) => id}
+                            renderItem={ item=>this.renderItem(item) }
+                            refreshControl={
+                                <RefreshControl
+                                //refresh control used for the Pull to Refresh
+                                refreshing={this.state.refreshing}
+                                onRefresh={this.onRefresh.bind(this)}
+                                />
+                            }
+                        />
+                    )}
                 </List>
             </View>
         );
