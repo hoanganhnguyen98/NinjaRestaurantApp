@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, FlatList, View, Image } from 'react-native';
+import { ActivityIndicator, FlatList, View, Image, RefreshControl } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Container, Header, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
 import NumberFormat from 'react-number-format';
@@ -12,8 +12,11 @@ export default class CurrentTab extends Component {
 
         this.state = {
             data:'',
-            isLoading: true
+            isLoading: true,
+            refreshing: true
         };
+
+        this.GetData();
     }
 
     getPrice = (a,b) =>
@@ -21,19 +24,34 @@ export default class CurrentTab extends Component {
         return a*b;
     }
 
-    componentDidMount = async() =>
+    GetData = async() =>
     {
         var userId = await AsyncStorage.getItem('userId');
 
         fetch(Urls.APIUrl+'cart/currentcart/'+userId)
         .then((response) => response.json())
         .then((json) => {
-            this.setState({ data: json.data });
+            this.setState({
+                refreshing: false,
+                data: json.data
+            });
         })
         .catch((error) => console.error(error))
         .finally(() => {
-            this.setState({ isLoading: false });
+            this.setState({
+                isLoading: false
+            });
         });
+    }
+
+    onRefresh = () =>
+    {
+        //Clear old data of the list
+        this.setState({
+            data: []
+        });
+        //Call the Service to get the latest data
+        this.GetData();
     }
 
     renderItem=(data)=>
@@ -78,6 +96,13 @@ export default class CurrentTab extends Component {
                         data={data}
                         keyExtractor={({ id }, index) => id}
                         renderItem={ item=>this.renderItem(item) }
+                        refreshControl={
+                            <RefreshControl
+                              //refresh control used for the Pull to Refresh
+                              refreshing={this.state.refreshing}
+                              onRefresh={this.onRefresh.bind(this)}
+                            />
+                        }
                     />
                 )}
                 </List>

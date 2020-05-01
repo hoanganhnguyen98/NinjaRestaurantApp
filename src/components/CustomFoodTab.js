@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, FlatList, View, Image } from 'react-native';
+import { ActivityIndicator, FlatList, View, Image, RefreshControl } from 'react-native';
 import { List, ListItem, Text, Left, Body } from 'native-base';
 import NumberFormat from 'react-number-format';
 import { PropTypes } from 'prop-types';
@@ -16,8 +16,10 @@ export default class CustomFoodTab extends Component
             navigation:'',
             source:'',
             data:'',
-            isLoading: true
+            isLoading: true,
+            refreshing: true
         };
+        this.getFoodListApi();
     }
 
     getFoodListApi()
@@ -25,16 +27,28 @@ export default class CustomFoodTab extends Component
         fetch(Urls.APIUrl+'food/index/'+this.props.source)
         .then((response) => response.json())
         .then((json) => {
-            this.setState({ data: json.data });
+            this.setState({
+                refreshing: false,
+                data: json.data
+            });
         })
         .catch((error) => console.error(error))
         .finally(() => {
-            this.setState({ isLoading: false });
+            this.setState({
+                isLoading: false
+            });
         });
     }
 
-    // Call API
-    componentDidMount() {
+    
+
+    onRefresh = () =>
+    {
+        //Clear old data of the list
+        this.setState({
+            data: []
+        });
+        //Call the Service to get the latest data
         this.getFoodListApi();
     }
 
@@ -85,6 +99,13 @@ export default class CustomFoodTab extends Component
                         }
                         keyExtractor={({ id }, index) => id}
                         renderItem={ item=>this.renderItem(item) }
+                        refreshControl={
+                            <RefreshControl
+                              //refresh control used for the Pull to Refresh
+                              refreshing={this.state.refreshing}
+                              onRefresh={this.onRefresh.bind(this)}
+                            />
+                        }
                     />
                 )}
                 </List>
