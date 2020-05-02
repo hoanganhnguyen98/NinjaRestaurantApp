@@ -42,7 +42,6 @@ export default class CurrentTab extends Component {
                     totalPrice: this.state.totalPrice + iterator.number*iterator.price
                 })
             }
-            console.log(this.state.totalPrice);
         })
         .catch((error) => console.error(error))
         .finally(() => {
@@ -98,43 +97,43 @@ export default class CurrentTab extends Component {
         const { data, isLoading } = this.state;
 
         return (
-            <View>
-                <List>
-                    <ListItem>
-                        <Left>
-                            <NumberFormat
-                                value={this.state.totalPrice}
-                                displayType={'text'}
-                                thousandSeparator="."
-                                decimalSeparator=","
-                                suffix={' VND'}
-                                renderText={value => <Text
-                                style={{color: 'red', fontWeight: "bold", fontSize: 20}} note numberOfLines={1}>{value}</Text>}
-                            />
-                        </Left>
-                        <Body>
-                            <Button block rounded>
-                                <Text>Order</Text>
-                            </Button>
-                        </Body>
-                    </ListItem>
-                </List>
-                <List>
-                    {isLoading ? <ActivityIndicator/> : (
-                        <FlatList
-                            data={data.sort((after, before) => after.created_at.localeCompare(before.created_at))}
-                            keyExtractor={({ id }, index) => id}
-                            renderItem={ item=>this.renderItem(item) }
-                            refreshControl={
-                                <RefreshControl
-                                //refresh control used for the Pull to Refresh
-                                refreshing={this.state.refreshing}
-                                onRefresh={this.onRefresh.bind(this)}
-                                />
-                            }
+            <View style={Styles.menu.foodList}>
+                <Header style={{backgroundColor: "#ffffff"}}>
+                    <Body style={{marginLeft: 20}}>
+                        <NumberFormat
+                            value={this.state.totalPrice}
+                            displayType={'text'}
+                            thousandSeparator="."
+                            decimalSeparator=","
+                            suffix={' VND'}
+                            renderText={value => <Text
+                            style={{color: 'red', fontWeight: "bold", fontSize: 18}} note numberOfLines={1}>{value}</Text>}
                         />
-                    )}
-                </List>
+                    </Body>
+                    <Right>
+                        <Button block rounded>
+                            <Text>Order Now</Text>
+                        </Button>
+                    </Right>
+                </Header>
+                <Content>
+                    <List>
+                        {isLoading ? <ActivityIndicator/> : (
+                            <FlatList
+                                data={data.sort((after, before) => after.created_at.localeCompare(before.created_at))}
+                                keyExtractor={({ id }, index) => id}
+                                renderItem={ item=>this.renderItem(item) }
+                                refreshControl={
+                                    <RefreshControl
+                                    //refresh control used for the Pull to Refresh
+                                    refreshing={this.state.refreshing}
+                                    onRefresh={this.onRefresh.bind(this)}
+                                    />
+                                }
+                            />
+                        )}
+                    </List>
+                </Content>
             </View>
         );
     }
