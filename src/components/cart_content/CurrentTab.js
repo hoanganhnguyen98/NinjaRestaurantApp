@@ -3,6 +3,8 @@ import { ActivityIndicator, FlatList, View, Image, RefreshControl } from 'react-
 import AsyncStorage from '@react-native-community/async-storage';
 import { Container, Header, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
 import NumberFormat from 'react-number-format';
+import FAIcon from 'react-native-vector-icons/FontAwesome';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Urls, Styles, Colors } from '../../common';
 
@@ -51,6 +53,20 @@ export default class CurrentTab extends Component {
         });
     }
 
+    removeCart = (id) =>
+    {
+        fetch(Urls.APIUrl+'cart/currentcart/remove/'+id)
+        .then((response) => response.json())
+        .then((json) => {
+            if (json.success === true) {
+                alert('Remove food successfully!')
+            }
+        })
+        .catch((error) => console.error(error))
+        .finally(() => {});
+        this.onRefresh();
+    }
+
     onRefresh = () =>
     {
         //Clear old data of the list
@@ -88,7 +104,9 @@ export default class CurrentTab extends Component {
                 />
             </Body>
             <Right>
-                
+                <Button transparent onPress={() => this.removeCart(data.item.id)}>
+                    <MCIcon name='cart-remove' color='red' size={25} />
+                </Button>
             </Right>
         </ListItem>
 
@@ -116,7 +134,7 @@ export default class CurrentTab extends Component {
                         </Button>
                     </Right>
                 </Header>
-                <Content>
+                <Container>
                     <List>
                         {isLoading ? <ActivityIndicator/> : (
                             <FlatList
@@ -133,7 +151,7 @@ export default class CurrentTab extends Component {
                             />
                         )}
                     </List>
-                </Content>
+                </Container>
             </View>
         );
     }
