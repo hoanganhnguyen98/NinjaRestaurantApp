@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, FlatList, View, Image, RefreshControl } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Container, Header, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
+import { Container, Header, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button, CardItem, Item, Input, Label } from 'native-base';
 import NumberFormat from 'react-number-format';
+import Modal from 'react-native-modal';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -16,7 +17,12 @@ export default class CurrentTab extends Component {
             data:'',
             isLoading: true,
             refreshing: true,
-            totalPrice: 0
+            totalPrice: 0,
+            email: '',
+            name: '',
+            phone: '',
+            address: '',
+            id: ''
         };
 
         this.GetData();
@@ -65,6 +71,60 @@ export default class CurrentTab extends Component {
         .catch((error) => console.error(error))
         .finally(() => {});
         this.onRefresh();
+    }
+
+    toggleModal = async() => {
+        this.setState({isModalVisible: !this.state.isModalVisible});
+    }
+
+    confirmOrder = async() =>
+    {
+        var orderId = await AsyncStorage.getItem('userId');
+        var orderEmail = await AsyncStorage.getItem('userEmail');
+        var orderName = await AsyncStorage.getItem('userName');
+        var orderPhone = await AsyncStorage.getItem('userPhone');
+        var orderAddress = await AsyncStorage.getItem('userAddress');
+        this.setState({
+            id: orderId,
+            email: orderEmail,
+            name: orderName,
+            phone: orderPhone,
+            address: orderAddress
+        })
+        this.setState({isModalVisible: !this.state.isModalVisible});
+    }
+
+    orderNow = () =>
+    {
+        try {
+            fetch(Urls.APIUrl+'cart/currentcart/order',{
+                method: 'POST',
+                headers:{
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "user_id": this.state.id,
+                    "email": this.state.email,
+                    "name": this.state.name,
+                    "phone": this.state.phone,
+                    "address": this.state.address,
+                    "total_price": this.state.totalPrice
+                })
+            })
+            .then((response) => response.json())
+            .then((json)=>{
+                if (json.success === true) {
+                    alert('Order successfully');
+                    this.onRefresh();
+                } else {
+                    alert('Order fail');
+                }
+            })
+            .catch((error) => console.error(error));
+        } catch (error) {
+            alert(error);
+        }
     }
 
     onRefresh = () =>
@@ -118,6 +178,7 @@ export default class CurrentTab extends Component {
             <View style={Styles.menu.foodList}>
                 <Header style={{backgroundColor: "#ffffff"}}>
                     <Body style={{marginLeft: 20}}>
+                        {this.state.totalPrice === 0 ? null :
                         <NumberFormat
                             value={this.state.totalPrice}
                             displayType={'text'}
@@ -126,10 +187,10 @@ export default class CurrentTab extends Component {
                             suffix={' VND'}
                             renderText={value => <Text
                             style={{color: 'red', fontWeight: "bold", fontSize: 18}} note numberOfLines={1}>{value}</Text>}
-                        />
+                        />}
                     </Body>
                     <Right>
-                        <Button block rounded>
+                        <Button block rounded onPress={() =>this.confirmOrder()}>
                             <Text>Order Now</Text>
                         </Button>
                     </Right>
@@ -152,6 +213,54 @@ export default class CurrentTab extends Component {
                         )}
                     </List>
                 </Container>
+                <Modal isVisible={this.state.isModalVisible}>
+                    <View style={{backgroundColor: '#ffffff', padding: 30}}>
+                        <Button transparent block>
+                            <Text>Comfirm order information</Text>
+                        </Button>
+                        <CardItem>
+                            <Item stackedLabel>
+                                <Label>Customer Name <MCIcon name='pencil' /></Label>
+                                <Input defaultValue={this.state.name} onChangeText={(name)=>this.setState({name})} />
+                            </Item>
+                        </CardItem>
+                        <CardItem>
+                            <Item stackedLabel>
+                                <Label>Phone number <MCIcon name='pencil' /></Label>
+                                <Input defaultValue={this.state.phone} onChangeText={(phone)=>this.setState({phone})} />
+                            </Item>
+                        </CardItem>
+                        <CardItem>
+                            <Item stackedLabel>
+                                <Label>Address <MCIcon name='pencil' /></Label>
+                                <Input defaultValue={this.state.address} onChangeText={(address)=>this.setState({address})} />
+                            </Item>
+                        </CardItem>
+                        <CardItem>
+                            <Text>Total: <NumberFormat
+                                value={this.state.totalPrice}
+                                displayType={'text'}
+                                thousandSeparator="."
+                                decimalSeparator=","
+                                suffix={' VND'}
+                                renderText={value => <Text
+                                style={{color: 'red', fontWeight: "bold", fontSize: 18}} note numberOfLines={1}>{value}</Text>}
+                            /></Text>
+                        </CardItem>
+                        <CardItem>
+                            <Left>
+                                <Button block rounded danger onPress={this.toggleModal}>
+                                    <Text>Cancel</Text>
+                                </Button>
+                            </Left>
+                            <Body>
+                                <Button block rounded onPress={this.orderNow}>
+                                    <Text>Order</Text>
+                                </Button>
+                            </Body>
+                        </CardItem>
+                    </View>
+                </Modal>
             </View>
         );
     }
