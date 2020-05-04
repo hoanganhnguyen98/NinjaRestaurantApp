@@ -19,7 +19,7 @@ const Stack = createStackNavigator(
     },
     HistoryDetail: {screen:HistoryDetail,
         navigationOptions: {
-            title: 'History Detail',
+            title: 'Bill Detail',
             headerStyle: {
                 backgroundColor: '#3F51B5',
             },

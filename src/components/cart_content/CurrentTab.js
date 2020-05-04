@@ -79,19 +79,23 @@ export default class CurrentTab extends Component {
 
     confirmOrder = async() =>
     {
-        var orderId = await AsyncStorage.getItem('userId');
-        var orderEmail = await AsyncStorage.getItem('userEmail');
-        var orderName = await AsyncStorage.getItem('userName');
-        var orderPhone = await AsyncStorage.getItem('userPhone');
-        var orderAddress = await AsyncStorage.getItem('userAddress');
-        this.setState({
-            id: orderId,
-            email: orderEmail,
-            name: orderName,
-            phone: orderPhone,
-            address: orderAddress
-        })
-        this.setState({isModalVisible: !this.state.isModalVisible});
+        if (this.state.totalPrice === 0) {
+            alert('No item to order');
+        } else {
+            var orderId = await AsyncStorage.getItem('userId');
+            var orderEmail = await AsyncStorage.getItem('userEmail');
+            var orderName = await AsyncStorage.getItem('userName');
+            var orderPhone = await AsyncStorage.getItem('userPhone');
+            var orderAddress = await AsyncStorage.getItem('userAddress');
+            this.setState({
+                id: orderId,
+                email: orderEmail,
+                name: orderName,
+                phone: orderPhone,
+                address: orderAddress
+            })
+            this.setState({isModalVisible: !this.state.isModalVisible});
+        }
     }
 
     orderNow = () =>
@@ -179,39 +183,52 @@ export default class CurrentTab extends Component {
                 <Header style={{backgroundColor: "#ffffff"}}>
                     <Body style={{marginLeft: 20}}>
                         {this.state.totalPrice === 0 ? null :
-                        <NumberFormat
-                            value={this.state.totalPrice}
-                            displayType={'text'}
-                            thousandSeparator="."
-                            decimalSeparator=","
-                            suffix={' VND'}
-                            renderText={value => <Text
-                            style={{color: 'red', fontWeight: "bold", fontSize: 18}} note numberOfLines={1}>{value}</Text>}
-                        />}
+                            <NumberFormat
+                                value={this.state.totalPrice}
+                                displayType={'text'}
+                                thousandSeparator="."
+                                decimalSeparator=","
+                                suffix={' VND'}
+                                renderText={value => <Text
+                                style={{color: 'red', fontWeight: "bold", fontSize: 18}} note numberOfLines={1}>{value}</Text>}
+                            />
+                        }
                     </Body>
                     <Right>
+                    {this.state.totalPrice === 0 ?
+                        <Button danger block rounded onPress={() =>this.onRefresh()}>
+                            <Text>Update cart</Text>
+                        </Button>
+                    : 
                         <Button block rounded onPress={() =>this.confirmOrder()}>
                             <Text>Order Now</Text>
                         </Button>
+                    }
                     </Right>
                 </Header>
                 <Container>
-                    <List>
-                        {isLoading ? <ActivityIndicator/> : (
-                            <FlatList
-                                data={data.sort((after, before) => after.created_at.localeCompare(before.created_at))}
-                                keyExtractor={({ id }, index) => id}
-                                renderItem={ item=>this.renderItem(item) }
-                                refreshControl={
-                                    <RefreshControl
-                                    //refresh control used for the Pull to Refresh
-                                    refreshing={this.state.refreshing}
-                                    onRefresh={this.onRefresh.bind(this)}
-                                    />
-                                }
-                            />
-                        )}
-                    </List>
+                    {this.state.totalPrice === 0 ?
+                        <Button danger block transparent style={{marginTop: 100}}>
+                            <Text>Cart is empty</Text>
+                        </Button>
+                    :
+                        <List>
+                            {isLoading ? <ActivityIndicator/> : (
+                                <FlatList
+                                    data={data.sort((after, before) => after.created_at.localeCompare(before.created_at))}
+                                    keyExtractor={({ id }, index) => id}
+                                    renderItem={ item=>this.renderItem(item) }
+                                    refreshControl={
+                                        <RefreshControl
+                                        //refresh control used for the Pull to Refresh
+                                        refreshing={this.state.refreshing}
+                                        onRefresh={this.onRefresh.bind(this)}
+                                        />
+                                    }
+                                />
+                            )}
+                        </List>
+                    }  
                 </Container>
                 <Modal isVisible={this.state.isModalVisible}>
                     <View style={{backgroundColor: '#ffffff', padding: 30}}>

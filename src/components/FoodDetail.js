@@ -52,11 +52,6 @@ export default class FoodDetail extends Component
         }
     }
 
-    changeFavourite = () =>
-    {
-        this.setState({favourite: !this.state.favourite});
-    }
-
     foodPlus= () =>
     {
         this.setState({number: this.state.number + 1});
@@ -96,11 +91,6 @@ export default class FoodDetail extends Component
                             <Body>
                                 <Text>{this.props.navigation.getParam('detailMaterial')}</Text>
                             </Body>
-                            <Right>
-                                <Button transparent onPress={this.changeFavourite}>
-                                    <FAIcon name={this.state.favourite ? 'heart' : 'heart-o'} color='red' size={20} />
-                                </Button>
-                            </Right>
                         </ListItem>
                         <ListItem noBorder style={{justifyContent: 'center', alignContent: 'center'}}>
                                 <Button transparent onPress={this.foodMinus}>

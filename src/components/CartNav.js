@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Header, Item, Input, Icon, Button, Text, Content, Body, Tabs, Tab, TabHeading } from 'native-base';
 
 import FAIcon from 'react-native-vector-icons/FontAwesome';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import CurrentTab from './cart_content/CurrentTab';
 import History from './cart_content/History';
@@ -42,8 +43,6 @@ export default class SearchNav extends Component
                     </Tab>
                     <Tab heading={ <TabHeading><FAIcon name="history" color='#ffffff' size={20} /></TabHeading>}>
                         <History navigation={this.props.navigation} />
-                    </Tab>
-                    <Tab heading={ <TabHeading><FAIcon name="heart" color='#ffffff' size={20} /></TabHeading>}>
                     </Tab>
                 </Tabs>
             </Container>
