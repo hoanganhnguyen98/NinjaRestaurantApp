@@ -11,11 +11,10 @@ import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import I18n from '../i18n/i18n';
 import { Colors } from '../common';
-import SearchNav from '../components/CartNav';
 import AboutUsNav from '../components/AboutUsNav';
-import MenuToFoodDetail from './MenuNavigator';
 import ProfileNavigator from './ProfileNavigator';
 import MenuNavigator from './MenuNavigator';
+import CartNavigator from './CartNavigator';
 
 const TabNavigator = createMaterialBottomTabNavigator(
 {
@@ -35,8 +34,8 @@ const TabNavigator = createMaterialBottomTabNavigator(
             ),
         }
     },
-    Search : {
-        screen:SearchNav,
+    Cart : {
+        screen:CartNavigator,
         navigationOptions: {
             title: I18n.t('nav.cart'),
             activeColor: '#f4f4f4',

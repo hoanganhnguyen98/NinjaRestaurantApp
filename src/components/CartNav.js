@@ -4,6 +4,7 @@ import { Container, Header, Item, Input, Icon, Button, Text, Content, Body, Tabs
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 
 import CurrentTab from './cart_content/CurrentTab';
+import History from './cart_content/History';
 
 export default class SearchNav extends Component
 {
@@ -40,6 +41,7 @@ export default class SearchNav extends Component
                         <CurrentTab />
                     </Tab>
                     <Tab heading={ <TabHeading><FAIcon name="history" color='#ffffff' size={20} /></TabHeading>}>
+                        <History navigation={this.props.navigation} />
                     </Tab>
                     <Tab heading={ <TabHeading><FAIcon name="heart" color='#ffffff' size={20} /></TabHeading>}>
                     </Tab>

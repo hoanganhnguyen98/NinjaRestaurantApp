@@ -91,7 +91,7 @@ export default class CustomFoodTab extends Component
                                 data.sort((after, before) => after.name.localeCompare(before.name)) :
                                 this.props.sortBy == 1 ?
                                 data.sort((after, before) => before.name.localeCompare(after.name)) :
-                                this.props.sortBy == 2?
+                                this.props.sortBy == 2 ?
                                 data.sort((after, before) => after.price.localeCompare(before.price)) :
                                 this.props.sortBy == 3 ?
                                 data.sort((after, before) => before.price.localeCompare(after.price)) :
