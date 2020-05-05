@@ -7,7 +7,7 @@ import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CurrentTab from './cart_content/CurrentTab';
 import History from './cart_content/History';
 
-export default class SearchNav extends Component
+export default class CartNav extends Component
 {
     constructor(props)
     {

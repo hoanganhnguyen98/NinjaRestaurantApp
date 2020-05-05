@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Container, Header, Body, Content, Form, Item, Input, Button, Label, Text } from 'native-base';
+import FAIcon from 'react-native-vector-icons/FontAwesome';
 
 import { PropTypes } from 'prop-types';
 
@@ -83,6 +84,9 @@ export default class Login extends Component {
                     <View>
                         <Button rounded block primary style={{marginTop: 30}} onPress={this.Login}>
                             <Text>Login</Text>
+                        </Button>
+                        <Button rounded block primary style={{marginTop: 50}} onPress={this.Login}>
+                            <Text><FAIcon name='facebook-official' size={20} />  Login with facebook</Text>
                         </Button>
                     </View>
                 </Content>
