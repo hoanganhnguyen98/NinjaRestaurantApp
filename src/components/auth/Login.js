@@ -88,6 +88,9 @@ export default class Login extends Component {
                         <Button rounded block primary style={{marginTop: 50}} onPress={this.Login}>
                             <Text><FAIcon name='facebook-official' size={20} />  Login with facebook</Text>
                         </Button>
+                        <Button transparent block style={{marginTop: 50}} onPress={()=>this.props.navigation.navigate('ResetPassword')}>
+                            <Text>Forget password <FAIcon name='question' size={20} /></Text>
+                        </Button>
                     </View>
                 </Content>
             </Container>

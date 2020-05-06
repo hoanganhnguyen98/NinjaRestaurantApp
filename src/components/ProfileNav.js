@@ -7,6 +7,7 @@ import FAIcon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { PropTypes } from 'prop-types';
 
+import CustomHeader from './CustomHeader';
 import { Styles, Colors } from '../common';
 
 export default class ProfileNav extends Component
@@ -61,17 +62,7 @@ export default class ProfileNav extends Component
     render() {
         return (
             <Container>
-                <Header>
-                    <Left>
-                        <Button transparent>
-                            <Image source={require('../assets/img/logo.jpg')} style={Styles.logo} />
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title>Ninja Restaurant</Title>
-                    </Body>
-                    <Right />
-                </Header>
+                <CustomHeader />
                 <Card>
                     <CardItem>
                         <Left>
