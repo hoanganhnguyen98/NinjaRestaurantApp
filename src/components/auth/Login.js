@@ -20,22 +20,6 @@ export default class Login extends Component {
         }
     }
 
-    componentDidMount = async() =>
-    {
-        try {
-            var userEmail = await AsyncStorage.getItem('userEmail');
-            var userPassword = await AsyncStorage.getItem('userPassword');
-
-            if (userEmail !== null && userPassword !== null) {
-                this.props.navigation.navigate('BottomNavigator');
-            }
-        } catch (error) {
-            alert(error);
-        }
-    }
-            
-    
-
     Login = () =>
     {
         fetch(Urls.APIUrl+'login',{
