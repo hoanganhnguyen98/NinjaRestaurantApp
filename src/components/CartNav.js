@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Container, Header, Item, Input, Icon, Button, Text, Content, Body, Tabs, Tab, TabHeading } from 'native-base';
+import { Image } from 'react-native';
+import { Container, Header, Button, Body, Tabs, Tab, TabHeading, Left, Right, Title } from 'native-base';
 
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import CurrentTab from './cart_content/CurrentTab';
 import History from './cart_content/History';
+import { Styles } from '../common';
 
 export default class CartNav extends Component
 {
@@ -27,15 +29,16 @@ export default class CartNav extends Component
     render() {
         return (
             <Container>
-                <Header searchBar rounded>
-                    <Item>
-                        <Icon name="search" />
-                        <Input placeholder="Search" onChangeText={food=>this.setState({food})} />
-                        <Button onPress={this.Search}><Icon name="search" /></Button>
-                    </Item>
-                    <Button transparent>
-                        <Text>Search</Text>
-                    </Button>
+                <Header>
+                    <Left>
+                        <Button transparent>
+                            <Image source={require('../assets/img/logo.jpg')} style={Styles.logo} />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Title>Ninja Restaurant</Title>
+                    </Body>
+                    <Right />
                 </Header>
                 <Tabs>
                     <Tab heading={ <TabHeading><FAIcon name="cart-plus" color='#ffffff' size={20} /></TabHeading>}>

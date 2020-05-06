@@ -45,6 +45,27 @@ export default class MenuNav extends Component {
                 this.props.navigation.navigate('Home');
             }
 
+            if (userEmail !== null && userPassword !== null) {
+                fetch(Urls.APIUrl+'login',{
+                    method: 'POST',
+                    headers:{
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "email": userEmail,
+                        "password": userPassword
+                    })
+                })
+                .then((response) => response.json())
+                .then((json)=>{
+                    if (json.success !== true) {
+                        this.props.navigation.navigate('Home');
+                    }
+                })
+                .catch((error) => console.error(error));
+            }
+
             fetch(Urls.APIUrl+'food/index/all')
             .then((response) => response.json())
             .then((json) => {

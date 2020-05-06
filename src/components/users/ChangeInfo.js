@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Container, Header, Content, Card, CardItem, Thumbnail, Text,
-    Button, Left, Body, ListItem, Right, Input, Item, List, Switch } from 'native-base';
-
+import { Container, Content, Card, CardItem, Thumbnail, Text, Button, Left, Body, ListItem, Input } from 'native-base';
 import Modal from 'react-native-modal';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 
@@ -22,7 +20,8 @@ export default class ChangeInfo extends Component
         }
     }
 
-    toggleModal = () => {
+    toggleModal = () =>
+    {
         this.setState({isModalVisible: !this.state.isModalVisible});
     }
 

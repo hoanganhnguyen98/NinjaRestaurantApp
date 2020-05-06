@@ -9,7 +9,6 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import MenuNav from '../components/MenuNav';
 import FoodDetail from '../components/FoodDetail';
-import Search from '../components/Search';
 
 const Stack = createStackNavigator(
 {
@@ -27,12 +26,6 @@ const Stack = createStackNavigator(
                 backgroundColor: '#3F51B5',
             },
             headerTintColor: '#ffffff',
-        }
-    },
-    Search: {
-        screen:Search,
-        navigationOptions: {
-            headerShown: false,
         }
     },
 });

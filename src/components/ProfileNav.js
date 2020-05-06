@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Container, Header, Content, Card, CardItem, Thumbnail, Text,
-    Button, Left, Body, ListItem, Right, Input, Item, List, Switch } from 'native-base';
-
+import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Left, Body, ListItem, Right, Title } from 'native-base';
 import Modal from 'react-native-modal';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -17,6 +15,7 @@ export default class ProfileNav extends Component
     {
         super(props);
         this.state = {
+            id: '',
             name: '',
             email: '',
             image: '',
@@ -46,6 +45,7 @@ export default class ProfileNav extends Component
     {
         try {
             this.setState({
+                id: await AsyncStorage.getItem('userId'),
                 name: await AsyncStorage.getItem('userName'),
                 email: await AsyncStorage.getItem('userEmail'),
                 image: await AsyncStorage.getItem('userImage'),
@@ -61,7 +61,17 @@ export default class ProfileNav extends Component
     render() {
         return (
             <Container>
-                <Header />
+                <Header>
+                    <Left>
+                        <Button transparent>
+                            <Image source={require('../assets/img/logo.jpg')} style={Styles.logo} />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Title>Ninja Restaurant</Title>
+                    </Body>
+                    <Right />
+                </Header>
                 <Card>
                     <CardItem>
                         <Left>
@@ -130,7 +140,11 @@ export default class ProfileNav extends Component
                             <Text>Setting</Text>
                         </Body>
                     </ListItem>
-                    <ListItem icon>
+                    <ListItem icon onPress={() =>this.props.navigation.navigate('ChangePassword',{
+                        changeId: this.state.id,
+                        changePassword: this.state.password,
+                        changeEmail: this.state.email,
+                    })}>
                         <Left>
                             <Button style={{ backgroundColor: "#ffffff" }}>
                                 <Ionicons name="md-key" size={20} style={{color: Colors.appColor}} />
@@ -197,9 +211,3 @@ ProfileNav.propTypes = {
     savePhone: PropTypes.string,
     saveAddress: PropTypes.string
 };
-
-// ProfileNav.defaultProps = {
-//     saveName: this.state.name,
-//     savePhone: this.state.phone,
-//     saveAddress: this.state.address,
-// }

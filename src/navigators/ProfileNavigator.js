@@ -9,7 +9,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import ProfileNav from '../components/ProfileNav';
 import ChangeInfo from '../components/users/ChangeInfo';
-import LoginNavigator from './LoginNavigator';
+import ChangePassword from '../components/users/ChangePassword';
 
 const Stack = createStackNavigator(
 {
@@ -29,12 +29,16 @@ const Stack = createStackNavigator(
             headerTintColor: '#ffffff',
         }
     },
-    // Login: {
-    //     screen:LoginNavigator,
-    //     navigationOptions: {
-    //         headerShown: false,
-    //     }
-    // }
+    ChangePassword: {
+        screen:ChangePassword,
+        navigationOptions: {
+            title: 'Change password',
+            headerStyle: {
+                backgroundColor: '#3F51B5',
+            },
+            headerTintColor: '#ffffff',
+        }
+    }
 });
 
 export default createAppContainer(Stack);

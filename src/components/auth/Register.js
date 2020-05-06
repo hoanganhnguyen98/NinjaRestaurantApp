@@ -35,8 +35,8 @@ export default class Register extends Component
         if (this.state.password.length < 6) {
             alert('Passwords must be at least 6 characters!');
         }
-        if (this.state.password === this.state.repassword) {
-            alert('Re-Password must match Password!')
+        if (this.state.password !== this.state.repassword) {
+            alert('Re-Password must match Password!');
         }
         fetch(Urls.APIUrl+'register',{
             method: 'POST',

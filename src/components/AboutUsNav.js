@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Image } from 'react-native';
 import { Container, Card, CardItem, Text, Tab, Tabs, TabHeading, Header, Left, Button, Body, Right, Title } from 'native-base';
-import FAIcon from 'react-native-vector-icons/FontAwesome';
 
 import Intro from './aboutus_content/Intro';
 import Branch from './aboutus_content/Branch';
@@ -16,9 +15,7 @@ export default class AboutUsNav extends Component {
                 <Header>
                     <Left>
                         <Button transparent>
-                            <Image
-                                source={require('../assets/img/logo.jpg')}
-                                style={Styles.logo} />
+                            <Image source={require('../assets/img/logo.jpg')} style={Styles.logo} />
                         </Button>
                     </Left>
                     <Body>
