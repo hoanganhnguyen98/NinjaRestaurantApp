@@ -1,24 +1,22 @@
-import React, { Component } from 'react';
-import { Image, AsyncStorage, View } from 'react-native';
-import { Content, Text, List, ListItem, Left, Body, Right, Header} from 'native-base';
+import React, {Component} from 'react';
+import {Image, AsyncStorage, View} from 'react-native';
+import {Text, List, ListItem, Left, Body, Right} from 'native-base';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 
-import I18n, { switchLanguage } from '../i18n/i18n';
+import I18n, {switchLanguage} from '../i18n/i18n';
 
-export default class ProfileNav extends Component
-{
-  constructor(props)
-  {
+export default class ProfileNav extends Component {
+  constructor(props) {
     super(props);
 
-    this.state={isVi: false};
+    this.state = {isVi: false};
   }
 
   componentDidMount() {
     this.getLanguage();
   }
 
-  getLanguage = async() => {
+  getLanguage = async () => {
     try {
       // Get the language set by default from AsyncStorage
       var defaultLanguage = await AsyncStorage.getItem('defaultLanguage');
@@ -31,7 +29,7 @@ export default class ProfileNav extends Component
     } catch (error) {
       alert(error);
     }
-  }
+  };
 
   render() {
     return (
@@ -44,22 +42,52 @@ export default class ProfileNav extends Component
             </Left>
             <Body>
               <List>
-                <ListItem thumbnail noBorder onPress={() => {switchLanguage('vi'); this.getLanguage();}}>
+                <ListItem
+                  thumbnail
+                  noBorder
+                  onPress={() => {
+                    switchLanguage('vi');
+                    this.getLanguage();
+                  }}>
                   <Left>
-                    <Image source={require('../assets/img/languages/vi.png')} style={{width: 50, height:25, borderRadius: 5}}></Image>
+                    <Image
+                      source={require('../assets/img/languages/vi.png')}
+                      style={{width: 50, height: 25, borderRadius: 5}}></Image>
                   </Left>
-                  <Body><Text>Tiếng Việt</Text></Body>
+                  <Body>
+                    <Text>Tiếng Việt</Text>
+                  </Body>
                   <Right>
-                    {this.state.isVi ? <FAIcon name="check" size={20} style={{color: 'green'}}></FAIcon> : null}
+                    {this.state.isVi ? (
+                      <FAIcon
+                        name="check"
+                        size={20}
+                        style={{color: 'green'}}></FAIcon>
+                    ) : null}
                   </Right>
                 </ListItem>
-                <ListItem thumbnail noBorder onPress={() => {switchLanguage('en'); this.getLanguage();}}>
+                <ListItem
+                  thumbnail
+                  noBorder
+                  onPress={() => {
+                    switchLanguage('en');
+                    this.getLanguage();
+                  }}>
                   <Left>
-                    <Image source={require('../assets/img/languages/en.png')} style={{width: 50, height:25, borderRadius: 5}}></Image>
+                    <Image
+                      source={require('../assets/img/languages/en.png')}
+                      style={{width: 50, height: 25, borderRadius: 5}}></Image>
                   </Left>
-                  <Body><Text>English</Text></Body>
+                  <Body>
+                    <Text>English</Text>
+                  </Body>
                   <Right>
-                    {this.state.isVi ? null : <FAIcon name="check" size={20} style={{color: 'green'}}></FAIcon>}
+                    {this.state.isVi ? null : (
+                      <FAIcon
+                        name="check"
+                        size={20}
+                        style={{color: 'green'}}></FAIcon>
+                    )}
                   </Right>
                 </ListItem>
               </List>
