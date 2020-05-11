@@ -1,20 +1,20 @@
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
-import MenuNav from '../components/MenuNav';
-import FoodDetail from '../components/FoodDetail';
+import CartNav from '../components/CartNav';
+import HistoryDetail from '../components/cart_content/HistoryDetail';
 
 const Stack = createStackNavigator({
-  Menu: {
-    screen: MenuNav,
+  Cart: {
+    screen: CartNav,
     navigationOptions: {
       headerShown: false,
     },
   },
-  FoodDetail: {
-    screen: FoodDetail,
+  HistoryDetail: {
+    screen: HistoryDetail,
     navigationOptions: {
-      title: 'Food Detail',
+      title: 'Bill Detail',
       headerStyle: {
         backgroundColor: '#3F51B5',
       },

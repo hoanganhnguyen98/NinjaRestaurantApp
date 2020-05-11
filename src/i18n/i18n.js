@@ -9,12 +9,12 @@ I18n.locale = 'en';
 I18n.fallbacks = false;
 
 I18n.translations = {
-    en,
-    vi
+  en,
+  vi,
 };
 
 export default I18n;
 export const switchLanguage = (language) => {
-    I18n.locale = language;
-    AsyncStorage.setItem('defaultLanguage', language);
+  I18n.locale = language;
+  AsyncStorage.setItem('defaultLanguage', language);
 };

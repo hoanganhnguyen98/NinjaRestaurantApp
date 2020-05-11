@@ -1,40 +1,37 @@
-/**
- * From Profile Navigation, go to Change Info
- */
-
-import React, {Component} from 'react';
-
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
 
 import ProfileNav from '../components/ProfileNav';
 import ChangeInfo from '../components/users/ChangeInfo';
-import LoginNavigator from './LoginNavigator';
+import ChangePassword from '../components/users/ChangePassword';
 
-const Stack = createStackNavigator(
-{
-    Profile: {
-        screen:ProfileNav,
-        navigationOptions: {
-            headerShown: false,
-        }
+const Stack = createStackNavigator({
+  Profile: {
+    screen: ProfileNav,
+    navigationOptions: {
+      headerShown: false,
     },
-    ChangeInfo: {
-        screen:ChangeInfo,
-        navigationOptions: {
-            title: 'Change information',
-            headerStyle: {
-                backgroundColor: '#3F51B5',
-            },
-            headerTintColor: '#ffffff',
-        }
+  },
+  ChangeInfo: {
+    screen: ChangeInfo,
+    navigationOptions: {
+      title: 'Change information',
+      headerStyle: {
+        backgroundColor: '#3F51B5',
+      },
+      headerTintColor: '#ffffff',
     },
-    // Login: {
-    //     screen:LoginNavigator,
-    //     navigationOptions: {
-    //         headerShown: false,
-    //     }
-    // }
+  },
+  ChangePassword: {
+    screen: ChangePassword,
+    navigationOptions: {
+      title: 'Change password',
+      headerStyle: {
+        backgroundColor: '#3F51B5',
+      },
+      headerTintColor: '#ffffff',
+    },
+  },
 });
 
 export default createAppContainer(Stack);
