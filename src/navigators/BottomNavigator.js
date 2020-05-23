@@ -5,7 +5,6 @@ import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import I18n from '../i18n/i18n';
 import {Colors} from '../common';
 import AboutUsNav from '../components/AboutUsNav';
 import ProfileNavigator from './ProfileNavigator';
@@ -16,7 +15,7 @@ const TabNavigator = createMaterialBottomTabNavigator({
   Menu: {
     screen: MenuNavigator,
     navigationOptions: {
-      title: I18n.t('nav.menu'),
+      title: 'Menu',
       activeColor: '#f4f4f4',
       inactiveColor: '#62B1F6',
       barStyle: {backgroundColor: Colors.appColor},
@@ -32,7 +31,7 @@ const TabNavigator = createMaterialBottomTabNavigator({
   Cart: {
     screen: CartNavigator,
     navigationOptions: {
-      title: I18n.t('nav.cart'),
+      title: 'Cart',
       activeColor: '#f4f4f4',
       inactiveColor: '#62B1F6',
       barStyle: {backgroundColor: Colors.appColor},
@@ -48,7 +47,7 @@ const TabNavigator = createMaterialBottomTabNavigator({
   AboutUs: {
     screen: AboutUsNav,
     navigationOptions: {
-      title: I18n.t('nav.aboutus'),
+      title: 'About us',
       activeColor: '#f4f4f4',
       inactiveColor: '#62B1F6',
       barStyle: {backgroundColor: Colors.appColor},
@@ -64,7 +63,7 @@ const TabNavigator = createMaterialBottomTabNavigator({
   Profile: {
     screen: ProfileNavigator,
     navigationOptions: {
-      title: I18n.t('nav.profile'),
+      title: 'Profile',
       activeColor: '#f4f4f4',
       inactiveColor: '#62B1F6',
       barStyle: {backgroundColor: Colors.appColor},

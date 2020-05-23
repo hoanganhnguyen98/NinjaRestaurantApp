@@ -17,6 +17,12 @@ const Styles = {
       borderRadius: 3,
     },
   },
+  cart: {
+    headerCart: {
+      backgroundColor: '#ffffff',
+      borderBottomWidth: 1,
+    },
+  },
   aboutus: {
     coverImage: {
       height: 80,
@@ -37,6 +43,11 @@ const Styles = {
     branchBorder: {
       borderBottomWidth: 3,
       borderBottomColor: Colors.appColor,
+    },
+    introTitle: {
+      fontWeight: 'bold',
+      fontSize: 18,
+      color: Colors.appColor,
     },
   },
   foodDetail: {

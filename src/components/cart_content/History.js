@@ -116,7 +116,7 @@ export default class History extends Component {
 
     return (
       <View style={Styles.menu.foodList}>
-        <Header style={{backgroundColor: '#ffffff'}}>
+        <Header style={Styles.cart.headerCart}>
           <Button transparent>
             <Button transparent>
               <Text>

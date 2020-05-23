@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable no-alert */
 import React, {Component} from 'react';
+import {Keyboard} from 'react-native';
 import {
   Container,
   Content,
@@ -26,6 +27,9 @@ export default class Register extends Component {
   }
 
   register = () => {
+    // hidden Keyboard after click button
+    Keyboard.dismiss();
+
     if (
       this.state.name === '' ||
       this.state.phone === '' ||
@@ -75,7 +79,7 @@ export default class Register extends Component {
         }
       })
       .catch((error) => console.error(error));
-  }
+  };
 
   render() {
     return (
@@ -101,6 +105,7 @@ export default class Register extends Component {
               <Label>Email</Label>
               <Input
                 keyboardType="email-address"
+                autoCapitalize="none"
                 onChangeText={(email) => this.setState({email})}
               />
             </Item>

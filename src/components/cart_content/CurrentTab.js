@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -26,7 +26,7 @@ import NumberFormat from 'react-number-format';
 import Modal from 'react-native-modal';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { Urls, Styles, Colors } from '../../common';
+import {Urls, Styles, Colors} from '../../common';
 
 export default class CurrentTab extends Component {
   constructor(props) {
@@ -86,12 +86,12 @@ export default class CurrentTab extends Component {
         }
       })
       .catch((error) => console.error(error))
-      .finally(() => { });
+      .finally(() => {});
     this.onRefresh();
   };
 
   toggleModal = async () => {
-    this.setState({ isModalVisible: !this.state.isModalVisible });
+    this.setState({isModalVisible: !this.state.isModalVisible});
   };
 
   confirmOrder = async () => {
@@ -110,7 +110,7 @@ export default class CurrentTab extends Component {
         phone: orderPhone,
         address: orderAddress,
       });
-      this.setState({ isModalVisible: !this.state.isModalVisible });
+      this.setState({isModalVisible: !this.state.isModalVisible});
     }
   };
 
@@ -161,7 +161,7 @@ export default class CurrentTab extends Component {
       <Left>
         <Image
           square
-          source={{ uri: data.item.image }}
+          source={{uri: data.item.image}}
           style={Styles.menu.foodImage}
         />
       </Left>
@@ -186,7 +186,7 @@ export default class CurrentTab extends Component {
           decimalSeparator=","
           suffix={' VND'}
           renderText={(value) => (
-            <Text style={{ color: 'red' }} note numberOfLines={1}>
+            <Text style={{color: 'red'}} note numberOfLines={1}>
               = {value}
             </Text>
           )}
@@ -201,12 +201,12 @@ export default class CurrentTab extends Component {
   );
 
   render() {
-    const { data, isLoading } = this.state;
+    const {data, isLoading} = this.state;
 
     return (
       <View style={Styles.menu.foodList}>
-        <Header style={{ backgroundColor: '#ffffff' }}>
-          <Body style={{ marginLeft: 20 }}>
+        <Header style={Styles.cart.headerCart}>
+          <Body style={{marginLeft: 20}}>
             {this.state.totalPrice === 0 ? null : (
               <NumberFormat
                 value={this.state.totalPrice}
@@ -216,7 +216,7 @@ export default class CurrentTab extends Component {
                 suffix={' VND'}
                 renderText={(value) => (
                   <Text
-                    style={{ color: 'red', fontWeight: 'bold', fontSize: 18 }}
+                    style={{color: 'red', fontWeight: 'bold', fontSize: 18}}
                     note
                     numberOfLines={1}>
                     {value}
@@ -231,42 +231,42 @@ export default class CurrentTab extends Component {
                 <Text>Update cart</Text>
               </Button>
             ) : (
-                <Button block rounded onPress={() => this.confirmOrder()}>
-                  <Text>Order Now</Text>
-                </Button>
-              )}
+              <Button block rounded onPress={() => this.confirmOrder()}>
+                <Text>Order Now</Text>
+              </Button>
+            )}
           </Right>
         </Header>
         <Container>
           {this.state.totalPrice === 0 ? (
-            <Button danger block transparent style={{ marginTop: 100 }}>
+            <Button danger block transparent style={{marginTop: 100}}>
               <Text>Cart is empty</Text>
             </Button>
           ) : (
-              <List>
-                {isLoading ? (
-                  <ActivityIndicator />
-                ) : (
-                    <FlatList
-                      data={data.sort((after, before) =>
-                        after.created_at.localeCompare(before.created_at),
-                      )}
-                      keyExtractor={({ id }, index) => id}
-                      renderItem={(item) => this.renderItem(item)}
-                      refreshControl={
-                        <RefreshControl
-                          //refresh control used for the Pull to Refresh
-                          refreshing={this.state.refreshing}
-                          onRefresh={this.onRefresh.bind(this)}
-                        />
-                      }
-                    />
+            <List>
+              {isLoading ? (
+                <ActivityIndicator />
+              ) : (
+                <FlatList
+                  data={data.sort((after, before) =>
+                    after.created_at.localeCompare(before.created_at),
                   )}
-              </List>
-            )}
+                  keyExtractor={({id}, index) => id}
+                  renderItem={(item) => this.renderItem(item)}
+                  refreshControl={
+                    <RefreshControl
+                      //refresh control used for the Pull to Refresh
+                      refreshing={this.state.refreshing}
+                      onRefresh={this.onRefresh.bind(this)}
+                    />
+                  }
+                />
+              )}
+            </List>
+          )}
         </Container>
         <Modal isVisible={this.state.isModalVisible}>
-          <View style={{ backgroundColor: '#ffffff', padding: 30 }}>
+          <View style={{backgroundColor: '#ffffff', padding: 30}}>
             <Button transparent block>
               <Text>Comfirm order information</Text>
             </Button>
@@ -277,7 +277,7 @@ export default class CurrentTab extends Component {
                 </Label>
                 <Input
                   defaultValue={this.state.name}
-                  onChangeText={(name) => this.setState({ name })}
+                  onChangeText={(name) => this.setState({name})}
                 />
               </Item>
             </CardItem>
@@ -288,7 +288,7 @@ export default class CurrentTab extends Component {
                 </Label>
                 <Input
                   defaultValue={this.state.phone}
-                  onChangeText={(phone) => this.setState({ phone })}
+                  onChangeText={(phone) => this.setState({phone})}
                 />
               </Item>
             </CardItem>
@@ -299,7 +299,7 @@ export default class CurrentTab extends Component {
                 </Label>
                 <Input
                   defaultValue={this.state.address}
-                  onChangeText={(address) => this.setState({ address })}
+                  onChangeText={(address) => this.setState({address})}
                 />
               </Item>
             </CardItem>
@@ -314,7 +314,7 @@ export default class CurrentTab extends Component {
                   suffix={' VND'}
                   renderText={(value) => (
                     <Text
-                      style={{ color: 'red', fontWeight: 'bold', fontSize: 18 }}
+                      style={{color: 'red', fontWeight: 'bold', fontSize: 18}}
                       note
                       numberOfLines={1}>
                       {value}
