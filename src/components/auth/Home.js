@@ -5,9 +5,15 @@ import LoginTab from './Login';
 import RegisterTab from './Register';
 import CustomHeader from '../CustomHeader';
 
+import {backButton, handleAndroidBackButton} from '../BackButton';
+
 export default class Home extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    handleAndroidBackButton(backButton);
   }
 
   render() {

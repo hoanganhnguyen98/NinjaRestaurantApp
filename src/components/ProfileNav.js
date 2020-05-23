@@ -168,6 +168,7 @@ export default class ProfileNav extends Component {
           </ListItem>
           <ListItem
             icon
+            noBorder
             onPress={() =>
               this.props.navigation.navigate('ChangePassword', {
                 changeId: this.state.id,
@@ -186,20 +187,6 @@ export default class ProfileNav extends Component {
             </Left>
             <Body>
               <Text>Change password</Text>
-            </Body>
-          </ListItem>
-          <ListItem icon noBorder>
-            <Left>
-              <Button style={{backgroundColor: '#ffffff'}}>
-                <FAIcon
-                  name="language"
-                  size={20}
-                  style={{color: Colors.appColor}}
-                />
-              </Button>
-            </Left>
-            <Body>
-              <Text>Select language</Text>
             </Body>
           </ListItem>
 

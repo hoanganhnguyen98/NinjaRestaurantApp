@@ -1,13 +1,19 @@
 import React, {Component} from 'react';
 import {View} from 'react-native';
 import {Content, Card, CardItem, Text, Body} from 'native-base';
+import FAIcon from 'react-native-vector-icons/FontAwesome5';
+
+import {Styles} from '../../common';
 export default class Intro extends Component {
   render() {
     return (
       <Content>
         <Card>
           <CardItem header>
-            <Text>History</Text>
+            <Text style={Styles.aboutus.introTitle}>
+              <FAIcon name="history" size={20} />
+              History
+            </Text>
           </CardItem>
           <CardItem>
             <Body>
@@ -22,7 +28,10 @@ export default class Intro extends Component {
             </Body>
           </CardItem>
           <CardItem header>
-            <Text>Mission</Text>
+            <Text style={Styles.aboutus.introTitle}>
+              <FAIcon name="user-ninja" size={20} />
+              Mission
+            </Text>
           </CardItem>
           <CardItem>
             <Body>
@@ -34,7 +43,10 @@ export default class Intro extends Component {
             </Body>
           </CardItem>
           <CardItem header>
-            <Text>Core Value</Text>
+            <Text style={Styles.aboutus.introTitle}>
+              <FAIcon name="globe-asia" size={20} />
+              Core value
+            </Text>
           </CardItem>
           <CardItem>
             <Body>

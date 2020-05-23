@@ -22,9 +22,7 @@ import ActionSheet from 'react-native-actionsheet';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import NumberFormat from 'react-number-format';
-import {getLanguages} from 'react-native-i18n';
 
-import I18n, {switchLanguage} from '../i18n/i18n';
 import {Styles, Colors, Urls} from '../common';
 import CustomFoodTab from './CustomFoodTab';
 

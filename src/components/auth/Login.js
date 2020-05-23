@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {View, Keyboard} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
   Container,
-  Header,
-  Body,
   Content,
   Form,
   Item,
@@ -31,6 +29,9 @@ export default class Login extends Component {
   }
 
   Login = () => {
+    // hidden Keyboard after click button
+    Keyboard.dismiss();
+
     fetch(Urls.APIUrl + 'login', {
       method: 'POST',
       headers: {
@@ -69,6 +70,7 @@ export default class Login extends Component {
               <Label>Email</Label>
               <Input
                 keyboardType="email-address"
+                autoCapitalize="none"
                 onChangeText={(email) => this.setState({email})}
               />
             </Item>
@@ -88,17 +90,6 @@ export default class Login extends Component {
               style={{marginTop: 30}}
               onPress={this.Login}>
               <Text>Login</Text>
-            </Button>
-            <Button
-              rounded
-              block
-              primary
-              style={{marginTop: 50}}
-              onPress={this.Login}>
-              <Text>
-                <FAIcon name="facebook-official" size={20} /> Login with
-                facebook
-              </Text>
             </Button>
             <Button
               transparent

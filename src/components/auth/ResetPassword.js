@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Keyboard} from 'react-native';
 import {
   Container,
   Content,
@@ -29,6 +30,9 @@ export default class ResetPassword extends Component {
   }
 
   reset = () => {
+    // hidden Keyboard after click button
+    Keyboard.dismiss();
+
     if (this.state.inputCode !== this.state.checkCode) {
       alert('Incorrect check code!');
     } else if (this.state.newPassword.length < 6) {
@@ -66,6 +70,9 @@ export default class ResetPassword extends Component {
   };
 
   sendRequest = () => {
+    // hidden Keyboard after click button
+    Keyboard.dismiss();
+
     try {
       fetch(Urls.APIUrl + 'user/forgetpassword', {
         method: 'POST',
@@ -127,6 +134,7 @@ export default class ResetPassword extends Component {
                 <Body>
                   <Input
                     keyboardType="email-address"
+                    autoCapitalize="none"
                     onChangeText={(email) => this.setState({email})}
                   />
                 </Body>
