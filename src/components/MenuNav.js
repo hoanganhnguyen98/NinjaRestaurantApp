@@ -102,23 +102,6 @@ export default class MenuNav extends Component {
             isLoading: false,
           });
         });
-
-      // Get the language set by default from AsyncStorage
-      var defaultLanguage = await AsyncStorage.getItem('defaultLanguage');
-
-      // if not defaultLanguage, get local device languages
-      if (!defaultLanguage) {
-        getLanguages().then((languages) => {
-          if (languages === 'vi-VN') {
-            switchLanguage('vi');
-          } else {
-            switchLanguage('en');
-          }
-        });
-      } else {
-        // if exist defaultLanguage, set it for locale in I18n
-        switchLanguage(defaultLanguage);
-      }
     } catch (error) {
       alert(error);
     }
