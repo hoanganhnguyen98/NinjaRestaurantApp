@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Keyboard} from 'react-native';
+import {View, Keyboard, Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
   Container,
@@ -11,10 +11,11 @@ import {
   Label,
   Text,
 } from 'native-base';
+import Modal from 'react-native-modal';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
-
 import {PropTypes} from 'prop-types';
 
+import LoadingModal from '../../LoadingModal';
 import {Urls} from '../../common';
 
 export default class Login extends Component {
@@ -25,12 +26,18 @@ export default class Login extends Component {
       email: '',
       password: '',
       navigation: '',
+      isLoading: false,
     };
   }
 
   Login = () => {
     // hidden Keyboard after click button
     Keyboard.dismiss();
+
+    //start loading modal while fetching
+    this.setState({
+      isLoading: true,
+    });
 
     fetch(Urls.APIUrl + 'login', {
       method: 'POST',
@@ -45,7 +52,12 @@ export default class Login extends Component {
     })
       .then((response) => response.json())
       .then((json) => {
+        //end loading modal
+        this.setState({
+          isLoading: false,
+        });
         if (json.success === true) {
+          //store user data to local mobile
           AsyncStorage.setItem('userId', json.data.user_id);
           AsyncStorage.setItem('userEmail', this.state.email);
           AsyncStorage.setItem('userPassword', this.state.password);
@@ -53,9 +65,21 @@ export default class Login extends Component {
           AsyncStorage.setItem('userImage', json.data.image);
           AsyncStorage.setItem('userPhone', json.data.phone);
           AsyncStorage.setItem('userAddress', json.data.address);
+
+          //redirect to Menu tab
           this.props.navigation.navigate('BottomNavigator');
         } else {
-          alert('Login fail');
+          Alert.alert(
+            'Login fail',
+            'Please check your email and password again!',
+            [
+              {
+                text: 'OK',
+                onPress: () => null,
+                style: 'cancel',
+              },
+            ],
+          );
         }
       })
       .catch((error) => console.error(error));
@@ -65,6 +89,7 @@ export default class Login extends Component {
     return (
       <Container>
         <Content style={{padding: 10}}>
+          <LoadingModal isLoading={this.state.isLoading} />
           <Form>
             <Item floatingLabel>
               <Label>Email</Label>

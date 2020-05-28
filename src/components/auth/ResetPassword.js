@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Keyboard} from 'react-native';
+import {Keyboard, Alert} from 'react-native';
 import {
   Container,
   Content,
@@ -14,11 +14,13 @@ import {
 } from 'native-base';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 
+import LoadingModal from '../../LoadingModal';
 import {Colors, Urls} from '../../common';
 
 export default class ResetPassword extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       email: '',
       newPassword: '',
@@ -26,85 +28,136 @@ export default class ResetPassword extends Component {
       inputCode: '',
       checkCode: '',
       activeResetForm: false,
+      isLoading: false,
     };
   }
+
+  showMessage = (notify, message) => {
+    Alert.alert(notify, message, [
+      {
+        text: 'OK',
+        onPress: () => null,
+        style: 'cancel',
+      },
+    ]);
+  };
+
+  validateInput = () => {
+    if (this.state.inputCode !== this.state.checkCode) {
+      this.showMessage(
+        'Incorrect check code!',
+        'Check your check code in email again!',
+      );
+    } else if (this.state.newPassword.length < 6) {
+      this.showMessage(
+        'Invalid password!',
+        'Passwords must be at least 6 characters!',
+      );
+    } else if (this.state.newPassword !== this.state.rePassword) {
+      this.showMessage(
+        'Incorrect re-password',
+        'Repeat new password must match New password!',
+      );
+    }
+  };
 
   reset = () => {
     // hidden Keyboard after click button
     Keyboard.dismiss();
 
-    if (this.state.inputCode !== this.state.checkCode) {
-      alert('Incorrect check code!');
-    } else if (this.state.newPassword.length < 6) {
-      alert('Passwords must be at least 6 characters!');
-    } else if (this.state.newPassword !== this.state.rePassword) {
-      alert('Repeat new password must match New password!');
-    } else {
-      try {
-        fetch(Urls.APIUrl + 'user/resetpassword', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: this.state.email,
-            check_code: this.state.checkCode,
-            new_password: this.state.newPassword,
-          }),
-        })
-          .then((response) => response.json())
-          .then((json) => {
-            if (json.success === true) {
-              alert('Reset password successfully!');
-              this.props.navigation.navigate('Home');
-            } else {
-              alert('Reset password fail!');
-            }
-          })
-          .catch((error) => console.error(error));
-      } catch (error) {
-        alert(error);
-      }
-    }
+    //start loading modal while fetching
+    this.setState({
+      isLoading: true,
+    });
+
+    // check if input is invalid
+    this.validateInput;
+
+    fetch(Urls.APIUrl + 'user/resetpassword', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+        check_code: this.state.checkCode,
+        new_password: this.state.newPassword,
+      }),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        //end loading modal
+        this.setState({
+          isLoading: true,
+        });
+
+        if (json.success === true) {
+          this.showMessage('Reset password successfully', 'Login now!');
+
+          //redirect to login
+          this.props.navigation.navigate('Home');
+        } else {
+          this.showMessage(
+            'Reset password fail',
+            'Check your information and try again!',
+          );
+        }
+      })
+      .catch((error) => console.error(error));
   };
 
   sendRequest = () => {
     // hidden Keyboard after click button
     Keyboard.dismiss();
 
-    try {
-      fetch(Urls.APIUrl + 'user/forgetpassword', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: this.state.email,
-        }),
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          if (json.success === true) {
-            this.setState({
-              checkCode: json.data.checkCode,
-              activeResetForm: true,
-            });
-          } else {
-            alert('Incorrect email!');
-          }
-        })
-        .catch((error) => console.error(error));
-    } catch (error) {
-      alert(error);
+    //start loading modal while fetching
+    this.setState({
+      isLoading: true,
+    });
+
+    // check if email is invalid
+    if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)) {
+      this.showMessage('Invalid email', 'Please check your email again!');
     }
+
+    fetch(Urls.APIUrl + 'user/forgetpassword', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+      }),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        //end loading modal
+        this.setState({
+          isLoading: true,
+        });
+
+        if (json.success === true) {
+          this.setState({
+            checkCode: json.data.checkCode,
+            activeResetForm: true,
+          });
+        } else {
+          this.showMessage(
+            'Incorrect email',
+            'Check your email and try again!',
+          );
+        }
+      })
+      .catch((error) => console.error(error));
   };
 
   render() {
     return (
       <Container>
         <Content>
+          <LoadingModal isLoading={this.state.isLoading} />
           {!this.state.activeResetForm ? (
             <Card style={{marginTop: 100}}>
               <ListItem icon>
