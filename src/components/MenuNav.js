@@ -25,6 +25,8 @@ import NumberFormat from 'react-number-format';
 
 import {Styles, Colors, Urls} from '../common';
 import CustomFoodTab from './CustomFoodTab';
+import {backButton, handleAndroidBackButton} from './BackButton';
+import {networkChecking, handleNetworkState} from './NetworkChecking';
 
 const options = [
   <Text>
@@ -57,34 +59,39 @@ export default class MenuNav extends Component {
   }
 
   componentDidMount = async () => {
+    handleAndroidBackButton(backButton);
+    // networkChecking;
+    handleNetworkState;
+
     try {
-      var userEmail = await AsyncStorage.getItem('userEmail');
-      var userPassword = await AsyncStorage.getItem('userPassword');
+      // var userEmail = await AsyncStorage.getItem('userEmail');
+      // var userPassword = await AsyncStorage.getItem('userPassword');
 
-      if (userEmail === null || userPassword === null) {
-        this.props.navigation.navigate('Home');
-      }
+      // console.log(userEmail);
+      // if (userEmail === null || userPassword === null) {
+      //   this.props.navigation.navigate('Home');
+      // }
 
-      if (userEmail !== null && userPassword !== null) {
-        fetch(Urls.APIUrl + 'login', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: userEmail,
-            password: userPassword,
-          }),
-        })
-          .then((response) => response.json())
-          .then((json) => {
-            if (json.success !== true) {
-              this.props.navigation.navigate('Home');
-            }
-          })
-          .catch((error) => console.error(error));
-      }
+      // if (userEmail !== null && userPassword !== null) {
+      //   fetch(Urls.APIUrl + 'login', {
+      //     method: 'POST',
+      //     headers: {
+      //       Accept: 'application/json',
+      //       'Content-Type': 'application/json',
+      //     },
+      //     body: JSON.stringify({
+      //       email: userEmail,
+      //       password: userPassword,
+      //     }),
+      //   })
+      //     .then((response) => response.json())
+      //     .then((json) => {
+      //       if (json.success !== true) {
+      //         this.props.navigation.navigate('Home');
+      //       }
+      //     })
+      //     .catch((error) => console.error(error));
+      // }
 
       fetch(Urls.APIUrl + 'food/index/all')
         .then((response) => response.json())

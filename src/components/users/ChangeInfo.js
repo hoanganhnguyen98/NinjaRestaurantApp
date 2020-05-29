@@ -17,16 +17,20 @@ import {
 import Modal from 'react-native-modal';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 
+import LoadingModal from '../LoadingModal';
+import showMessage from '../MessagesAlert';
 import {Colors, Urls} from '../../common';
 
 export default class ChangeInfo extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       name: this.props.navigation.getParam('changeName'),
       phone: this.props.navigation.getParam('changePhone'),
       address: this.props.navigation.getParam('changeAddress'),
       isModalVisible: false,
+      requestIsSending: false,
     };
   }
 
@@ -35,7 +39,14 @@ export default class ChangeInfo extends Component {
   };
 
   save = async () => {
+    this.toggleModal;
+
     try {
+      //start loading modal while fetching
+      this.setState({
+        requestIsSending: true,
+      });
+
       fetch(Urls.APIUrl + 'user/update', {
         method: 'POST',
         headers: {
@@ -51,6 +62,11 @@ export default class ChangeInfo extends Component {
       })
         .then((response) => response.json())
         .then((json) => {
+          //end loading modal
+          this.setState({
+            requestIsSending: false,
+          });
+
           if (json.success === true) {
             AsyncStorage.setItem('userName', this.state.name);
             AsyncStorage.setItem('userPhone', this.state.phone);
@@ -62,7 +78,7 @@ export default class ChangeInfo extends Component {
               saveAddress: this.state.address,
             });
           } else {
-            alert('Change information fail');
+            showMessage('Change information fail', 'Try again!');
           }
         })
         .catch((error) => console.error(error));
@@ -75,6 +91,7 @@ export default class ChangeInfo extends Component {
     return (
       <Container>
         <Content>
+          <LoadingModal requestIsSending={this.state.requestIsSending} />
           <Card>
             <CardItem style={{alignItems: 'center', justifyContent: 'center'}}>
               <Thumbnail

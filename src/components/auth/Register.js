@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Keyboard, Alert} from 'react-native';
+import {Keyboard} from 'react-native';
 import {
   Container,
   Content,
@@ -11,7 +11,8 @@ import {
   Label,
 } from 'native-base';
 
-import LoadingModal from '../../LoadingModal';
+import LoadingModal from '../LoadingModal';
+import showMessage from '../MessagesAlert';
 import {Urls} from '../../common';
 
 export default class Register extends Component {
@@ -25,21 +26,15 @@ export default class Register extends Component {
       email: '',
       password: '',
       repassword: '',
-      isLoading: false,
+      requestIsSending: false,
     };
   }
 
-  showMessage = (notify, message) => {
-    Alert.alert(notify, message, [
-      {
-        text: 'OK',
-        onPress: () => null,
-        style: 'cancel',
-      },
-    ]);
-  };
+  register = () => {
+    // hidden Keyboard after click button
+    Keyboard.dismiss();
 
-  validateInput = () => {
+    // check if input is invalid
     if (
       this.state.name === '' ||
       this.state.phone === '' ||
@@ -48,83 +43,70 @@ export default class Register extends Component {
       this.state.password === '' ||
       this.state.repassword === ''
     ) {
-      this.showMessage('Null information', 'Please fill all information!');
-    }
-    if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)) {
-      this.showMessage('Invalid email', 'Please check your email again!');
-    }
-    if (this.state.phone.length < 10) {
-      this.showMessage('Invalid phone number', 'Phone must be 10 numbers!');
-    }
-    if (this.state.password.length < 6) {
-      this.showMessage(
+      showMessage('Null information', 'Please fill all information!');
+    } else if (
+      !/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)
+    ) {
+      showMessage('Invalid email', 'Please check your email again!');
+    } else if (this.state.phone.length < 10) {
+      showMessage('Invalid phone number', 'Phone must be 10 numbers!');
+    } else if (this.state.password.length < 6) {
+      showMessage(
         'Invalid password',
         'Passwords must be at least 6 characters!',
       );
-    }
-    if (this.state.password !== this.state.repassword) {
-      this.showMessage(
-        'Incorrect re-password',
-        'Re-Password must match Password!',
-      );
-    }
-  };
+    } else if (this.state.password !== this.state.repassword) {
+      showMessage('Incorrect re-password', 'Re-Password must match Password!');
+    } else {
+      //start loading modal while fetching
+      this.setState({
+        requestIsSending: true,
+      });
 
-  register = () => {
-    // hidden Keyboard after click button
-    Keyboard.dismiss();
-
-    //start loading modal while fetching
-    this.setState({
-      isLoading: true,
-    });
-
-    // check if input is invalid
-    this.validateInput;
-
-    fetch(Urls.APIUrl + 'register', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: this.state.email,
-        name: this.state.name,
-        phone: this.state.phone,
-        address: this.state.address,
-        password: this.state.password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        //end loading modal
-        this.setState({
-          isLoading: true,
-        });
-
-        if (json.success === true) {
-          // success register
-          this.showMessage('Register successfully', 'Login now!');
-
-          //redirect to login
-          this.props.navigation.navigate('Home');
-        } else {
-          // fail
-          this.showMessage(
-            'Register fail',
-            'Please check your information and try again!',
-          );
-        }
+      fetch(Urls.APIUrl + 'register', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: this.state.email,
+          name: this.state.name,
+          phone: this.state.phone,
+          address: this.state.address,
+          password: this.state.password,
+        }),
       })
-      .catch((error) => console.error(error));
+        .then((response) => response.json())
+        .then((json) => {
+          //end loading modal
+          this.setState({
+            requestIsSending: false,
+          });
+
+          if (json.success === true) {
+            // success register
+            showMessage('Register successfully', 'Login now!');
+
+            //redirect to login
+            this.props.navigation.navigate('Home');
+          } else {
+            // fail
+            showMessage(
+              'Register fail',
+              'Please check your information and try again!',
+            );
+          }
+        })
+        .catch((error) => console.error(error));
+    }
   };
 
   render() {
     return (
       <Container>
         <Content style={{padding: 10}}>
-          <LoadingModal isLoading={this.state.isLoading} />
+          <LoadingModal requestIsSending={this.state.requestIsSending} />
           <Form>
             <Item floatingLabel>
               <Label>Full Name</Label>

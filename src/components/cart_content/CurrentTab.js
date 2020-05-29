@@ -5,6 +5,7 @@ import {
   View,
   Image,
   RefreshControl,
+  Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
@@ -26,6 +27,8 @@ import NumberFormat from 'react-number-format';
 import Modal from 'react-native-modal';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import LoadingModal from '../LoadingModal';
+import showMessage from '../MessagesAlert';
 import {Urls, Styles, Colors} from '../../common';
 
 export default class CurrentTab extends Component {
@@ -42,6 +45,7 @@ export default class CurrentTab extends Component {
       phone: '',
       address: '',
       id: '',
+      requestIsSending: false,
     };
 
     this.GetData();
@@ -78,25 +82,36 @@ export default class CurrentTab extends Component {
   };
 
   removeCart = (id) => {
+    //start loading modal while fetching
+    this.setState({
+      requestIsSending: true,
+    });
+
     fetch(Urls.APIUrl + 'cart/currentcart/remove/' + id)
       .then((response) => response.json())
       .then((json) => {
+        //end loading modal
+        this.setState({
+          requestIsSending: false,
+        });
+
         if (json.success === true) {
-          alert('Remove food successfully!');
+          showMessage('Remove food successfully', '');
+        } else {
+          showMessage('Remove food fail', 'Try again!');
         }
       })
-      .catch((error) => console.error(error))
-      .finally(() => {});
+      .catch((error) => console.error(error));
     this.onRefresh();
   };
 
-  toggleModal = async () => {
+  toggleModal = () => {
     this.setState({isModalVisible: !this.state.isModalVisible});
   };
 
   confirmOrder = async () => {
     if (this.state.totalPrice === 0) {
-      alert('No item to order');
+      showMessage('No item to order', '');
     } else {
       var orderId = await AsyncStorage.getItem('userId');
       var orderEmail = await AsyncStorage.getItem('userEmail');
@@ -110,40 +125,49 @@ export default class CurrentTab extends Component {
         phone: orderPhone,
         address: orderAddress,
       });
-      this.setState({isModalVisible: !this.state.isModalVisible});
+      this.toggleModal;
     }
   };
 
   orderNow = () => {
-    try {
-      fetch(Urls.APIUrl + 'cart/currentcart/order', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user_id: this.state.id,
-          email: this.state.email,
-          name: this.state.name,
-          phone: this.state.phone,
-          address: this.state.address,
-          total_price: this.state.totalPrice,
-        }),
+    // hidden modal
+    this.toggleModal;
+
+    //start loading modal while fetching
+    this.setState({
+      requestIsSending: true,
+    });
+
+    fetch(Urls.APIUrl + 'cart/currentcart/order', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: this.state.id,
+        email: this.state.email,
+        name: this.state.name,
+        phone: this.state.phone,
+        address: this.state.address,
+        total_price: this.state.totalPrice,
+      }),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        //end loading modal
+        this.setState({
+          requestIsSending: false,
+        });
+
+        if (json.success === true) {
+          showMessage('Order successfully', '');
+          this.onRefresh();
+        } else {
+          showMessage('Order fail', '');
+        }
       })
-        .then((response) => response.json())
-        .then((json) => {
-          if (json.success === true) {
-            alert('Order successfully');
-            this.onRefresh();
-          } else {
-            alert('Order fail');
-          }
-        })
-        .catch((error) => console.error(error));
-    } catch (error) {
-      alert(error);
-    }
+      .catch((error) => console.error(error));
   };
 
   onRefresh = () => {
@@ -205,6 +229,7 @@ export default class CurrentTab extends Component {
 
     return (
       <View style={Styles.menu.foodList}>
+        <LoadingModal requestIsSending={this.state.requestIsSending} />
         <Header style={Styles.cart.headerCart}>
           <Body style={{marginLeft: 20}}>
             {this.state.totalPrice === 0 ? null : (
@@ -268,7 +293,7 @@ export default class CurrentTab extends Component {
         <Modal isVisible={this.state.isModalVisible}>
           <View style={{backgroundColor: '#ffffff', padding: 30}}>
             <Button transparent block>
-              <Text>Comfirm order information</Text>
+              <Text>Confirm order information</Text>
             </Button>
             <CardItem>
               <Item stackedLabel>

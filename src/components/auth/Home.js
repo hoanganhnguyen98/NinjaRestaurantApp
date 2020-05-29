@@ -5,18 +5,9 @@ import LoginTab from './Login';
 import RegisterTab from './Register';
 import CustomHeader from '../CustomHeader';
 
-import {backButton, handleAndroidBackButton} from '../BackButton';
-import {networkChecking, handleNetworkState} from '../NetworkChecking';
-
 export default class Home extends Component {
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-    handleAndroidBackButton(backButton);
-    // networkChecking;
-    handleNetworkState;
   }
 
   render() {

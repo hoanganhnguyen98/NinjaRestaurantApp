@@ -16,16 +16,20 @@ import {
 import Modal from 'react-native-modal';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 
-import {Styles, Colors, Urls} from '../../common';
+import LoadingModal from '../LoadingModal';
+import showMessage from '../MessagesAlert';
+import {Colors, Urls} from '../../common';
 
 export default class ChangePassword extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       oldPassword: '',
       newPassword: '',
       rePassword: '',
       isModalVisible: false,
+      requestIsSending: false,
     };
   }
 
@@ -38,11 +42,11 @@ export default class ChangePassword extends Component {
       this.state.oldPassword !==
       this.props.navigation.getParam('changePassword')
     ) {
-      alert('Old password is incorrect!');
+      showMessage('Old password is incorrect!', 'Try again!');
     } else if (this.state.newPassword.length < 6) {
-      alert('Passwords must be at least 6 characters!');
+      showMessage('Passwords must be at least 6 characters!', 'Try again!');
     } else if (this.state.newPassword !== this.state.rePassword) {
-      alert('Repeat new password must match New password!');
+      showMessage('Repeat new password must match New password!', 'Try again!');
     } else {
       this.toggleModal();
     }
@@ -66,7 +70,14 @@ export default class ChangePassword extends Component {
   };
 
   change = async () => {
+    this.toggleModal();
+
     try {
+      //start loading modal while fetching
+      this.setState({
+        requestIsSending: true,
+      });
+
       fetch(Urls.APIUrl + 'user/changepassword', {
         method: 'POST',
         headers: {
@@ -81,11 +92,16 @@ export default class ChangePassword extends Component {
       })
         .then((response) => response.json())
         .then((json) => {
+          //end loading modal
+          this.setState({
+            requestIsSending: false,
+          });
+
           if (json.success === true) {
-            alert('Change password successfully! Login again now!');
+            showMessage('Change password successfully', 'Login again now!');
             this.logout();
           } else {
-            alert('Change password fail');
+            showMessage('Change password fail', 'Try again!');
           }
         })
         .catch((error) => console.error(error));
@@ -98,6 +114,7 @@ export default class ChangePassword extends Component {
     return (
       <Container>
         <Content>
+          <LoadingModal requestIsSending={this.state.requestIsSending} />
           <Card>
             <ListItem icon>
               <Left>

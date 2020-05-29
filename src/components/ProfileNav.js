@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable no-alert */
 import React, {Component} from 'react';
 import {View} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -43,6 +41,8 @@ export default class ProfileNav extends Component {
   };
 
   logout = async () => {
+    this.toggleModal;
+
     try {
       let keys = [
         'userName',
@@ -53,7 +53,9 @@ export default class ProfileNav extends Component {
         'userAddress',
       ];
       await AsyncStorage.multiRemove(keys);
-      this.props.navigation.navigate('Home');
+
+      // back to Login screen
+      this.props.navigation.navigate('LoginNav');
     } catch (error) {
       alert(error);
     }
