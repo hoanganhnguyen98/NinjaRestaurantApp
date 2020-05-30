@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable no-alert */
 import React, {Component} from 'react';
 import {View} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -43,6 +41,8 @@ export default class ProfileNav extends Component {
   };
 
   logout = async () => {
+    // this.toggleModal;
+
     try {
       let keys = [
         'userName',
@@ -53,6 +53,8 @@ export default class ProfileNav extends Component {
         'userAddress',
       ];
       await AsyncStorage.multiRemove(keys);
+
+      // back to Login screen
       this.props.navigation.navigate('Home');
     } catch (error) {
       alert(error);
@@ -78,7 +80,7 @@ export default class ProfileNav extends Component {
   render() {
     return (
       <Container>
-        <CustomHeader />
+        <CustomHeader headerTitle="Profile" />
         <Card>
           <CardItem>
             <Left>
@@ -100,25 +102,6 @@ export default class ProfileNav extends Component {
             <Body>
               <Text>Personal information</Text>
             </Body>
-            <Left>
-              <Button
-                transparent
-                onPress={() =>
-                  this.props.navigation.navigate('ChangeInfo', {
-                    changeImage: this.state.image,
-                    changeName: this.state.name,
-                    changeEmail: this.state.email,
-                    changePhone: this.state.phone,
-                    changeAddress: this.state.address,
-                  })
-                }>
-                <FAIcon
-                  name="edit"
-                  size={20}
-                  style={{color: Colors.appColor}}
-                />
-              </Button>
-            </Left>
           </ListItem>
           <ListItem icon>
             <Left>
@@ -164,6 +147,30 @@ export default class ProfileNav extends Component {
             <Left />
             <Body>
               <Text>Setting</Text>
+            </Body>
+          </ListItem>
+          <ListItem
+            icon
+            onPress={() =>
+              this.props.navigation.navigate('ChangeInfo', {
+                changeImage: this.state.image,
+                changeName: this.state.name,
+                changeEmail: this.state.email,
+                changePhone: this.state.phone,
+                changeAddress: this.state.address,
+              })
+            }>
+            <Left>
+              <Button style={{backgroundColor: '#ffffff'}}>
+                <FAIcon
+                  name="edit"
+                  size={20}
+                  style={{color: Colors.appColor}}
+                />
+              </Button>
+            </Left>
+            <Body>
+              <Text>Change information</Text>
             </Body>
           </ListItem>
           <ListItem

@@ -1,8 +1,8 @@
 /* eslint-disable no-alert */
 import React, {Component} from 'react';
 import {ActivityIndicator, FlatList, View, Image} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 import {
+  Content,
   Container,
   Tab,
   Tabs,
@@ -25,6 +25,7 @@ import NumberFormat from 'react-number-format';
 
 import {Styles, Colors, Urls} from '../common';
 import CustomFoodTab from './CustomFoodTab';
+import {backButton, handleAndroidBackButton} from './BackButton';
 
 const options = [
   <Text>
@@ -45,6 +46,7 @@ const options = [
 export default class MenuNav extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       index: 0,
       sortIconType: 'sort-alpha-asc',
@@ -52,61 +54,33 @@ export default class MenuNav extends Component {
       activeSearch: false,
       data: '',
       isLoading: true,
+      disconnectedNetwork: false,
     };
     this.arrayholder = [];
   }
 
-  componentDidMount = async () => {
-    try {
-      var userEmail = await AsyncStorage.getItem('userEmail');
-      var userPassword = await AsyncStorage.getItem('userPassword');
+  componentDidMount = () => {
+    handleAndroidBackButton(backButton);
 
-      if (userEmail === null || userPassword === null) {
-        this.props.navigation.navigate('Home');
-      }
-
-      if (userEmail !== null && userPassword !== null) {
-        fetch(Urls.APIUrl + 'login', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: userEmail,
-            password: userPassword,
-          }),
-        })
-          .then((response) => response.json())
-          .then((json) => {
-            if (json.success !== true) {
-              this.props.navigation.navigate('Home');
-            }
-          })
-          .catch((error) => console.error(error));
-      }
-
-      fetch(Urls.APIUrl + 'food/index/all')
-        .then((response) => response.json())
-        .then((json) => {
-          this.setState({
-            data: json.data,
-          });
-          this.arrayholder = json.data;
-        })
-        .catch((error) => console.error(error))
-        .finally(() => {
-          this.setState({
-            isLoading: false,
-          });
+    // get food list to display
+    fetch(Urls.APIUrl + 'food/index/all')
+      .then((response) => response.json())
+      .then((json) => {
+        this.setState({
+          data: json.data,
         });
-    } catch (error) {
-      alert(error);
-    }
+        this.arrayholder = json.data;
+      })
+      .catch((error) => console.error(error))
+      .finally(() => {
+        this.setState({
+          isLoading: false,
+        });
+      });
   };
 
   SearchFilterFunction = (food) => {
-    //passing the inserted text in textinput
+    //passing the inserted text in text input
     const newData = this.arrayholder.filter(function (item) {
       //applying filter for the inserted text in search bar
       const itemData = item.name.toUpperCase();
@@ -114,7 +88,7 @@ export default class MenuNav extends Component {
       return itemData.indexOf(textData) > -1;
     });
     this.setState({
-      //setting the filtered newData on datasource
+      //setting the filtered newData on data source
       //After setting the data it will automatically re-render the view
       data: newData,
       food: food,
@@ -210,128 +184,128 @@ export default class MenuNav extends Component {
 
     return (
       <Container>
-        <Header>
-          <Left>
-            <Button transparent>
-              <Image
-                source={require('../assets/img/logo.jpg')}
-                style={Styles.logo}
-              />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Ninja Restaurant</Title>
-          </Body>
-          <Right>
-            <Button transparent onPress={this.toggleSearch}>
-              <MCIcon
-                name={this.state.activeSearch ? 'filter-remove' : 'filter'}
-                size={25}
-                style={{color: '#ffffff'}}
-              />
-            </Button>
-            <Button transparent onPress={this.showActionSheet}>
-              <FAIcon
-                name={this.state.sortIconType}
-                size={20}
-                style={{color: '#ffffff'}}
-              />
-            </Button>
-          </Right>
-        </Header>
-        {!this.state.activeSearch ? null : (
-          <Header searchBar rounded>
-            <Item>
-              <FAIcon
-                name="filter"
-                color={Colors.appColor}
-                size={20}
-                style={{marginLeft: 10}}
-              />
-              <Input
-                placeholder="... enter food name"
-                onChangeText={(food) => this.SearchFilterFunction(food)}
-              />
-            </Item>
-          </Header>
-        )}
-
-        {!this.state.activeSearch ? (
-          <Tabs>
-            <Tab heading="Vietnam">
-              <CustomFoodTab
-                source="Vietnam"
-                sortBy={this.state.index}
-                navigation={this.props.navigation}
-              />
-            </Tab>
-            <Tab heading="Japan">
-              <CustomFoodTab
-                source="Japan"
-                sortBy={this.state.index}
-                navigation={this.props.navigation}
-              />
-            </Tab>
-            <Tab heading="Korea">
-              <CustomFoodTab
-                source="Korea"
-                sortBy={this.state.index}
-                navigation={this.props.navigation}
-              />
-            </Tab>
-            <Tab heading="China">
-              <CustomFoodTab
-                source="China"
-                sortBy={this.state.index}
-                navigation={this.props.navigation}
-              />
-            </Tab>
-          </Tabs>
-        ) : (
-          <View style={Styles.menu.foodList}>
-            <List>
-              {isLoading ? (
-                <ActivityIndicator />
-              ) : (
-                <FlatList
-                  data={
-                    this.state.index == 0
-                      ? this.state.data.sort((after, before) =>
-                          after.name.localeCompare(before.name),
-                        )
-                      : this.state.index == 1
-                      ? this.state.data.sort((after, before) =>
-                          before.name.localeCompare(after.name),
-                        )
-                      : this.state.index == 2
-                      ? this.state.data.sort((after, before) =>
-                          after.price.localeCompare(before.price),
-                        )
-                      : this.state.index == 3
-                      ? this.state.data.sort((after, before) =>
-                          before.price.localeCompare(after.price),
-                        )
-                      : this.state.data
-                  }
-                  keyExtractor={({id}, index) => id}
-                  renderItem={(item) => this.renderItem(item)}
+        <Content>
+          <Header>
+            <Left>
+              <Button transparent>
+                <Image
+                  source={require('../assets/img/logo.jpg')}
+                  style={Styles.logo}
                 />
-              )}
-            </List>
-          </View>
-        )}
-
-        {/* Select way to display item list */}
-        <ActionSheet
-          ref={(o) => (this.ActionSheet = o)}
-          title={'Sort food by'}
-          options={options}
-          cancelButtonIndex={4}
-          destructiveButtonIndex={1}
-          onPress={(index) => {
-            this.sortFood(index);
-          }}
-        />
+              </Button>
+            </Left>
+            <Body>
+              <Title>{!this.state.activeSearch ? 'Menu' : 'Search'}</Title>
+            </Body>
+            <Right>
+              <Button transparent onPress={this.toggleSearch}>
+                <MCIcon
+                  name={this.state.activeSearch ? 'filter-remove' : 'filter'}
+                  size={25}
+                  style={{color: '#ffffff'}}
+                />
+              </Button>
+              <Button transparent onPress={this.showActionSheet}>
+                <FAIcon
+                  name={this.state.sortIconType}
+                  size={20}
+                  style={{color: '#ffffff'}}
+                />
+              </Button>
+            </Right>
+          </Header>
+          {!this.state.activeSearch ? null : (
+            <Header searchBar rounded>
+              <Item>
+                <FAIcon
+                  name="filter"
+                  color={Colors.appColor}
+                  size={20}
+                  style={{marginLeft: 10}}
+                />
+                <Input
+                  placeholder="... enter food name"
+                  onChangeText={(food) => this.SearchFilterFunction(food)}
+                />
+              </Item>
+            </Header>
+          )}
+          {!this.state.activeSearch ? (
+            <Tabs>
+              <Tab heading="Vietnam">
+                <CustomFoodTab
+                  source="Vietnam"
+                  sortBy={this.state.index}
+                  navigation={this.props.navigation}
+                />
+              </Tab>
+              <Tab heading="Japan">
+                <CustomFoodTab
+                  source="Japan"
+                  sortBy={this.state.index}
+                  navigation={this.props.navigation}
+                />
+              </Tab>
+              <Tab heading="Korea">
+                <CustomFoodTab
+                  source="Korea"
+                  sortBy={this.state.index}
+                  navigation={this.props.navigation}
+                />
+              </Tab>
+              <Tab heading="China">
+                <CustomFoodTab
+                  source="China"
+                  sortBy={this.state.index}
+                  navigation={this.props.navigation}
+                />
+              </Tab>
+            </Tabs>
+          ) : (
+            <View style={Styles.menu.foodList}>
+              <List>
+                {isLoading ? (
+                  <ActivityIndicator />
+                ) : (
+                  <FlatList
+                    data={
+                      this.state.index == 0
+                        ? this.state.data.sort((after, before) =>
+                            after.name.localeCompare(before.name),
+                          )
+                        : this.state.index == 1
+                        ? this.state.data.sort((after, before) =>
+                            before.name.localeCompare(after.name),
+                          )
+                        : this.state.index == 2
+                        ? this.state.data.sort((after, before) =>
+                            after.price.localeCompare(before.price),
+                          )
+                        : this.state.index == 3
+                        ? this.state.data.sort((after, before) =>
+                            before.price.localeCompare(after.price),
+                          )
+                        : this.state.data
+                    }
+                    keyExtractor={({id}, index) => id}
+                    renderItem={(item) => this.renderItem(item)}
+                  />
+                )}
+              </List>
+            </View>
+          )}
+          {/* Select way to display item list */}
+          <ActionSheet
+            ref={(o) => (this.ActionSheet = o)}
+            title={'Sort food by'}
+            options={options}
+            cancelButtonIndex={4}
+            destructiveButtonIndex={1}
+            onPress={(index) => {
+              this.sortFood(index);
+            }}
+          />
+        </Content>
       </Container>
     );
   }

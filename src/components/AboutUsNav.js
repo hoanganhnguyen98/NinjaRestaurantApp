@@ -19,7 +19,7 @@ export default class AboutUsNav extends Component {
   render() {
     return (
       <Container>
-        <CustomHeader />
+        <CustomHeader headerTitle="Ninja Restaurant" />
         <Card>
           <CardItem cardBody>
             <Image

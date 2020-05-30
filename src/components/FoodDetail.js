@@ -16,6 +16,8 @@ import {
 import NumberFormat from 'react-number-format';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 
+import LoadingModal from './LoadingModal';
+import showMessage from './MessagesAlert';
 import {Styles, Colors, Urls} from '../common';
 
 export default class FoodDetail extends Component {
@@ -23,40 +25,49 @@ export default class FoodDetail extends Component {
     super(props);
 
     this.state = {
-      favourite: true,
       number: 1,
+      requestIsSending: false,
     };
   }
 
   addToCart = async () => {
-    try {
-      fetch(Urls.APIUrl + 'addtocart', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user_id: await AsyncStorage.getItem('userId'),
-          food_id: this.props.navigation.getParam('detailId'),
-          food_name: this.props.navigation.getParam('detailName'),
-          image: this.props.navigation.getParam('detailImage'),
-          number: this.state.number,
-          price: this.props.navigation.getParam('detailPrice'),
-        }),
+    //start loading modal while fetching
+    this.setState({
+      requestIsSending: true,
+    });
+
+    fetch(Urls.APIUrl + 'addtocart', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: await AsyncStorage.getItem('userId'),
+        food_id: this.props.navigation.getParam('detailId'),
+        food_name: this.props.navigation.getParam('detailName'),
+        image: this.props.navigation.getParam('detailImage'),
+        number: this.state.number,
+        price: this.props.navigation.getParam('detailPrice'),
+      }),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        //end loading modal
+        this.setState({
+          requestIsSending: false,
+        });
+
+        if (json.success === true) {
+          showMessage(
+            'Add to cart successfully',
+            'Checking your cart for more detail!',
+          );
+        } else {
+          showMessage('Add to cart fail', '');
+        }
       })
-        .then((response) => response.json())
-        .then((json) => {
-          if (json.success === true) {
-            alert('Add to cart successfully');
-          } else {
-            alert('Add to cart fail');
-          }
-        })
-        .catch((error) => console.error(error));
-    } catch (error) {
-      alert(error);
-    }
+      .catch((error) => console.error(error));
   };
 
   foodPlus = () => {
@@ -74,6 +85,7 @@ export default class FoodDetail extends Component {
       <Content>
         <List>
           <View>
+            <LoadingModal requestIsSending={this.state.requestIsSending} />
             <ListItem noBorder>
               <Thumbnail
                 square

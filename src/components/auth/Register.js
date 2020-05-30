@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable no-alert */
 import React, {Component} from 'react';
 import {Keyboard} from 'react-native';
 import {
@@ -12,10 +10,15 @@ import {
   Input,
   Label,
 } from 'native-base';
+
+import LoadingModal from '../LoadingModal';
+import showMessage from '../MessagesAlert';
 import {Urls} from '../../common';
+
 export default class Register extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       name: '',
       phone: '',
@@ -23,6 +26,7 @@ export default class Register extends Component {
       email: '',
       password: '',
       repassword: '',
+      requestIsSending: false,
     };
   }
 
@@ -30,6 +34,7 @@ export default class Register extends Component {
     // hidden Keyboard after click button
     Keyboard.dismiss();
 
+    // check if input is invalid
     if (
       this.state.name === '' ||
       this.state.phone === '' ||
@@ -38,53 +43,70 @@ export default class Register extends Component {
       this.state.password === '' ||
       this.state.repassword === ''
     ) {
-      alert('Please fill all information!');
-    }
-    if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)) {
-      alert('Invalid email!');
-    }
-    if (this.state.phone.length < 10) {
-      alert('Phone must be 10 numbers!');
-    }
-    if (this.state.password.length < 6) {
-      alert('Passwords must be at least 6 characters!');
-    }
-    if (this.state.password !== this.state.repassword) {
-      alert('Re-Password must match Password!');
-    }
+      showMessage('Null information', 'Please fill all information!');
+    } else if (
+      !/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)
+    ) {
+      showMessage('Invalid email', 'Please check your email again!');
+    } else if (this.state.phone.length < 10) {
+      showMessage('Invalid phone number', 'Phone must be 10 numbers!');
+    } else if (this.state.password.length < 6) {
+      showMessage(
+        'Invalid password',
+        'Passwords must be at least 6 characters!',
+      );
+    } else if (this.state.password !== this.state.repassword) {
+      showMessage('Incorrect re-password', 'Re-Password must match Password!');
+    } else {
+      //start loading modal while fetching
+      this.setState({
+        requestIsSending: true,
+      });
 
-    fetch(Urls.APIUrl + 'register', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: this.state.email,
-        name: this.state.name,
-        phone: this.state.phone,
-        address: this.state.address,
-        password: this.state.password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        if (json.success === true) {
-          // success register
-          alert('Register successfully, login now');
-          this.props.navigation.navigate('Home');
-        } else {
-          // fail
-          alert('Register fail! Please try again!');
-        }
+      fetch(Urls.APIUrl + 'register', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: this.state.email,
+          name: this.state.name,
+          phone: this.state.phone,
+          address: this.state.address,
+          password: this.state.password,
+        }),
       })
-      .catch((error) => console.error(error));
+        .then((response) => response.json())
+        .then((json) => {
+          //end loading modal
+          this.setState({
+            requestIsSending: false,
+          });
+
+          if (json.success === true) {
+            // success register
+            showMessage('Register successfully', 'Login now!');
+
+            //redirect to login
+            this.props.navigation.navigate('Home');
+          } else {
+            // fail
+            showMessage(
+              'Register fail',
+              'Please check your information and try again!',
+            );
+          }
+        })
+        .catch((error) => console.error(error));
+    }
   };
 
   render() {
     return (
       <Container>
         <Content style={{padding: 10}}>
+          <LoadingModal requestIsSending={this.state.requestIsSending} />
           <Form>
             <Item floatingLabel>
               <Label>Full Name</Label>

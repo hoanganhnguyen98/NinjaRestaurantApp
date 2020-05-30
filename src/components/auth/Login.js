@@ -12,9 +12,10 @@ import {
   Text,
 } from 'native-base';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
-
 import {PropTypes} from 'prop-types';
 
+import LoadingModal from '../LoadingModal';
+import showMessage from '../MessagesAlert';
 import {Urls} from '../../common';
 
 export default class Login extends Component {
@@ -25,6 +26,7 @@ export default class Login extends Component {
       email: '',
       password: '',
       navigation: '',
+      requestIsSending: false,
     };
   }
 
@@ -32,39 +34,68 @@ export default class Login extends Component {
     // hidden Keyboard after click button
     Keyboard.dismiss();
 
-    fetch(Urls.APIUrl + 'login', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        if (json.success === true) {
-          AsyncStorage.setItem('userId', json.data.user_id);
-          AsyncStorage.setItem('userEmail', this.state.email);
-          AsyncStorage.setItem('userPassword', this.state.password);
-          AsyncStorage.setItem('userName', json.data.name);
-          AsyncStorage.setItem('userImage', json.data.image);
-          AsyncStorage.setItem('userPhone', json.data.phone);
-          AsyncStorage.setItem('userAddress', json.data.address);
-          this.props.navigation.navigate('BottomNavigator');
-        } else {
-          alert('Login fail');
-        }
+    // check if input is invalid
+    if (this.state.email === '' || this.state.password === '') {
+      showMessage(
+        'Null Input',
+        'Please fill both email and password to login!',
+      );
+    } else if (
+      !/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)
+    ) {
+      showMessage('Invalid email', 'Please check your email again!');
+    } else {
+      //start loading modal while fetching
+      this.setState({
+        requestIsSending: true,
+      });
+
+      fetch(Urls.APIUrl + 'login', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password,
+        }),
       })
-      .catch((error) => console.error(error));
+        .then((response) => response.json())
+        .then((json) => {
+          //end loading modal
+          this.setState({
+            requestIsSending: false,
+          });
+
+          if (json.success === true) {
+            //store user data to local mobile
+            AsyncStorage.setItem('userId', json.data.user_id);
+            AsyncStorage.setItem('userEmail', this.state.email);
+            AsyncStorage.setItem('userPassword', this.state.password);
+            AsyncStorage.setItem('userName', json.data.name);
+            AsyncStorage.setItem('userImage', json.data.image);
+            AsyncStorage.setItem('userPhone', json.data.phone);
+            AsyncStorage.setItem('userAddress', json.data.address);
+
+            //redirect to Menu tab
+            this.props.navigation.navigate('BottomNavigator');
+          } else {
+            showMessage(
+              'Login fail',
+              'Please check your email and password again!',
+            );
+          }
+        })
+        .catch((error) => console.error(error));
+    }
   };
 
   render() {
     return (
       <Container>
         <Content style={{padding: 10}}>
+          <LoadingModal requestIsSending={this.state.requestIsSending} />
           <Form>
             <Item floatingLabel>
               <Label>Email</Label>
