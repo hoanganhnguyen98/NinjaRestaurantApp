@@ -45,6 +45,37 @@ const Styles = {
     },
   },
 
+  networkModal: {
+    modalBackground: {
+      flex: 1,
+      alignItems: 'center',
+      flexDirection: 'column',
+      justifyContent: 'space-around',
+      backgroundColor: '#00000040',
+    },
+    activeModal: {
+      alignItems: 'center',
+      flexDirection: 'column',
+      backgroundColor: '#FFFFFF',
+      height: 120,
+      width: 300,
+      borderRadius: 10,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-around',
+    },
+    functionView: {
+      height: 80,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    functionText: {
+      height: 80,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  },
+
   // styles in bottom tab
   menu: {
     foodList: {
