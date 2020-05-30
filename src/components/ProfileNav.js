@@ -80,7 +80,7 @@ export default class ProfileNav extends Component {
   render() {
     return (
       <Container>
-        <CustomHeader />
+        <CustomHeader headerTitle="Profile" />
         <Card>
           <CardItem>
             <Left>

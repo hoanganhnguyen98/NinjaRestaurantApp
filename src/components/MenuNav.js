@@ -195,7 +195,7 @@ export default class MenuNav extends Component {
               </Button>
             </Left>
             <Body>
-              <Title>Ninja Restaurant</Title>
+              <Title>{!this.state.activeSearch ? 'Menu' : 'Search'}</Title>
             </Body>
             <Right>
               <Button transparent onPress={this.toggleSearch}>

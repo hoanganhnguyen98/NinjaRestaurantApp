@@ -16,7 +16,7 @@ export default class CartNav extends Component {
   render() {
     return (
       <Container>
-        <CustomHeader />
+        <CustomHeader headerTitle="Cart" />
         <Tabs>
           <Tab
             heading={
