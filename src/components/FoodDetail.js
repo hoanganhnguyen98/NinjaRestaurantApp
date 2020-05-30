@@ -5,8 +5,6 @@ import {
   Content,
   Text,
   Button,
-  Icon,
-  Left,
   Body,
   Right,
   Thumbnail,
@@ -19,6 +17,7 @@ import FAIcon from 'react-native-vector-icons/FontAwesome';
 import LoadingModal from './LoadingModal';
 import showMessage from './MessagesAlert';
 import {Styles, Colors, Urls} from '../common';
+import I18n from '../i18n/i18n';
 
 export default class FoodDetail extends Component {
   constructor(props) {
@@ -133,8 +132,9 @@ export default class FoodDetail extends Component {
               <Body style={{marginLeft: 50, marginRight: 50}}>
                 <Button rounded block onPress={this.addToCart}>
                   <Text>
-                    Add <Text style={{color: 'red'}}>{this.state.number}</Text>{' '}
-                    to cart
+                    {I18n.t('screen.menu.addToCart', {
+                      number: this.state.number,
+                    })}
                   </Text>
                 </Button>
               </Body>

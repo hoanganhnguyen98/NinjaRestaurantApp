@@ -15,11 +15,13 @@ import Branch from './aboutus_content/Branch';
 import Contact from './aboutus_content/Contact';
 import CustomHeader from './CustomHeader';
 import {Styles, Urls} from '../common';
+import I18n from '../i18n/i18n';
+
 export default class AboutUsNav extends Component {
   render() {
     return (
       <Container>
-        <CustomHeader headerTitle="Ninja Restaurant" />
+        <CustomHeader headerTitle={I18n.t('restaurantName')} />
         <Card>
           <CardItem cardBody>
             <Image
@@ -36,7 +38,7 @@ export default class AboutUsNav extends Component {
           <Tab
             heading={
               <TabHeading>
-                <Text>Intro</Text>
+                <Text>{I18n.t('screen.aboutUs.intro')}</Text>
               </TabHeading>
             }>
             <Intro />
@@ -44,7 +46,7 @@ export default class AboutUsNav extends Component {
           <Tab
             heading={
               <TabHeading>
-                <Text>Branch</Text>
+                <Text>{I18n.t('screen.aboutUs.branch')}</Text>
               </TabHeading>
             }>
             <Branch />
@@ -52,7 +54,7 @@ export default class AboutUsNav extends Component {
           <Tab
             heading={
               <TabHeading>
-                <Text>Contact</Text>
+                <Text>{I18n.t('screen.aboutUs.contact')}</Text>
               </TabHeading>
             }>
             <Contact />

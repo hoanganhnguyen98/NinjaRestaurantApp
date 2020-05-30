@@ -2,9 +2,12 @@ import React, {Component} from 'react';
 import {View, Image} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import NetInfo from '@react-native-community/netinfo';
+import {getLanguages} from 'react-native-i18n';
 
 import {Styles, Urls} from '../common';
 import NetworkModal from './NetworkModal';
+import {backButton, handleAndroidBackButton} from './BackButton';
+import {setLanguage} from '../i18n/i18n';
 
 export default class StartScreen extends Component {
   constructor(props) {
@@ -16,6 +19,31 @@ export default class StartScreen extends Component {
   }
 
   componentDidMount = async () => {
+    // handle if user click mobile Back button
+    handleAndroidBackButton(backButton);
+
+    // Get exist language if it had stored
+    var defaultLanguage = await AsyncStorage.getItem('defaultLanguage');
+
+    // if exist defaultLanguage, set it for locale in I18n
+    // if not defaultLanguage, get local device languages
+    if (defaultLanguage !== null) {
+      console.log(defaultLanguage);
+      setLanguage(defaultLanguage);
+    } else {
+      getLanguages().then((languages) => {
+        if (languages == 'vi-VN') {
+          console.log('vn');
+          AsyncStorage.setItem('defaultLanguage', 'vi');
+          setLanguage('vn');
+        } else {
+          console.log('en');
+          AsyncStorage.setItem('defaultLanguage', 'en');
+          setLanguage('en');
+        }
+      });
+    }
+
     var userEmail = await AsyncStorage.getItem('userEmail');
     var userPassword = await AsyncStorage.getItem('userPassword');
 

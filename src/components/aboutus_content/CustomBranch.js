@@ -3,11 +3,11 @@ import {View} from 'react-native';
 import {ListItem, Thumbnail, Text, Right, Body} from 'native-base';
 import {PropTypes} from 'prop-types';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
 import * as OpenAnything from 'react-native-openanything';
 import * as Animatable from 'react-native-animatable';
 
 import {Styles} from '../../common';
+import I18n from '../../i18n/i18n';
 
 export default class CustomBranch extends Component {
   constructor(props) {
@@ -53,7 +53,7 @@ export default class CustomBranch extends Component {
               />
             </Animatable.Text>
             <Text note onPress={() => OpenAnything.Map(this.props.address)}>
-              Map
+              {I18n.t('screen.aboutUs.map')}
             </Text>
           </Right>
         </ListItem>
@@ -74,7 +74,7 @@ export default class CustomBranch extends Component {
               />
             </Animatable.Text>
             <Text note onPress={() => OpenAnything.Call(this.props.phone)}>
-              Call
+              {I18n.t('screen.aboutUs.call')}
             </Text>
           </Right>
         </ListItem>

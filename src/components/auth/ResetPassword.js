@@ -17,6 +17,7 @@ import FAIcon from 'react-native-vector-icons/FontAwesome';
 import LoadingModal from '../LoadingModal';
 import showMessage from '../MessagesAlert';
 import {Colors, Urls} from '../../common';
+import I18n from '../../i18n/i18n';
 
 export default class ResetPassword extends Component {
   constructor(props) {
@@ -155,7 +156,7 @@ export default class ResetPassword extends Component {
                   </Button>
                 </Left>
                 <Body>
-                  <Text>Enter your email</Text>
+                  <Text>{I18n.t('screen.home.reset.enterYourEmail')}</Text>
                 </Body>
               </ListItem>
               <ListItem icon noBorder>
@@ -190,7 +191,7 @@ export default class ResetPassword extends Component {
                   </Button>
                 </Left>
                 <Body>
-                  <Text>Check code</Text>
+                  <Text>{I18n.t('screen.home.reset.checkCode')}</Text>
                 </Body>
               </ListItem>
               <ListItem icon>
@@ -205,7 +206,7 @@ export default class ResetPassword extends Component {
                 </Left>
                 <Body>
                   <Input
-                    placeholder={'check code from email'}
+                    placeholder={I18n.t('screen.home.reset.checkCodeFromEmail')}
                     onChangeText={(inputCode) => this.setState({inputCode})}
                   />
                 </Body>
@@ -221,7 +222,7 @@ export default class ResetPassword extends Component {
                   </Button>
                 </Left>
                 <Body>
-                  <Text>New password</Text>
+                  <Text>{I18n.t('screen.home.reset.newPassword')}</Text>
                 </Body>
               </ListItem>
               <ListItem icon>
@@ -252,7 +253,7 @@ export default class ResetPassword extends Component {
                   </Button>
                 </Left>
                 <Body>
-                  <Text>Repeat new password</Text>
+                  <Text>{I18n.t('screen.home.reset.repeatNewPassword')}</Text>
                 </Body>
               </ListItem>
               <ListItem icon noBorder>
@@ -277,11 +278,11 @@ export default class ResetPassword extends Component {
           <CardItem style={{alignItems: 'center', justifyContent: 'center'}}>
             {!this.state.activeResetForm ? (
               <Button rounded onPress={this.sendRequest}>
-                <Text>Send request</Text>
+                <Text>{I18n.t('screen.home.reset.sendRequest')}</Text>
               </Button>
             ) : (
               <Button rounded onPress={this.reset}>
-                <Text>Reset password</Text>
+                <Text>{I18n.t('screen.home.reset.resetPassword')}</Text>
               </Button>
             )}
           </CardItem>

@@ -14,6 +14,7 @@ import {
 import LoadingModal from '../LoadingModal';
 import showMessage from '../MessagesAlert';
 import {Urls} from '../../common';
+import I18n from '../../i18n/i18n';
 
 export default class Register extends Component {
   constructor(props) {
@@ -109,22 +110,22 @@ export default class Register extends Component {
           <LoadingModal requestIsSending={this.state.requestIsSending} />
           <Form>
             <Item floatingLabel>
-              <Label>Full Name</Label>
+              <Label>{I18n.t('screen.home.main.fullName')}</Label>
               <Input onChangeText={(name) => this.setState({name})} />
             </Item>
             <Item floatingLabel>
-              <Label>Phone number</Label>
+              <Label>{I18n.t('screen.home.main.phoneNumber')}</Label>
               <Input
                 onChangeText={(phone) => this.setState({phone})}
                 maxLength={10}
               />
             </Item>
             <Item floatingLabel>
-              <Label>Address</Label>
+              <Label>{I18n.t('screen.home.main.address')}</Label>
               <Input onChangeText={(address) => this.setState({address})} />
             </Item>
             <Item floatingLabel>
-              <Label>Email</Label>
+              <Label>{I18n.t('email')}</Label>
               <Input
                 keyboardType="email-address"
                 autoCapitalize="none"
@@ -132,14 +133,14 @@ export default class Register extends Component {
               />
             </Item>
             <Item floatingLabel>
-              <Label>Password</Label>
+              <Label>{I18n.t('screen.home.main.password')}</Label>
               <Input
                 secureTextEntry={true}
                 onChangeText={(password) => this.setState({password})}
               />
             </Item>
             <Item floatingLabel>
-              <Label>Re-Password</Label>
+              <Label>{I18n.t('screen.home.main.repassword')}</Label>
               <Input
                 secureTextEntry={true}
                 onChangeText={(repassword) => this.setState({repassword})}
@@ -152,7 +153,7 @@ export default class Register extends Component {
             primary
             onPress={this.register}
             style={{marginTop: 30}}>
-            <Text>Resigter</Text>
+            <Text>{I18n.t('screen.home.main.register')}</Text>
           </Button>
         </Content>
       </Container>
