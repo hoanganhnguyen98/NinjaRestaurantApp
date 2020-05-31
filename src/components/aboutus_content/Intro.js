@@ -4,6 +4,8 @@ import {Content, Card, CardItem, Text, Body} from 'native-base';
 import FAIcon from 'react-native-vector-icons/FontAwesome5';
 
 import {Styles} from '../../common';
+import I18n from '../../i18n/i18n';
+
 export default class Intro extends Component {
   render() {
     return (
@@ -12,7 +14,7 @@ export default class Intro extends Component {
           <CardItem header>
             <Text style={Styles.aboutus.introTitle}>
               <FAIcon name="history" size={20} />
-              History
+              {I18n.t('screen.aboutUs.history')}
             </Text>
           </CardItem>
           <CardItem>
@@ -30,7 +32,7 @@ export default class Intro extends Component {
           <CardItem header>
             <Text style={Styles.aboutus.introTitle}>
               <FAIcon name="user-ninja" size={20} />
-              Mission
+              {I18n.t('screen.aboutUs.mission')}
             </Text>
           </CardItem>
           <CardItem>
@@ -45,7 +47,7 @@ export default class Intro extends Component {
           <CardItem header>
             <Text style={Styles.aboutus.introTitle}>
               <FAIcon name="globe-asia" size={20} />
-              Core value
+              {I18n.t('screen.aboutUs.coreValue')}
             </Text>
           </CardItem>
           <CardItem>

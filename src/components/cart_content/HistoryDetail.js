@@ -15,6 +15,7 @@ import NumberFormat from 'react-number-format';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Urls, Styles, Colors} from '../../common';
+import I18n from '../../i18n/i18n';
 
 export default class HistoryDetail extends Component {
   constructor(props) {
@@ -129,15 +130,18 @@ export default class HistoryDetail extends Component {
           <Right>
             {this.state.status === 'new' ? (
               <Text>
-                Ordered in {this.props.navigation.getParam('updateTime')}
+                {I18n.t('screen.cart.orderedIn')}
+                {this.props.navigation.getParam('updateTime')}
               </Text>
             ) : this.state.status === 'done' ? (
               <Text>
-                Recevied in {this.props.navigation.getParam('updateTime')}
+                {I18n.t('screen.cart.receivedIn')}
+                {this.props.navigation.getParam('updateTime')}
               </Text>
             ) : (
               <Text>
-                Delivering in {this.props.navigation.getParam('updateTime')}
+                {I18n.t('screen.cart.deliveredIn')}
+                {this.props.navigation.getParam('updateTime')}
               </Text>
             )}
           </Right>

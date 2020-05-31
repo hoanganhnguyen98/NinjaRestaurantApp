@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {View, Image} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
   Container,
@@ -17,13 +17,29 @@ import Modal from 'react-native-modal';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {PropTypes} from 'prop-types';
+import ActionSheet from 'react-native-actionsheet';
+import RNRestart from 'react-native-restart';
 
 import CustomHeader from './CustomHeader';
 import {Colors} from '../common';
+import I18n, {setLanguage} from '../i18n/i18n';
+
+const options = [
+  <Image
+    source={require('../assets/img/vi.png')}
+    style={{height: 30, width: 60}}
+  />,
+  <Image
+    source={require('../assets/img/en.png')}
+    style={{height: 30, width: 60}}
+  />,
+  <Text style={{color: 'red'}}>{I18n.t('cancel')}</Text>,
+];
 
 export default class ProfileNav extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       id: '',
       name: '',
@@ -32,6 +48,7 @@ export default class ProfileNav extends Component {
       phone: '',
       address: '',
       password: '',
+      locale: '',
       isModalVisible: false,
     };
   }
@@ -61,6 +78,26 @@ export default class ProfileNav extends Component {
     }
   };
 
+  selectLanguage = (index) => {
+    if (index === 0) {
+      AsyncStorage.setItem('defaultLanguage', 'vi');
+      setLanguage('vi');
+
+      // restart app
+      RNRestart.Restart();
+    } else if (index === 1) {
+      AsyncStorage.setItem('defaultLanguage', 'en');
+      setLanguage('en');
+
+      // restart app
+      RNRestart.Restart();
+    }
+  };
+
+  showActionSheet = () => {
+    this.ActionSheet.show();
+  };
+
   componentDidMount = async () => {
     try {
       this.setState({
@@ -71,6 +108,7 @@ export default class ProfileNav extends Component {
         phone: await AsyncStorage.getItem('userPhone'),
         address: await AsyncStorage.getItem('userAddress'),
         password: await AsyncStorage.getItem('userPassword'),
+        locale: await AsyncStorage.getItem('defaultLanguage'),
       });
     } catch (error) {
       alert(error);
@@ -80,7 +118,7 @@ export default class ProfileNav extends Component {
   render() {
     return (
       <Container>
-        <CustomHeader headerTitle="Profile" />
+        <CustomHeader headerTitle={I18n.t('screen.profile.headerTitle')} />
         <Card>
           <CardItem>
             <Left>
@@ -100,7 +138,7 @@ export default class ProfileNav extends Component {
           <ListItem icon itemDivider noBorder>
             <Left />
             <Body>
-              <Text>Personal information</Text>
+              <Text>{I18n.t('screen.profile.personalInformation')}</Text>
             </Body>
           </ListItem>
           <ListItem icon>
@@ -146,7 +184,21 @@ export default class ProfileNav extends Component {
           <ListItem icon itemDivider noBorder>
             <Left />
             <Body>
-              <Text>Setting</Text>
+              <Text>{I18n.t('screen.profile.settings')}</Text>
+            </Body>
+          </ListItem>
+          <ListItem icon onPress={() => this.showActionSheet()}>
+            <Left>
+              <Button style={{backgroundColor: '#ffffff'}}>
+                <FAIcon
+                  name="language"
+                  size={20}
+                  style={{color: Colors.appColor}}
+                />
+              </Button>
+            </Left>
+            <Body>
+              <Text>{I18n.t('screen.profile.selectLanguages')}</Text>
             </Body>
           </ListItem>
           <ListItem
@@ -170,7 +222,7 @@ export default class ProfileNav extends Component {
               </Button>
             </Left>
             <Body>
-              <Text>Change information</Text>
+              <Text>{I18n.t('screen.profile.changeInformation')}</Text>
             </Body>
           </ListItem>
           <ListItem
@@ -193,7 +245,7 @@ export default class ProfileNav extends Component {
               </Button>
             </Left>
             <Body>
-              <Text>Change password</Text>
+              <Text>{I18n.t('screen.profile.changePassword')}</Text>
             </Body>
           </ListItem>
 
@@ -210,7 +262,7 @@ export default class ProfileNav extends Component {
               </Button>
             </Left>
             <Body>
-              <Text>Logout</Text>
+              <Text>{I18n.t('screen.profile.logout')}</Text>
             </Body>
           </ListItem>
         </Content>
@@ -220,23 +272,34 @@ export default class ProfileNav extends Component {
           <Modal isVisible={this.state.isModalVisible}>
             <View style={{backgroundColor: '#ffffff', padding: 30}}>
               <Button transparent block>
-                <Text>Do you want to logout?</Text>
+                <Text>{I18n.t('screen.profile.wantLogout')}</Text>
               </Button>
               <CardItem>
                 <Left>
                   <Button block rounded danger onPress={this.toggleModal}>
-                    <Text>Cancel</Text>
+                    <Text>{I18n.t('cancel')}</Text>
                   </Button>
                 </Left>
                 <Body>
                   <Button block rounded onPress={this.logout}>
-                    <Text>Logout</Text>
+                    <Text>{I18n.t('screen.profile.logout')}</Text>
                   </Button>
                 </Body>
               </CardItem>
             </View>
           </Modal>
         </View>
+
+        <ActionSheet
+          ref={(o) => (this.ActionSheet = o)}
+          title={I18n.t('screen.profile.selectLanguages')}
+          options={options}
+          cancelButtonIndex={2}
+          destructiveButtonIndex={1}
+          onPress={(index) => {
+            this.selectLanguage(index);
+          }}
+        />
       </Container>
     );
   }

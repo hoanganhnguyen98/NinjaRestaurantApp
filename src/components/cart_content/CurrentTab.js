@@ -5,7 +5,6 @@ import {
   View,
   Image,
   RefreshControl,
-  Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
@@ -29,7 +28,8 @@ import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import LoadingModal from '../LoadingModal';
 import showMessage from '../MessagesAlert';
-import {Urls, Styles, Colors} from '../../common';
+import {Urls, Styles} from '../../common';
+import I18n from '../../i18n/i18n';
 
 export default class CurrentTab extends Component {
   constructor(props) {
@@ -96,9 +96,15 @@ export default class CurrentTab extends Component {
         });
 
         if (json.success === true) {
-          showMessage('Remove food successfully', '');
+          showMessage(
+            I18n.t('success.removeFood.ok'),
+            I18n.t('success.removeFood.message'),
+          );
         } else {
-          showMessage('Remove food fail', 'Try again!');
+          showMessage(
+            I18n.t('errors.removeFood.fail'),
+            I18n.t('errors.removeFood.failMess'),
+          );
         }
       })
       .catch((error) => console.error(error));
@@ -161,10 +167,16 @@ export default class CurrentTab extends Component {
         });
 
         if (json.success === true) {
-          showMessage('Order successfully', '');
+          showMessage(
+            I18n.t('success.orderNow.ok'),
+            I18n.t('success.orderNow.message'),
+          );
           this.onRefresh();
         } else {
-          showMessage('Order fail', '');
+          showMessage(
+            I18n.t('errors.orderNow.fail'),
+            I18n.t('errors.orderNow.failMess'),
+          );
         }
       })
       .catch((error) => console.error(error));
@@ -253,11 +265,11 @@ export default class CurrentTab extends Component {
           <Right>
             {this.state.totalPrice === 0 ? (
               <Button danger block rounded onPress={() => this.onRefresh()}>
-                <Text>Update cart</Text>
+                <Text>{I18n.t('screen.cart.updateCart')}</Text>
               </Button>
             ) : (
               <Button block rounded onPress={() => this.confirmOrder()}>
-                <Text>Order Now</Text>
+                <Text>{I18n.t('screen.cart.orderNow')} </Text>
               </Button>
             )}
           </Right>
@@ -265,7 +277,7 @@ export default class CurrentTab extends Component {
         <Container>
           {this.state.totalPrice === 0 ? (
             <Button danger block transparent style={{marginTop: 100}}>
-              <Text>Cart is empty</Text>
+              <Text>{I18n.t('screen.cart.cartIsEmpty')}</Text>
             </Button>
           ) : (
             <List>

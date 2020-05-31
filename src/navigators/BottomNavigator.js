@@ -10,12 +10,13 @@ import AboutUsNav from '../components/AboutUsNav';
 import ProfileNavigator from './ProfileNavigator';
 import MenuNavigator from './MenuNavigator';
 import CartNavigator from './CartNavigator';
+import I18n from '../i18n/i18n';
 
 const TabNavigator = createMaterialBottomTabNavigator({
   Menu: {
     screen: MenuNavigator,
-    navigationOptions: {
-      title: 'Menu',
+    navigationOptions: () => ({
+      title: I18n.t('navigator.menu'),
       activeColor: '#f4f4f4',
       inactiveColor: '#62B1F6',
       barStyle: {backgroundColor: Colors.appColor},
@@ -26,12 +27,12 @@ const TabNavigator = createMaterialBottomTabNavigator({
           style={{color: tintColor}}
         />
       ),
-    },
+    }),
   },
   Cart: {
     screen: CartNavigator,
-    navigationOptions: {
-      title: 'Cart',
+    navigationOptions: () => ({
+      title: I18n.t('navigator.cart'),
       activeColor: '#f4f4f4',
       inactiveColor: '#62B1F6',
       barStyle: {backgroundColor: Colors.appColor},
@@ -42,12 +43,12 @@ const TabNavigator = createMaterialBottomTabNavigator({
           style={{color: tintColor}}
         />
       ),
-    },
+    }),
   },
   AboutUs: {
     screen: AboutUsNav,
-    navigationOptions: {
-      title: 'About us',
+    navigationOptions: () => ({
+      title: I18n.t('navigator.aboutUs'),
       activeColor: '#f4f4f4',
       inactiveColor: '#62B1F6',
       barStyle: {backgroundColor: Colors.appColor},
@@ -58,12 +59,12 @@ const TabNavigator = createMaterialBottomTabNavigator({
           style={{color: tintColor}}
         />
       ),
-    },
+    }),
   },
   Profile: {
     screen: ProfileNavigator,
-    navigationOptions: {
-      title: 'Profile',
+    navigationOptions: () => ({
+      title: I18n.t('navigator.profile'),
       activeColor: '#f4f4f4',
       inactiveColor: '#62B1F6',
       barStyle: {backgroundColor: Colors.appColor},
@@ -74,7 +75,7 @@ const TabNavigator = createMaterialBottomTabNavigator({
           style={{color: tintColor}}
         />
       ),
-    },
+    }),
   },
 });
 

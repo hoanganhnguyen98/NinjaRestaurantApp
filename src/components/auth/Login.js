@@ -17,6 +17,7 @@ import {PropTypes} from 'prop-types';
 import LoadingModal from '../LoadingModal';
 import showMessage from '../MessagesAlert';
 import {Urls} from '../../common';
+import I18n from '../../i18n/i18n';
 
 export default class Login extends Component {
   constructor(props) {
@@ -37,13 +38,16 @@ export default class Login extends Component {
     // check if input is invalid
     if (this.state.email === '' || this.state.password === '') {
       showMessage(
-        'Null Input',
-        'Please fill both email and password to login!',
+        I18n.t('errors.login.nullInput'),
+        I18n.t('errors.login.nullInputMess'),
       );
     } else if (
       !/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)
     ) {
-      showMessage('Invalid email', 'Please check your email again!');
+      showMessage(
+        I18n.t('errors.email.invalid'),
+        I18n.t('errors.email.message'),
+      );
     } else {
       //start loading modal while fetching
       this.setState({
@@ -82,8 +86,8 @@ export default class Login extends Component {
             this.props.navigation.navigate('BottomNavigator');
           } else {
             showMessage(
-              'Login fail',
-              'Please check your email and password again!',
+              I18n.t('errors.login.fail'),
+              I18n.t('errors.login.failMess'),
             );
           }
         })
@@ -98,7 +102,7 @@ export default class Login extends Component {
           <LoadingModal requestIsSending={this.state.requestIsSending} />
           <Form>
             <Item floatingLabel>
-              <Label>Email</Label>
+              <Label>{I18n.t('email')}</Label>
               <Input
                 keyboardType="email-address"
                 autoCapitalize="none"
@@ -106,7 +110,7 @@ export default class Login extends Component {
               />
             </Item>
             <Item floatingLabel>
-              <Label>Password</Label>
+              <Label>{I18n.t('screen.home.main.password')}</Label>
               <Input
                 secureTextEntry={true}
                 onChangeText={(password) => this.setState({password})}
@@ -120,7 +124,7 @@ export default class Login extends Component {
               primary
               style={{marginTop: 30}}
               onPress={this.Login}>
-              <Text>Login</Text>
+              <Text>{I18n.t('screen.home.main.login')}</Text>
             </Button>
             <Button
               transparent
@@ -128,7 +132,8 @@ export default class Login extends Component {
               style={{marginTop: 50}}
               onPress={() => this.props.navigation.navigate('ResetPassword')}>
               <Text>
-                Forget password <FAIcon name="question" size={20} />
+                {I18n.t('screen.home.main.forgetPassword')}
+                <FAIcon name="question" size={20} />
               </Text>
             </Button>
           </View>

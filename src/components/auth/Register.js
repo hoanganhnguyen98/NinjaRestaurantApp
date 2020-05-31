@@ -14,6 +14,7 @@ import {
 import LoadingModal from '../LoadingModal';
 import showMessage from '../MessagesAlert';
 import {Urls} from '../../common';
+import I18n from '../../i18n/i18n';
 
 export default class Register extends Component {
   constructor(props) {
@@ -43,20 +44,29 @@ export default class Register extends Component {
       this.state.password === '' ||
       this.state.repassword === ''
     ) {
-      showMessage('Null information', 'Please fill all information!');
+      showMessage(
+        I18n.t('errors.login.nullInfo'),
+        I18n.t('errors.login.nullInfoMess'),
+      );
     } else if (
       !/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)
     ) {
       showMessage('Invalid email', 'Please check your email again!');
     } else if (this.state.phone.length < 10) {
-      showMessage('Invalid phone number', 'Phone must be 10 numbers!');
+      showMessage(
+        I18n.t('errors.login.invalidPhone'),
+        I18n.t('errors.login.invalidPhoneMess'),
+      );
     } else if (this.state.password.length < 6) {
       showMessage(
-        'Invalid password',
-        'Passwords must be at least 6 characters!',
+        I18n.t('errors.password.password.invalid'),
+        I18n.t('errors.password.password.message'),
       );
     } else if (this.state.password !== this.state.repassword) {
-      showMessage('Incorrect re-password', 'Re-Password must match Password!');
+      showMessage(
+        I18n.t('errors.password.repassword.invalid'),
+        I18n.t('errors.password.repassword.message'),
+      );
     } else {
       //start loading modal while fetching
       this.setState({
@@ -86,15 +96,18 @@ export default class Register extends Component {
 
           if (json.success === true) {
             // success register
-            showMessage('Register successfully', 'Login now!');
+            showMessage(
+              I18n.t('success.register.ok'),
+              I18n.t('success.register.message'),
+            );
 
             //redirect to login
             this.props.navigation.navigate('Home');
           } else {
             // fail
             showMessage(
-              'Register fail',
-              'Please check your information and try again!',
+              I18n.t('errors.register.fail'),
+              I18n.t('errors.register.failMess'),
             );
           }
         })
@@ -109,22 +122,22 @@ export default class Register extends Component {
           <LoadingModal requestIsSending={this.state.requestIsSending} />
           <Form>
             <Item floatingLabel>
-              <Label>Full Name</Label>
+              <Label>{I18n.t('screen.home.main.fullName')}</Label>
               <Input onChangeText={(name) => this.setState({name})} />
             </Item>
             <Item floatingLabel>
-              <Label>Phone number</Label>
+              <Label>{I18n.t('screen.home.main.phoneNumber')}</Label>
               <Input
                 onChangeText={(phone) => this.setState({phone})}
                 maxLength={10}
               />
             </Item>
             <Item floatingLabel>
-              <Label>Address</Label>
+              <Label>{I18n.t('screen.home.main.address')}</Label>
               <Input onChangeText={(address) => this.setState({address})} />
             </Item>
             <Item floatingLabel>
-              <Label>Email</Label>
+              <Label>{I18n.t('email')}</Label>
               <Input
                 keyboardType="email-address"
                 autoCapitalize="none"
@@ -132,14 +145,14 @@ export default class Register extends Component {
               />
             </Item>
             <Item floatingLabel>
-              <Label>Password</Label>
+              <Label>{I18n.t('screen.home.main.password')}</Label>
               <Input
                 secureTextEntry={true}
                 onChangeText={(password) => this.setState({password})}
               />
             </Item>
             <Item floatingLabel>
-              <Label>Re-Password</Label>
+              <Label>{I18n.t('screen.home.main.repassword')}</Label>
               <Input
                 secureTextEntry={true}
                 onChangeText={(repassword) => this.setState({repassword})}
@@ -152,7 +165,7 @@ export default class Register extends Component {
             primary
             onPress={this.register}
             style={{marginTop: 30}}>
-            <Text>Resigter</Text>
+            <Text>{I18n.t('screen.home.main.register')}</Text>
           </Button>
         </Content>
       </Container>

@@ -20,6 +20,7 @@ import FAIcon from 'react-native-vector-icons/FontAwesome';
 import LoadingModal from '../LoadingModal';
 import showMessage from '../MessagesAlert';
 import {Colors, Urls} from '../../common';
+import I18n from '../../i18n/i18n';
 
 export default class ChangeInfo extends Component {
   constructor(props) {
@@ -78,7 +79,10 @@ export default class ChangeInfo extends Component {
               saveAddress: this.state.address,
             });
           } else {
-            showMessage('Change information fail', 'Try again!');
+            showMessage(
+              I18n.t('errors.changeInfo.fail'),
+              I18n.t('errors.changeInfo.failMess'),
+            );
           }
         })
         .catch((error) => console.error(error));
@@ -155,7 +159,7 @@ export default class ChangeInfo extends Component {
           </Card>
           <CardItem style={{alignItems: 'center', justifyContent: 'center'}}>
             <Button rounded onPress={this.toggleModal}>
-              <Text>Save</Text>
+              <Text>{I18n.t('screen.profile.save')}</Text>
             </Button>
           </CardItem>
         </Content>
@@ -165,17 +169,17 @@ export default class ChangeInfo extends Component {
           <Modal isVisible={this.state.isModalVisible}>
             <View style={{backgroundColor: '#ffffff', padding: 30}}>
               <Button transparent block>
-                <Text>Do you want to save?</Text>
+                <Text>{I18n.t('screen.profile.wantSave')}</Text>
               </Button>
               <CardItem>
                 <Left>
                   <Button block rounded danger onPress={this.toggleModal}>
-                    <Text>Cancel</Text>
+                    <Text>{I18n.t('cancel')}</Text>
                   </Button>
                 </Left>
                 <Body>
                   <Button block rounded onPress={this.save}>
-                    <Text>Save</Text>
+                    <Text>{I18n.t('screen.profile.save')}</Text>
                   </Button>
                 </Body>
               </CardItem>

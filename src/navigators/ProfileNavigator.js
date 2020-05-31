@@ -4,6 +4,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 import ProfileNav from '../components/ProfileNav';
 import ChangeInfo from '../components/users/ChangeInfo';
 import ChangePassword from '../components/users/ChangePassword';
+import I18n from '../i18n/i18n';
 
 const Stack = createStackNavigator({
   Profile: {
@@ -14,23 +15,23 @@ const Stack = createStackNavigator({
   },
   ChangeInfo: {
     screen: ChangeInfo,
-    navigationOptions: {
-      title: 'Change information',
+    navigationOptions: () => ({
+      title: I18n.t('navigator.changeInformation'),
       headerStyle: {
         backgroundColor: '#3F51B5',
       },
       headerTintColor: '#ffffff',
-    },
+    }),
   },
   ChangePassword: {
     screen: ChangePassword,
-    navigationOptions: {
-      title: 'Change password',
+    navigationOptions: () => ({
+      title: I18n.t('navigator.changePassword'),
       headerStyle: {
         backgroundColor: '#3F51B5',
       },
       headerTintColor: '#ffffff',
-    },
+    }),
   },
 });
 
