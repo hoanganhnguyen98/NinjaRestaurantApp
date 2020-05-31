@@ -14,13 +14,13 @@ const Stack = createStackNavigator({
   },
   HistoryDetail: {
     screen: HistoryDetail,
-    navigationOptions: {
+    navigationOptions: () => ({
       title: I18n.t('navigator.billDetail'),
       headerStyle: {
         backgroundColor: '#3F51B5',
       },
       headerTintColor: '#ffffff',
-    },
+    }),
   },
 });
 

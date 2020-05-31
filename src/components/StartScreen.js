@@ -28,16 +28,13 @@ export default class StartScreen extends Component {
     // if exist defaultLanguage, set it for locale in I18n
     // if not defaultLanguage, get local device languages
     if (defaultLanguage !== null) {
-      console.log(defaultLanguage);
       setLanguage(defaultLanguage);
     } else {
       getLanguages().then((languages) => {
         if (languages == 'vi-VN') {
-          console.log('vn');
           AsyncStorage.setItem('defaultLanguage', 'vi');
-          setLanguage('vn');
+          setLanguage('vi');
         } else {
-          console.log('en');
           AsyncStorage.setItem('defaultLanguage', 'en');
           setLanguage('en');
         }

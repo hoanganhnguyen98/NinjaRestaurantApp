@@ -15,23 +15,23 @@ const Stack = createStackNavigator({
   },
   ChangeInfo: {
     screen: ChangeInfo,
-    navigationOptions: {
+    navigationOptions: () => ({
       title: I18n.t('navigator.changeInformation'),
       headerStyle: {
         backgroundColor: '#3F51B5',
       },
       headerTintColor: '#ffffff',
-    },
+    }),
   },
   ChangePassword: {
     screen: ChangePassword,
-    navigationOptions: {
+    navigationOptions: () => ({
       title: I18n.t('navigator.changePassword'),
       headerStyle: {
         backgroundColor: '#3F51B5',
       },
       headerTintColor: '#ffffff',
-    },
+    }),
   },
 });
 

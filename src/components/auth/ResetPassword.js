@@ -41,18 +41,18 @@ export default class ResetPassword extends Component {
     // check if input is invalid
     if (this.state.inputCode !== this.state.checkCode) {
       showMessage(
-        'Incorrect check code!',
-        'Check your check code in email again!',
+        I18n.t('errors.password.checkCode.invalid'),
+        I18n.t('errors.password.checkCode.message'),
       );
     } else if (this.state.newPassword.length < 6) {
       showMessage(
-        'Invalid password!',
-        'Passwords must be at least 6 characters!',
+        I18n.t('errors.password.password.invalid'),
+        I18n.t('errors.password.password.message'),
       );
     } else if (this.state.newPassword !== this.state.rePassword) {
       showMessage(
-        'Incorrect re-password',
-        'Repeat new password must match New password!',
+        I18n.t('errors.password.repassword.invalid'),
+        I18n.t('errors.password.repassword.message'),
       );
     } else {
       //start loading modal while fetching
@@ -80,14 +80,17 @@ export default class ResetPassword extends Component {
           });
 
           if (json.success === true) {
-            showMessage('Reset password successfully', 'Login now!');
+            showMessage(
+              I18n.t('success.reset.ok'),
+              I18n.t('success.reset.message'),
+            );
 
             //redirect to login
             this.props.navigation.navigate('Home');
           } else {
             showMessage(
-              'Reset password fail',
-              'Check your information and try again!',
+              I18n.t('errors.reset.fail'),
+              I18n.t('errors.reset.failMess'),
             );
           }
         })
@@ -101,7 +104,10 @@ export default class ResetPassword extends Component {
 
     // check if email is invalid
     if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)) {
-      showMessage('Invalid email', 'Please check your email again!');
+      showMessage(
+        I18n.t('errors.email.invalid'),
+        I18n.t('errors.email.message'),
+      );
     } else {
       //start loading modal while fetching
       this.setState({
@@ -131,7 +137,10 @@ export default class ResetPassword extends Component {
               activeResetForm: true,
             });
           } else {
-            showMessage('Incorrect email', 'Check your email and try again!');
+            showMessage(
+              I18n.t('errors.reset.incorrectEmail'),
+              I18n.t('errors.reset.incorrectEmailMess'),
+            );
           }
         })
         .catch((error) => console.error(error));

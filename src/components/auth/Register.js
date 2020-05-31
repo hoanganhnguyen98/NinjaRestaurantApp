@@ -44,20 +44,29 @@ export default class Register extends Component {
       this.state.password === '' ||
       this.state.repassword === ''
     ) {
-      showMessage('Null information', 'Please fill all information!');
+      showMessage(
+        I18n.t('errors.login.nullInfo'),
+        I18n.t('errors.login.nullInfoMess'),
+      );
     } else if (
       !/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)
     ) {
       showMessage('Invalid email', 'Please check your email again!');
     } else if (this.state.phone.length < 10) {
-      showMessage('Invalid phone number', 'Phone must be 10 numbers!');
+      showMessage(
+        I18n.t('errors.login.invalidPhone'),
+        I18n.t('errors.login.invalidPhoneMess'),
+      );
     } else if (this.state.password.length < 6) {
       showMessage(
-        'Invalid password',
-        'Passwords must be at least 6 characters!',
+        I18n.t('errors.password.password.invalid'),
+        I18n.t('errors.password.password.message'),
       );
     } else if (this.state.password !== this.state.repassword) {
-      showMessage('Incorrect re-password', 'Re-Password must match Password!');
+      showMessage(
+        I18n.t('errors.password.repassword.invalid'),
+        I18n.t('errors.password.repassword.message'),
+      );
     } else {
       //start loading modal while fetching
       this.setState({
@@ -87,15 +96,18 @@ export default class Register extends Component {
 
           if (json.success === true) {
             // success register
-            showMessage('Register successfully', 'Login now!');
+            showMessage(
+              I18n.t('success.register.ok'),
+              I18n.t('success.register.message'),
+            );
 
             //redirect to login
             this.props.navigation.navigate('Home');
           } else {
             // fail
             showMessage(
-              'Register fail',
-              'Please check your information and try again!',
+              I18n.t('errors.register.fail'),
+              I18n.t('errors.register.failMess'),
             );
           }
         })

@@ -79,7 +79,10 @@ export default class ChangeInfo extends Component {
               saveAddress: this.state.address,
             });
           } else {
-            showMessage('Change information fail', 'Try again!');
+            showMessage(
+              I18n.t('errors.changeInfo.fail'),
+              I18n.t('errors.changeInfo.failMess'),
+            );
           }
         })
         .catch((error) => console.error(error));

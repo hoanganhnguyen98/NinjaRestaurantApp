@@ -96,9 +96,15 @@ export default class CurrentTab extends Component {
         });
 
         if (json.success === true) {
-          showMessage('Remove food successfully', '');
+          showMessage(
+            I18n.t('success.removeFood.ok'),
+            I18n.t('success.removeFood.message'),
+          );
         } else {
-          showMessage('Remove food fail', 'Try again!');
+          showMessage(
+            I18n.t('errors.removeFood.fail'),
+            I18n.t('errors.removeFood.failMess'),
+          );
         }
       })
       .catch((error) => console.error(error));
@@ -161,10 +167,16 @@ export default class CurrentTab extends Component {
         });
 
         if (json.success === true) {
-          showMessage('Order successfully', '');
+          showMessage(
+            I18n.t('success.orderNow.ok'),
+            I18n.t('success.orderNow.message'),
+          );
           this.onRefresh();
         } else {
-          showMessage('Order fail', '');
+          showMessage(
+            I18n.t('errors.orderNow.fail'),
+            I18n.t('errors.orderNow.failMess'),
+          );
         }
       })
       .catch((error) => console.error(error));

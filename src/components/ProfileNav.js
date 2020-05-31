@@ -27,11 +27,11 @@ import I18n, {setLanguage} from '../i18n/i18n';
 const options = [
   <Image
     source={require('../assets/img/vi.png')}
-    style={{height: 35, width: 70}}
+    style={{height: 30, width: 60}}
   />,
   <Image
     source={require('../assets/img/en.png')}
-    style={{height: 35, width: 70}}
+    style={{height: 30, width: 60}}
   />,
   <Text style={{color: 'red'}}>{I18n.t('cancel')}</Text>,
 ];

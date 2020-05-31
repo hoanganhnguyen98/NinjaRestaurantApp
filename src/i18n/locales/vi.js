@@ -2,6 +2,15 @@ export default {
   restaurantName: 'Nhà hàng Ninja',
   email: 'Hòm thư',
   cancel: 'Hủy',
+  networkChecking: {
+    message: 'Mất kết nối mạng',
+    goTo: 'Cài đặt Wi-Fi',
+    exit: 'Thoát',
+  },
+  backButton: {
+    message: 'Bạn có chắc muốn thoát không?',
+    exit: 'THOÁT',
+  },
   navigator: {
     menu: 'Thực đơn',
     cart: 'Giỏ hàng',
@@ -143,6 +152,18 @@ export default {
       fail: 'Thay đổi thông tin lỗi',
       failMess: 'Hãy thử lại',
     },
+    addToCart: {
+      fail: 'Thêm vào giỏ lỗi',
+      failMess: 'Hãy thử lại',
+    },
+    removeFood: {
+      fail: 'Xóa món ăn lỗi',
+      failMess: 'Hãy thử lại',
+    },
+    orderNow: {
+      fail: 'Đặt món lỗi',
+      failMess: 'Hãy thử lại',
+    },
   },
   success: {
     register: {
@@ -157,9 +178,17 @@ export default {
       ok: 'Thay đổi mật khẩu thành công',
       message: 'Hãy đăng nhập lại!',
     },
-    addToCard: {
+    addToCart: {
       ok: 'Thêm vào giỏ thành công',
       message: 'Kiểm tra giỏ hàng để thêm chi tiết!',
+    },
+    removeFood: {
+      ok: 'Xóa món ăn thành công',
+      message: 'Kiểm tra lại danh sách!',
+    },
+    orderNow: {
+      ok: 'Đặt món thành công',
+      message: 'Kiểm tra lại lịch sử!',
     },
   },
 };

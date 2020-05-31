@@ -14,13 +14,13 @@ const Stack = createStackNavigator({
   },
   FoodDetail: {
     screen: FoodDetail,
-    navigationOptions: {
+    navigationOptions: () => ({
       title: I18n.t('navigator.foodDetail'),
       headerStyle: {
         backgroundColor: '#3F51B5',
       },
       headerTintColor: '#ffffff',
-    },
+    }),
   },
 });
 

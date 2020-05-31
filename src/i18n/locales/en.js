@@ -2,6 +2,15 @@ export default {
   restaurantName: 'Ninja Restaurant',
   email: 'Email',
   cancel: 'Cancel',
+  networkChecking: {
+    message: 'Disconnected Network',
+    goTo: 'Go to Wi-Fi settings',
+    exit: 'Exit App',
+  },
+  backButton: {
+    message: 'Are you sure you want to exit?',
+    exit: 'EXIT',
+  },
   navigator: {
     menu: 'Menu',
     cart: 'Cart',
@@ -143,6 +152,18 @@ export default {
       fail: 'Change information fail',
       failMess: 'Try again!',
     },
+    addToCart: {
+      fail: 'Add to cart fail',
+      failMess: 'Try again!',
+    },
+    removeFood: {
+      fail: 'Remove food fail',
+      failMess: 'Try again!',
+    },
+    orderNow: {
+      fail: 'Order food fail',
+      failMess: 'Try again!',
+    },
   },
   success: {
     register: {
@@ -157,9 +178,17 @@ export default {
       ok: 'Change password successfully',
       message: 'Login again now!',
     },
-    addToCard: {
+    addToCart: {
       ok: 'Add to cart successfully',
       message: 'Checking your cart for more detail!',
+    },
+    removeFood: {
+      ok: 'Remove food successfully',
+      message: 'Check food list again!',
+    },
+    orderNow: {
+      ok: 'Order food successfully',
+      message: 'Check order history again!',
     },
   },
 };

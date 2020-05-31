@@ -43,11 +43,20 @@ export default class ChangePassword extends Component {
       this.state.oldPassword !==
       this.props.navigation.getParam('changePassword')
     ) {
-      showMessage('Old password is incorrect!', 'Try again!');
+      showMessage(
+        I18n.t('errors.password.old.invalid'),
+        I18n.t('errors.password.old.message'),
+      );
     } else if (this.state.newPassword.length < 6) {
-      showMessage('Passwords must be at least 6 characters!', 'Try again!');
+      showMessage(
+        I18n.t('errors.password.password.invalid'),
+        I18n.t('errors.password.password.message'),
+      );
     } else if (this.state.newPassword !== this.state.rePassword) {
-      showMessage('Repeat new password must match New password!', 'Try again!');
+      showMessage(
+        I18n.t('errors.password.repassword.invalid'),
+        I18n.t('errors.password.repassword.message'),
+      );
     } else {
       this.toggleModal();
     }
@@ -99,10 +108,16 @@ export default class ChangePassword extends Component {
           });
 
           if (json.success === true) {
-            showMessage('Change password successfully', 'Login again now!');
+            showMessage(
+              I18n.t('success.changePassword.ok'),
+              I18n.t('success.changePassword.message'),
+            );
             this.logout();
           } else {
-            showMessage('Change password fail', 'Try again!');
+            showMessage(
+              I18n.t('errors.changePassword.fail'),
+              I18n.t('errors.changePassword.failMess'),
+            );
           }
         })
         .catch((error) => console.error(error));

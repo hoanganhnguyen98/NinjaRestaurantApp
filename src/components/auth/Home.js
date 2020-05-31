@@ -14,7 +14,7 @@ export default class Home extends Component {
   render() {
     return (
       <Container>
-        <CustomHeader headerTitle="Ninja Restaurant" />
+        <CustomHeader headerTitle={I18n.t('restaurantName')} />
         <Tabs>
           <Tab
             heading={

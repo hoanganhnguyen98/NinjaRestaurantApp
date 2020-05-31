@@ -38,13 +38,16 @@ export default class Login extends Component {
     // check if input is invalid
     if (this.state.email === '' || this.state.password === '') {
       showMessage(
-        'Null Input',
-        'Please fill both email and password to login!',
+        I18n.t('errors.login.nullInput'),
+        I18n.t('errors.login.nullInputMess'),
       );
     } else if (
       !/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)
     ) {
-      showMessage('Invalid email', 'Please check your email again!');
+      showMessage(
+        I18n.t('errors.email.invalid'),
+        I18n.t('errors.email.message'),
+      );
     } else {
       //start loading modal while fetching
       this.setState({
@@ -83,8 +86,8 @@ export default class Login extends Component {
             this.props.navigation.navigate('BottomNavigator');
           } else {
             showMessage(
-              'Login fail',
-              'Please check your email and password again!',
+              I18n.t('errors.login.fail'),
+              I18n.t('errors.login.failMess'),
             );
           }
         })

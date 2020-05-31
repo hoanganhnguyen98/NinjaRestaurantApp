@@ -15,7 +15,7 @@ import I18n from '../i18n/i18n';
 const TabNavigator = createMaterialBottomTabNavigator({
   Menu: {
     screen: MenuNavigator,
-    navigationOptions: {
+    navigationOptions: () => ({
       title: I18n.t('navigator.menu'),
       activeColor: '#f4f4f4',
       inactiveColor: '#62B1F6',
@@ -27,11 +27,11 @@ const TabNavigator = createMaterialBottomTabNavigator({
           style={{color: tintColor}}
         />
       ),
-    },
+    }),
   },
   Cart: {
     screen: CartNavigator,
-    navigationOptions: {
+    navigationOptions: () => ({
       title: I18n.t('navigator.cart'),
       activeColor: '#f4f4f4',
       inactiveColor: '#62B1F6',
@@ -43,11 +43,11 @@ const TabNavigator = createMaterialBottomTabNavigator({
           style={{color: tintColor}}
         />
       ),
-    },
+    }),
   },
   AboutUs: {
     screen: AboutUsNav,
-    navigationOptions: {
+    navigationOptions: () => ({
       title: I18n.t('navigator.aboutUs'),
       activeColor: '#f4f4f4',
       inactiveColor: '#62B1F6',
@@ -59,11 +59,11 @@ const TabNavigator = createMaterialBottomTabNavigator({
           style={{color: tintColor}}
         />
       ),
-    },
+    }),
   },
   Profile: {
     screen: ProfileNavigator,
-    navigationOptions: {
+    navigationOptions: () => ({
       title: I18n.t('navigator.profile'),
       activeColor: '#f4f4f4',
       inactiveColor: '#62B1F6',
@@ -75,7 +75,7 @@ const TabNavigator = createMaterialBottomTabNavigator({
           style={{color: tintColor}}
         />
       ),
-    },
+    }),
   },
 });
 

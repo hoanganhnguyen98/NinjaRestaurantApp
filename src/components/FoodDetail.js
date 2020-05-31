@@ -59,11 +59,14 @@ export default class FoodDetail extends Component {
 
         if (json.success === true) {
           showMessage(
-            'Add to cart successfully',
-            'Checking your cart for more detail!',
+            I18n.t('success.addToCart.ok'),
+            I18n.t('success.addToCart.message'),
           );
         } else {
-          showMessage('Add to cart fail', '');
+          showMessage(
+            I18n.t('errors.addToCart.fail'),
+            I18n.t('errors.addToCart.failMess'),
+          );
         }
       })
       .catch((error) => console.error(error));

@@ -21,13 +21,13 @@ const Stack = createStackNavigator({
   },
   ResetPassword: {
     screen: ResetPassword,
-    navigationOptions: {
+    navigationOptions: () => ({
       title: I18n.t('navigator.resetPassword'),
       headerStyle: {
         backgroundColor: '#3F51B5',
       },
       headerTintColor: '#ffffff',
-    },
+    }),
   },
 });
 

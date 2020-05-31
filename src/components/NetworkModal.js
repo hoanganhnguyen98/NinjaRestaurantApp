@@ -5,6 +5,7 @@ import AndroidOpenSettings from 'react-native-android-open-settings';
 import * as Animatable from 'react-native-animatable';
 
 import {Styles, Colors} from '../common';
+import I18n from '../i18n/i18n';
 
 const NetworkModal = (props) => {
   const {disconnectedNetwork} = props;
@@ -26,7 +27,7 @@ const NetworkModal = (props) => {
               direction="alternate">
               <MCIcon name="wifi-off" size={25} color="red" />
             </Animatable.Text>
-            <Text>Disconnected Network</Text>
+            <Text>{I18n.t('networkChecking.message')}</Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <View style={[Styles.networkModal.functionView, {width: 180}]}>
@@ -39,7 +40,7 @@ const NetworkModal = (props) => {
                     textDecorationLine: 'underline',
                     color: Colors.appColor,
                   }}>
-                  Go to Wi-Fi settings
+                  {I18n.t('networkChecking.goTo')}
                 </Text>
               </TouchableHighlight>
             </View>
@@ -53,7 +54,7 @@ const NetworkModal = (props) => {
                     textDecorationLine: 'underline',
                     color: Colors.appColor,
                   }}>
-                  Exit App
+                  {I18n.t('networkChecking.exit')}
                 </Text>
               </TouchableHighlight>
             </View>
