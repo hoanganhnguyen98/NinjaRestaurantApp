@@ -89,6 +89,7 @@ export default class CurrentTab extends Component {
   removeCart = (id) => {
     //start loading modal while fetching
     this.setState({
+      isRemoveFood: !this.state.isRemoveFood,
       requestIsSending: true,
     });
 
