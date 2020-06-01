@@ -26,25 +26,25 @@ import {Styles, Colors, Urls} from '../common';
 import CustomFoodTab from './CustomFoodTab';
 import I18n from '../i18n/i18n';
 
-const options = [
-  <Text>
-    <FAIcon name="sort-alpha-asc" size={20} />
-    {I18n.t('screen.menu.name')}
-  </Text>,
-  <Text>
-    <FAIcon name="sort-alpha-desc" size={20} />
-    {I18n.t('screen.menu.name')}
-  </Text>,
-  <Text>
-    <FAIcon name="sort-numeric-asc" size={20} />
-    {I18n.t('screen.menu.price')}
-  </Text>,
-  <Text>
-    <FAIcon name="sort-numeric-desc" size={20} />
-    {I18n.t('screen.menu.price')}
-  </Text>,
-  <Text style={{color: 'red'}}>{I18n.t('cancel')}</Text>,
-];
+// const options = [
+//   <Text>
+//     <FAIcon name="sort-alpha-asc" size={20} />
+//     {I18n.t('screen.menu.name')}
+//   </Text>,
+//   <Text>
+//     <FAIcon name="sort-alpha-desc" size={20} />
+//     {I18n.t('screen.menu.name')}
+//   </Text>,
+//   <Text>
+//     <FAIcon name="sort-numeric-asc" size={20} />
+//     {I18n.t('screen.menu.price')}
+//   </Text>,
+//   <Text>
+//     <FAIcon name="sort-numeric-desc" size={20} />
+//     {I18n.t('screen.menu.price')}
+//   </Text>,
+//   <Text style={{color: 'red'}}>{I18n.t('cancel')}</Text>,
+// ];
 
 export default class MenuNav extends Component {
   constructor(props) {
@@ -302,7 +302,25 @@ export default class MenuNav extends Component {
         <ActionSheet
           ref={(o) => (this.ActionSheet = o)}
           title={I18n.t('screen.menu.sortFoodBy')}
-          options={options}
+          options={[
+            <Text>
+              <FAIcon name="sort-alpha-asc" size={20} />
+              {I18n.t('screen.menu.name')}
+            </Text>,
+            <Text>
+              <FAIcon name="sort-alpha-desc" size={20} />
+              {I18n.t('screen.menu.name')}
+            </Text>,
+            <Text>
+              <FAIcon name="sort-numeric-asc" size={20} />
+              {I18n.t('screen.menu.price')}
+            </Text>,
+            <Text>
+              <FAIcon name="sort-numeric-desc" size={20} />
+              {I18n.t('screen.menu.price')}
+            </Text>,
+            <Text style={{color: 'red'}}>{I18n.t('cancel')}</Text>,
+          ]}
           cancelButtonIndex={4}
           destructiveButtonIndex={1}
           onPress={(index) => {

@@ -1,25 +1,13 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {
-  Container,
-  Content,
-  Card,
-  CardItem,
-  Text,
-  Button,
-  Left,
-  Body,
-  ListItem,
-  Input,
-} from 'native-base';
-import Modal from 'react-native-modal';
-import FAIcon from 'react-native-vector-icons/FontAwesome';
+import {Container, Content, Card, CardItem, Text, Button} from 'native-base';
 
 import LoadingModal from '../LoadingModal';
 import showMessage from '../MessagesAlert';
-import {Colors, Urls} from '../../common';
+import {Urls} from '../../common';
 import I18n from '../../i18n/i18n';
+import CustomConfirmModal from '../CustomConfirmModal';
+import {CustomListItemLabel, CustomListItemInput} from '../CustomListItem';
 
 export default class ChangePassword extends Component {
   constructor(props) {
@@ -132,114 +120,47 @@ export default class ChangePassword extends Component {
         <Content>
           <LoadingModal requestIsSending={this.state.requestIsSending} />
           <Card>
-            <ListItem icon>
-              <Left>
-                <Button style={{backgroundColor: '#ffffff'}}>
-                  <FAIcon
-                    name="envelope-o"
-                    size={20}
-                    style={{color: Colors.appColor}}
-                  />
-                </Button>
-              </Left>
-              <Body>
-                <Text>{this.props.navigation.getParam('changeEmail')}</Text>
-              </Body>
-            </ListItem>
-            <ListItem icon noBorder>
-              <Left>
-                <Button style={{backgroundColor: '#ffffff'}}>
-                  <FAIcon
-                    name="lock"
-                    size={20}
-                    style={{color: Colors.appColor}}
-                  />
-                </Button>
-              </Left>
-              <Body>
-                <Text>{I18n.t('screen.profile.oldPassword')}</Text>
-              </Body>
-            </ListItem>
-            <ListItem icon>
-              <Left>
-                <Button style={{backgroundColor: '#ffffff'}}>
-                  <FAIcon
-                    name="edit"
-                    size={20}
-                    style={{color: Colors.appColor}}
-                  />
-                </Button>
-              </Left>
-              <Body>
-                <Input
-                  secureTextEntry={true}
-                  onChangeText={(oldPassword) => this.setState({oldPassword})}
-                />
-              </Body>
-            </ListItem>
-            <ListItem icon noBorder>
-              <Left>
-                <Button style={{backgroundColor: '#ffffff'}}>
-                  <FAIcon
-                    name="lock"
-                    size={20}
-                    style={{color: Colors.appColor}}
-                  />
-                </Button>
-              </Left>
-              <Body>
-                <Text>{I18n.t('screen.profile.newPassword')}</Text>
-              </Body>
-            </ListItem>
-            <ListItem icon>
-              <Left>
-                <Button style={{backgroundColor: '#ffffff'}}>
-                  <FAIcon
-                    name="edit"
-                    size={20}
-                    style={{color: Colors.appColor}}
-                  />
-                </Button>
-              </Left>
-              <Body>
-                <Input
-                  secureTextEntry={true}
-                  onChangeText={(newPassword) => this.setState({newPassword})}
-                />
-              </Body>
-            </ListItem>
-            <ListItem icon noBorder>
-              <Left>
-                <Button style={{backgroundColor: '#ffffff'}}>
-                  <FAIcon
-                    name="lock"
-                    size={20}
-                    style={{color: Colors.appColor}}
-                  />
-                </Button>
-              </Left>
-              <Body>
-                <Text>{I18n.t('screen.profile.repeatNewPassword')}</Text>
-              </Body>
-            </ListItem>
-            <ListItem icon noBorder>
-              <Left>
-                <Button style={{backgroundColor: '#ffffff'}}>
-                  <FAIcon
-                    name="edit"
-                    size={20}
-                    style={{color: Colors.appColor}}
-                  />
-                </Button>
-              </Left>
-              <Body>
-                <Input
-                  secureTextEntry={true}
-                  onChangeText={(rePassword) => this.setState({rePassword})}
-                />
-              </Body>
-            </ListItem>
+            {/* show user email */}
+            <CustomListItemLabel
+              iconName="envelope-o"
+              label={this.props.navigation.getParam('changeEmail')}
+            />
+
+            {/* get passwords to check and change */}
+            <CustomListItemLabel
+              noBorder={true}
+              iconName="lock"
+              label={I18n.t('screen.profile.oldPassword')}
+            />
+            <CustomListItemInput
+              iconName="edit"
+              secureTextEntry={true}
+              onChangeText={(oldPassword) => this.setState({oldPassword})}
+            />
+            <CustomListItemLabel
+              noBorder={true}
+              iconName="lock"
+              label={I18n.t('screen.profile.newPassword')}
+            />
+            <CustomListItemInput
+              iconName="edit"
+              secureTextEntry={true}
+              onChangeText={(newPassword) => this.setState({newPassword})}
+            />
+            <CustomListItemLabel
+              noBorder={true}
+              iconName="lock"
+              label={I18n.t('screen.profile.repeatNewPassword')}
+            />
+            <CustomListItemInput
+              noBorder={true}
+              iconName="edit"
+              secureTextEntry={true}
+              onChangeText={(rePassword) => this.setState({rePassword})}
+            />
           </Card>
+
+          {/* Button */}
           <CardItem style={{alignItems: 'center', justifyContent: 'center'}}>
             <Button rounded onPress={this.check}>
               <Text>{I18n.t('screen.profile.change')}</Text>
@@ -248,27 +169,13 @@ export default class ChangePassword extends Component {
         </Content>
 
         {/* Modal Save */}
-        <View>
-          <Modal isVisible={this.state.isModalVisible}>
-            <View style={{backgroundColor: '#ffffff', padding: 10}}>
-              <Button transparent block>
-                <Text>{I18n.t('screen.profile.wantChange')}</Text>
-              </Button>
-              <CardItem>
-                <Left>
-                  <Button block rounded danger onPress={this.toggleModal}>
-                    <Text>{I18n.t('cancel')}</Text>
-                  </Button>
-                </Left>
-                <Body>
-                  <Button block rounded onPress={this.change}>
-                    <Text>{I18n.t('screen.profile.change')}</Text>
-                  </Button>
-                </Body>
-              </CardItem>
-            </View>
-          </Modal>
-        </View>
+        <CustomConfirmModal
+          isModalVisible={this.state.isModalVisible}
+          message={I18n.t('screen.profile.wantChange')}
+          actionName={I18n.t('screen.profile.change')}
+          onPressMainAction={this.change}
+          onPressToggleModal={this.toggleModal}
+        />
       </Container>
     );
   }

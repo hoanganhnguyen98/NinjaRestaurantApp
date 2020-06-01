@@ -25,6 +25,27 @@ const Styles = {
     backgroundColor: '#FFFFFF',
   },
 
+  // modal for confirm an user action
+  actionModal: {
+    modalBackground: {
+      flex: 1,
+      alignItems: 'center',
+      flexDirection: 'column',
+      justifyContent: 'space-around',
+      backgroundColor: '#00000040',
+    },
+    activeModal: {
+      padding: 10,
+      backgroundColor: '#FFFFFF',
+      height: 150,
+      width: 300,
+      borderRadius: 10,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-around',
+    },
+  },
+
   // modal loading while fetching api
   loadingModal: {
     modalBackground: {
@@ -45,6 +66,7 @@ const Styles = {
     },
   },
 
+  // styles for modal which display if disconnected network
   networkModal: {
     modalBackground: {
       flex: 1,

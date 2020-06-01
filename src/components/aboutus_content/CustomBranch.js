@@ -36,7 +36,7 @@ export default class CustomBranch extends Component {
             />
           </Body>
         </ListItem>
-        <ListItem>
+        <ListItem onPress={() => OpenAnything.Map(this.props.address)}>
           <Body>
             <Text>{this.props.address}</Text>
           </Body>
@@ -45,19 +45,14 @@ export default class CustomBranch extends Component {
               animation="rotate"
               iterationCount="infinite"
               direction="alternate">
-              <Ionicons
-                name="ios-navigate"
-                size={25}
-                onPress={() => OpenAnything.Map(this.props.address)}
-                style={{color: 'red'}}
-              />
+              <Ionicons name="ios-navigate" size={25} style={{color: 'red'}} />
             </Animatable.Text>
-            <Text note onPress={() => OpenAnything.Map(this.props.address)}>
-              {I18n.t('screen.aboutUs.map')}
-            </Text>
+            <Text note>{I18n.t('screen.aboutUs.map')}</Text>
           </Right>
         </ListItem>
-        <ListItem style={Styles.aboutus.branchBorder}>
+        <ListItem
+          style={Styles.aboutus.branchBorder}
+          onPress={() => OpenAnything.Call(this.props.phone)}>
           <Body>
             <Text>{this.props.phone}</Text>
           </Body>
@@ -66,16 +61,9 @@ export default class CustomBranch extends Component {
               animation="flash"
               iterationCount="infinite"
               direction="alternate">
-              <Ionicons
-                name="md-call"
-                size={25}
-                onPress={() => OpenAnything.Call(this.props.phone)}
-                style={{color: 'green'}}
-              />
+              <Ionicons name="md-call" size={25} style={{color: 'green'}} />
             </Animatable.Text>
-            <Text note onPress={() => OpenAnything.Call(this.props.phone)}>
-              {I18n.t('screen.aboutUs.call')}
-            </Text>
+            <Text note>{I18n.t('screen.aboutUs.call')}</Text>
           </Right>
         </ListItem>
       </View>

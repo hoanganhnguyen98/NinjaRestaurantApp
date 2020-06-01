@@ -10,7 +10,11 @@ export default class Contact extends Component {
     return (
       <Content>
         <List>
-          <ListItem avatar>
+          <ListItem
+            avatar
+            onPress={() =>
+              OpenAnything.Web('https://ninja-restaurant.herokuapp.com/index')
+            }>
             <Left>
               <Ionicons
                 name="logo-chrome"
@@ -26,15 +30,12 @@ export default class Contact extends Component {
                 name="md-arrow-round-forward"
                 size={20}
                 style={{color: '#3F51B5', paddingRight: 10}}
-                onPress={() =>
-                  OpenAnything.Web(
-                    'https://ninja-restaurant.herokuapp.com/index',
-                  )
-                }
               />
             </Right>
           </ListItem>
-          <ListItem avatar>
+          <ListItem
+            avatar
+            onPress={() => OpenAnything.Email('hoanghuynh1998@gmail.com')}>
             <Left>
               <Ionicons
                 name="ios-mail"
@@ -50,11 +51,10 @@ export default class Contact extends Component {
                 name="md-arrow-round-forward"
                 size={20}
                 style={{color: '#3F51B5', paddingRight: 10}}
-                onPress={() => OpenAnything.Email('hoanghuynh1998@gmail.com')}
               />
             </Right>
           </ListItem>
-          <ListItem avatar>
+          <ListItem avatar onPress={() => OpenAnything.Facebook('thoisuvtv/')}>
             <Left>
               <Ionicons
                 name="logo-facebook"
@@ -70,11 +70,13 @@ export default class Contact extends Component {
                 name="md-arrow-round-forward"
                 size={20}
                 style={{color: '#3F51B5', paddingRight: 10}}
-                onPress={() => OpenAnything.Facebook('thoisuvtv/')}
               />
             </Right>
           </ListItem>
-          <ListItem avatar>
+          <ListItem
+            avatar
+            noBorder
+            onPress={() => OpenAnything.Youtube('cjPyidkLC3s')}>
             <Left>
               <Ionicons
                 name="logo-youtube"
@@ -90,45 +92,8 @@ export default class Contact extends Component {
                 name="md-arrow-round-forward"
                 size={20}
                 style={{color: '#3F51B5', paddingRight: 10}}
-                onPress={() => OpenAnything.Youtube('cjPyidkLC3s')}
               />
             </Right>
-          </ListItem>
-          <ListItem avatar>
-            <Left>
-              <Ionicons
-                name="logo-linkedin"
-                size={25}
-                style={{color: '#0077B5', paddingRight: 10}}
-              />
-            </Left>
-            <Body>
-              <Text>Ninja Restaurant Official</Text>
-            </Body>
-          </ListItem>
-          <ListItem avatar>
-            <Left>
-              <Ionicons
-                name="logo-twitter"
-                size={25}
-                style={{color: '#1DA1F2', paddingRight: 10}}
-              />
-            </Left>
-            <Body>
-              <Text>Ninja Restaurant Official</Text>
-            </Body>
-          </ListItem>
-          <ListItem avatar>
-            <Left>
-              <Ionicons
-                name="logo-skype"
-                size={25}
-                style={{color: '#0078D7', paddingRight: 10}}
-              />
-            </Left>
-            <Body>
-              <Text>Ninja Restaurant Official</Text>
-            </Body>
           </ListItem>
         </List>
       </Content>

@@ -69,6 +69,14 @@ export default {
       orderedIn: 'Ordered in ',
       deliveredIn: 'Delivered in ',
       receivedIn: 'Received in ',
+      confirmMessage: 'Confirm order information',
+      customerName: 'Customer name ',
+      phoneNumber: 'Phone number ',
+      address: 'Address ',
+      total: 'Total: ',
+      order: 'Order',
+      removeFoodMessage: 'Remove %{removeFoodName} from cart?',
+      remove: 'Remove',
     },
     aboutUs: {
       intro: 'Intro',
@@ -79,20 +87,31 @@ export default {
       coreValue: ' Core value',
       map: 'Map',
       call: 'Call',
-      historyContent: '',
-      missionContent: '',
-      coreValueContent: '',
+      historyContent:
+        'After 10 years of establishment and development,' +
+        ' the restaurant has more branches in Hanoi, Ho Chi Minh and also in Kawasaki province in Japan,' +
+        ' while expanding the scale of restaurants,' +
+        ' improving the quality of the staff.' +
+        ' Ninja Restaurant is pleased to have the famous detective Sherlock Holmes to open at the Kawasaki Japan branch.',
+      missionContent:
+        'With a passion for creativity and dedication, our mission is to bring customers the most amazing and novel experience in the style of Japanese Ninjas.',
+      coreValueContent:
+        'Together with our customers,' +
+        ' we aim to expand our branches globally,' +
+        ' as well as to bring more culinary experiences to regions around the world.',
     },
     profile: {
       headerTitle: 'Profile',
       personalInformation: 'Personal Information',
       settings: 'Settings',
-      selectLanguages: 'Select Languages',
+      selectLanguages: 'Select languages',
+      selectLanguagesMess: 'Restart to change languages',
       changeInformation: 'Change information',
       changePassword: 'Change password',
       save: 'Save',
       logout: 'Logout',
       change: 'Change',
+      restart: 'Restart',
       wantSave: 'Do you want to save?',
       wantLogout: 'Do you want to logout?',
       wantChange: 'Do you want to change?',
