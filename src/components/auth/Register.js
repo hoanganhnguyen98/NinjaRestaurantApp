@@ -45,8 +45,8 @@ export default class Register extends Component {
       this.state.repassword === ''
     ) {
       showMessage(
-        I18n.t('errors.login.nullInfo'),
-        I18n.t('errors.login.nullInfoMess'),
+        I18n.t('errors.register.nullInfo'),
+        I18n.t('errors.register.nullInfoMess'),
       );
     } else if (
       !/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)
@@ -54,8 +54,8 @@ export default class Register extends Component {
       showMessage('Invalid email', 'Please check your email again!');
     } else if (this.state.phone.length < 10) {
       showMessage(
-        I18n.t('errors.login.invalidPhone'),
-        I18n.t('errors.login.invalidPhoneMess'),
+        I18n.t('errors.register.invalidPhone'),
+        I18n.t('errors.register.invalidPhoneMess'),
       );
     } else if (this.state.password.length < 6) {
       showMessage(

@@ -9,13 +9,12 @@ import {
   Body,
   Right,
   Header,
-  Button,
 } from 'native-base';
 import NumberFormat from 'react-number-format';
-import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {Urls, Styles, Colors} from '../../common';
+import {Urls, Styles} from '../../common';
 import I18n from '../../i18n/i18n';
+import {CustomListItemHistoryDetail} from '../CustomListItem';
 
 export default class HistoryDetail extends Component {
   constructor(props) {
@@ -147,44 +146,18 @@ export default class HistoryDetail extends Component {
           </Right>
         </Header>
         <List style={{backgroundColor: '#ffffff'}}>
-          <ListItem icon>
-            <Left>
-              <Button style={{backgroundColor: '#ffffff'}}>
-                <MCIcon
-                  name="account-check"
-                  color={Colors.appColor}
-                  size={20}
-                />
-              </Button>
-            </Left>
-            <Body>
-              <Text>{this.props.navigation.getParam('detailName')}</Text>
-            </Body>
-          </ListItem>
-          <ListItem icon>
-            <Left>
-              <Button style={{backgroundColor: '#ffffff'}}>
-                <MCIcon name="phone" color={Colors.appColor} size={20} />
-              </Button>
-            </Left>
-            <Body>
-              <Text>{this.props.navigation.getParam('detailPhone')}</Text>
-            </Body>
-          </ListItem>
-          <ListItem icon>
-            <Left>
-              <Button style={{backgroundColor: '#ffffff'}}>
-                <MCIcon
-                  name="truck-delivery"
-                  color={Colors.appColor}
-                  size={20}
-                />
-              </Button>
-            </Left>
-            <Body>
-              <Text>{this.props.navigation.getParam('detailAddress')}</Text>
-            </Body>
-          </ListItem>
+          <CustomListItemHistoryDetail
+            iconName="account-check"
+            label={this.props.navigation.getParam('detailName')}
+          />
+          <CustomListItemHistoryDetail
+            iconName="phone"
+            label={this.props.navigation.getParam('detailPhone')}
+          />
+          <CustomListItemHistoryDetail
+            iconName="truck-delivery"
+            label={this.props.navigation.getParam('detailAddress')}
+          />
         </List>
         <Container>
           <List>

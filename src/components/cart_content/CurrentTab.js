@@ -30,6 +30,7 @@ import LoadingModal from '../LoadingModal';
 import showMessage from '../MessagesAlert';
 import {Urls, Styles} from '../../common';
 import I18n from '../../i18n/i18n';
+import CustomConfirmModal from '../CustomConfirmModal';
 
 export default class CurrentTab extends Component {
   constructor(props) {
@@ -46,6 +47,10 @@ export default class CurrentTab extends Component {
       address: '',
       id: '',
       requestIsSending: false,
+      isModalVisible: false,
+      isRemoveFood: false,
+      removeFoodId: null,
+      removeFoodName: null,
     };
 
     this.GetData();
@@ -119,28 +124,21 @@ export default class CurrentTab extends Component {
     if (this.state.totalPrice === 0) {
       showMessage('No item to order', '');
     } else {
-      var orderId = await AsyncStorage.getItem('userId');
-      var orderEmail = await AsyncStorage.getItem('userEmail');
-      var orderName = await AsyncStorage.getItem('userName');
-      var orderPhone = await AsyncStorage.getItem('userPhone');
-      var orderAddress = await AsyncStorage.getItem('userAddress');
       this.setState({
-        id: orderId,
-        email: orderEmail,
-        name: orderName,
-        phone: orderPhone,
-        address: orderAddress,
+        id: await AsyncStorage.getItem('userId'),
+        email: await AsyncStorage.getItem('userEmail'),
+        name: await AsyncStorage.getItem('userName'),
+        phone: await AsyncStorage.getItem('userPhone'),
+        address: await AsyncStorage.getItem('userAddress'),
+        isModalVisible: !this.state.isModalVisible,
       });
-      this.toggleModal;
     }
   };
 
   orderNow = () => {
-    // hidden modal
-    this.toggleModal;
-
     //start loading modal while fetching
     this.setState({
+      isModalVisible: !this.state.isModalVisible,
       requestIsSending: true,
     });
 
@@ -229,7 +227,15 @@ export default class CurrentTab extends Component {
         />
       </Body>
       <Right>
-        <Button transparent onPress={() => this.removeCart(data.item.id)}>
+        <Button
+          transparent
+          onPress={() =>
+            this.setState({
+              removeFoodId: data.item.id,
+              removeFoodName: data.item.food_name,
+              isRemoveFood: !this.state.isRemoveFood,
+            })
+          }>
           <MCIcon name="cart-remove" color="red" size={25} />
         </Button>
       </Right>
@@ -269,7 +275,7 @@ export default class CurrentTab extends Component {
               </Button>
             ) : (
               <Button block rounded onPress={() => this.confirmOrder()}>
-                <Text>{I18n.t('screen.cart.orderNow')} </Text>
+                <Text>{I18n.t('screen.cart.orderNow')}</Text>
               </Button>
             )}
           </Right>
@@ -302,15 +308,36 @@ export default class CurrentTab extends Component {
             </List>
           )}
         </Container>
+
+        {/* Modal to confirm to remove food */}
+        <CustomConfirmModal
+          isModalVisible={this.state.isRemoveFood}
+          message={I18n.t('screen.cart.removeFoodMessage', {
+            removeFoodName: this.state.removeFoodName,
+          })}
+          actionName={I18n.t('screen.cart.remove')}
+          onPressMainAction={() => this.removeCart(this.state.removeFoodId)}
+          onPressToggleModal={() =>
+            this.setState({
+              removeFoodId: null,
+              removeFoodName: null,
+              isRemoveFood: !this.state.isRemoveFood,
+            })
+          }
+        />
+
+        {/* Modal to confirm to order */}
         <Modal isVisible={this.state.isModalVisible}>
-          <View style={{backgroundColor: '#ffffff', padding: 30}}>
+          <View
+            style={{backgroundColor: '#ffffff', padding: 30, borderRadius: 10}}>
             <Button transparent block>
-              <Text>Confirm order information</Text>
+              <Text>{I18n.t('screen.cart.confirmMessage')}</Text>
             </Button>
             <CardItem>
               <Item stackedLabel>
                 <Label>
-                  Customer Name <MCIcon name="pencil" />
+                  {I18n.t('screen.cart.customerName')}
+                  <MCIcon name="pencil" />
                 </Label>
                 <Input
                   defaultValue={this.state.name}
@@ -321,7 +348,8 @@ export default class CurrentTab extends Component {
             <CardItem>
               <Item stackedLabel>
                 <Label>
-                  Phone number <MCIcon name="pencil" />
+                  {I18n.t('screen.cart.phoneNumber')}
+                  <MCIcon name="pencil" />
                 </Label>
                 <Input
                   defaultValue={this.state.phone}
@@ -332,7 +360,8 @@ export default class CurrentTab extends Component {
             <CardItem>
               <Item stackedLabel>
                 <Label>
-                  Address <MCIcon name="pencil" />
+                  {I18n.t('screen.cart.address')}
+                  <MCIcon name="pencil" />
                 </Label>
                 <Input
                   defaultValue={this.state.address}
@@ -342,7 +371,7 @@ export default class CurrentTab extends Component {
             </CardItem>
             <CardItem>
               <Text>
-                Total:{' '}
+                {I18n.t('screen.cart.total')}
                 <NumberFormat
                   value={this.state.totalPrice}
                   displayType={'text'}
@@ -362,13 +391,21 @@ export default class CurrentTab extends Component {
             </CardItem>
             <CardItem>
               <Left>
-                <Button block rounded danger onPress={this.toggleModal}>
-                  <Text>Cancel</Text>
+                <Button
+                  block
+                  rounded
+                  danger
+                  onPress={() =>
+                    this.setState({
+                      isModalVisible: !this.state.isModalVisible,
+                    })
+                  }>
+                  <Text>{I18n.t('cancel')}</Text>
                 </Button>
               </Left>
               <Body>
                 <Button block rounded onPress={this.orderNow}>
-                  <Text>Order</Text>
+                  <Text>{I18n.t('screen.cart.order')}</Text>
                 </Button>
               </Body>
             </CardItem>

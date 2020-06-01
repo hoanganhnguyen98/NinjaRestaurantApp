@@ -69,6 +69,14 @@ export default {
       orderedIn: 'Đã đặt lúc ',
       deliveredIn: 'Đã giao lúc ',
       receivedIn: 'Đã nhận lúc ',
+      confirmMessage: 'Xác nhận thông tin đặt món',
+      customerName: 'Tên khách hàng ',
+      phoneNumber: 'Số điện thoại ',
+      address: 'Địa chỉ ',
+      total: 'Tổng: ',
+      order: 'Đặt món',
+      removeFoodMessage: 'Xóa %{removeFoodName} khỏi giỏ?',
+      remove: 'Xóa',
     },
     aboutUs: {
       intro: 'Giới thiệu',
@@ -79,20 +87,31 @@ export default {
       coreValue: ' Giá trị cốt lõi',
       map: 'Bản đồ',
       call: 'Gọi',
-      historyContent: '',
-      missionContent: '',
-      coreValueContent: '',
+      historyContent:
+        'Sau 10 năm hình thành và phát triển,' +
+        ' nhà hàng đã có thêm các chi nhánh ở Hà Nội, Hồ Chí Minh và cả ở tỉnh Kawasaki ở Nhật Bản,' +
+        ' đồng thời mở rộng quy mô các nhà hàng,' +
+        ' nâng cao chất lượng đội ngũ nhân viên.' +
+        ' Nhà hàng Ninja hân hạnh được thám tử lừng danh Sherlock Holmes đến khai trương tại chi nhánh Kawasaki Nhật Bản, đánh dấu sự mở rộng toàn cầu của nhà hàng.',
+      missionContent:
+        'Với niềm đam mê sáng tạo cùng sự cống hiến, sứ mệnh của chúng tôi là đưa đến cho khách hàng trải nghiệm tuyệt vời nhất, mới lạ nhất theo phong cách của huyền thoại Ninja Nhật Bản.',
+      coreValueContent:
+        'Cùng sự đồng hành của khách hàng,' +
+        ' chúng tôi tiến tới mở rộng các chi nhánh trên toàn cầu,' +
+        ' cũng như đem lại nhiều hơn sự trải nghiệm ẩm thực của các vùng miền trên toàn thế giới.',
     },
     profile: {
       headerTitle: 'Hồ sơ',
       personalInformation: 'Thông tin cá nhân',
       settings: 'Cài đặt',
       selectLanguages: 'Chọn ngôn ngữ',
+      selectLanguagesMess: 'Khởi động lại để thay đổi',
       changeInformation: 'Thay đổi thông tin',
       changePassword: 'Thay đổi mật khẩu',
       save: 'Lưu',
       logout: 'Đăng xuất',
       change: 'Thay đổi',
+      restart: 'Cứ vậy đi',
       wantSave: 'Bạn có muốn lưu?',
       wantLogout: 'Bạn có muốn đăng xuất?',
       wantChange: 'Bạn có muốn thay đổi?',

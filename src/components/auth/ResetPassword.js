@@ -1,23 +1,12 @@
 import React, {Component} from 'react';
 import {Keyboard} from 'react-native';
-import {
-  Container,
-  Content,
-  Card,
-  CardItem,
-  Text,
-  Button,
-  Left,
-  Body,
-  ListItem,
-  Input,
-} from 'native-base';
-import FAIcon from 'react-native-vector-icons/FontAwesome';
+import {Container, Content, Card, CardItem, Text, Button} from 'native-base';
 
 import LoadingModal from '../LoadingModal';
 import showMessage from '../MessagesAlert';
-import {Colors, Urls} from '../../common';
+import {Urls} from '../../common';
 import I18n from '../../i18n/i18n';
+import {CustomListItemLabel, CustomListItemInput} from '../CustomListItem';
 
 export default class ResetPassword extends Component {
   constructor(props) {
@@ -154,134 +143,51 @@ export default class ResetPassword extends Component {
           <LoadingModal requestIsSending={this.state.requestIsSending} />
           {!this.state.activeResetForm ? (
             <Card style={{marginTop: 100}}>
-              <ListItem icon>
-                <Left>
-                  <Button style={{backgroundColor: '#ffffff'}}>
-                    <FAIcon
-                      name="envelope-o"
-                      size={20}
-                      style={{color: Colors.appColor}}
-                    />
-                  </Button>
-                </Left>
-                <Body>
-                  <Text>{I18n.t('screen.home.reset.enterYourEmail')}</Text>
-                </Body>
-              </ListItem>
-              <ListItem icon noBorder>
-                <Left>
-                  <Button style={{backgroundColor: '#ffffff'}}>
-                    <FAIcon
-                      name="edit"
-                      size={20}
-                      style={{color: Colors.appColor}}
-                    />
-                  </Button>
-                </Left>
-                <Body>
-                  <Input
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    onChangeText={(email) => this.setState({email})}
-                  />
-                </Body>
-              </ListItem>
+              <CustomListItemLabel
+                iconName="envelope-o"
+                label={I18n.t('screen.home.reset.enterYourEmail')}
+              />
+              <CustomListItemInput
+                noBorder={true}
+                iconName="edit"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                onChangeText={(email) => this.setState({email})}
+              />
             </Card>
           ) : (
             <Card>
-              <ListItem icon noBorder>
-                <Left>
-                  <Button style={{backgroundColor: '#ffffff'}}>
-                    <FAIcon
-                      name="barcode"
-                      size={20}
-                      style={{color: Colors.appColor}}
-                    />
-                  </Button>
-                </Left>
-                <Body>
-                  <Text>{I18n.t('screen.home.reset.checkCode')}</Text>
-                </Body>
-              </ListItem>
-              <ListItem icon>
-                <Left>
-                  <Button style={{backgroundColor: '#ffffff'}}>
-                    <FAIcon
-                      name="edit"
-                      size={20}
-                      style={{color: Colors.appColor}}
-                    />
-                  </Button>
-                </Left>
-                <Body>
-                  <Input
-                    placeholder={I18n.t('screen.home.reset.checkCodeFromEmail')}
-                    onChangeText={(inputCode) => this.setState({inputCode})}
-                  />
-                </Body>
-              </ListItem>
-              <ListItem icon noBorder>
-                <Left>
-                  <Button style={{backgroundColor: '#ffffff'}}>
-                    <FAIcon
-                      name="lock"
-                      size={20}
-                      style={{color: Colors.appColor}}
-                    />
-                  </Button>
-                </Left>
-                <Body>
-                  <Text>{I18n.t('screen.home.reset.newPassword')}</Text>
-                </Body>
-              </ListItem>
-              <ListItem icon>
-                <Left>
-                  <Button style={{backgroundColor: '#ffffff'}}>
-                    <FAIcon
-                      name="edit"
-                      size={20}
-                      style={{color: Colors.appColor}}
-                    />
-                  </Button>
-                </Left>
-                <Body>
-                  <Input
-                    secureTextEntry={true}
-                    onChangeText={(newPassword) => this.setState({newPassword})}
-                  />
-                </Body>
-              </ListItem>
-              <ListItem icon noBorder>
-                <Left>
-                  <Button style={{backgroundColor: '#ffffff'}}>
-                    <FAIcon
-                      name="lock"
-                      size={20}
-                      style={{color: Colors.appColor}}
-                    />
-                  </Button>
-                </Left>
-                <Body>
-                  <Text>{I18n.t('screen.home.reset.repeatNewPassword')}</Text>
-                </Body>
-              </ListItem>
-              <ListItem icon noBorder>
-                <Left>
-                  <Button style={{backgroundColor: '#ffffff'}}>
-                    <FAIcon
-                      name="edit"
-                      size={20}
-                      style={{color: Colors.appColor}}
-                    />
-                  </Button>
-                </Left>
-                <Body>
-                  <Input
-                    secureTextEntry={true}
-                    onChangeText={(rePassword) => this.setState({rePassword})}
-                  />
-                </Body>
-              </ListItem>
+              <CustomListItemLabel
+                iconName="barcode"
+                noBorder={true}
+                label={I18n.t('screen.home.reset.checkCode')}
+              />
+              <CustomListItemInput
+                iconName="edit"
+                placeholder={I18n.t('screen.home.reset.checkCodeFromEmail')}
+                onChangeText={(inputCode) => this.setState({inputCode})}
+              />
+              <CustomListItemLabel
+                iconName="lock"
+                noBorder={true}
+                label={I18n.t('screen.home.reset.newPassword')}
+              />
+              <CustomListItemInput
+                iconName="edit"
+                secureTextEntry={true}
+                onChangeText={(newPassword) => this.setState({newPassword})}
+              />
+              <CustomListItemLabel
+                iconName="lock"
+                noBorder={true}
+                label={I18n.t('screen.home.reset.repeatNewPassword')}
+              />
+              <CustomListItemInput
+                iconName="edit"
+                noBorder={true}
+                secureTextEntry={true}
+                onChangeText={(rePassword) => this.setState({rePassword})}
+              />
             </Card>
           )}
           <CardItem style={{alignItems: 'center', justifyContent: 'center'}}>

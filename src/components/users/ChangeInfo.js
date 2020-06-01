@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
   Container,
@@ -9,18 +8,14 @@ import {
   Thumbnail,
   Text,
   Button,
-  Left,
-  Body,
-  ListItem,
-  Input,
 } from 'native-base';
-import Modal from 'react-native-modal';
-import FAIcon from 'react-native-vector-icons/FontAwesome';
 
 import LoadingModal from '../LoadingModal';
 import showMessage from '../MessagesAlert';
-import {Colors, Urls} from '../../common';
+import {Urls} from '../../common';
 import I18n from '../../i18n/i18n';
+import CustomConfirmModal from '../CustomConfirmModal';
+import {CustomListItemInput} from '../CustomListItem';
 
 export default class ChangeInfo extends Component {
   constructor(props) {
@@ -97,6 +92,7 @@ export default class ChangeInfo extends Component {
         <Content>
           <LoadingModal requestIsSending={this.state.requestIsSending} />
           <Card>
+            {/* Image and email address */}
             <CardItem style={{alignItems: 'center', justifyContent: 'center'}}>
               <Thumbnail
                 source={{uri: this.props.navigation.getParam('changeImage')}}
@@ -105,58 +101,26 @@ export default class ChangeInfo extends Component {
             <CardItem style={{alignItems: 'center', justifyContent: 'center'}}>
               <Text>{this.props.navigation.getParam('changeEmail')}</Text>
             </CardItem>
-            <ListItem icon>
-              <Left>
-                <Button style={{backgroundColor: '#ffffff'}}>
-                  <FAIcon
-                    name="vcard-o"
-                    size={20}
-                    style={{color: Colors.appColor}}
-                  />
-                </Button>
-              </Left>
-              <Body>
-                <Input
-                  defaultValue={this.props.navigation.getParam('changeName')}
-                  onChangeText={(name) => this.setState({name})}
-                />
-              </Body>
-            </ListItem>
-            <ListItem icon>
-              <Left>
-                <Button style={{backgroundColor: '#ffffff'}}>
-                  <FAIcon
-                    name="phone"
-                    size={20}
-                    style={{color: Colors.appColor}}
-                  />
-                </Button>
-              </Left>
-              <Body>
-                <Input
-                  defaultValue={this.props.navigation.getParam('changePhone')}
-                  onChangeText={(phone) => this.setState({phone})}
-                />
-              </Body>
-            </ListItem>
-            <ListItem icon>
-              <Left>
-                <Button style={{backgroundColor: '#ffffff'}}>
-                  <FAIcon
-                    name="home"
-                    size={20}
-                    style={{color: Colors.appColor}}
-                  />
-                </Button>
-              </Left>
-              <Body>
-                <Input
-                  defaultValue={this.props.navigation.getParam('changeAddress')}
-                  onChangeText={(address) => this.setState({address})}
-                />
-              </Body>
-            </ListItem>
+
+            {/* Information to edit */}
+            <CustomListItemInput
+              iconName="vcard-o"
+              defaultValue={this.props.navigation.getParam('changeName')}
+              onChangeText={(name) => this.setState({name})}
+            />
+            <CustomListItemInput
+              iconName="phone"
+              defaultValue={this.props.navigation.getParam('changePhone')}
+              onChangeText={(phone) => this.setState({phone})}
+            />
+            <CustomListItemInput
+              iconName="home"
+              defaultValue={this.props.navigation.getParam('changeAddress')}
+              onChangeText={(address) => this.setState({address})}
+            />
           </Card>
+
+          {/* Button */}
           <CardItem style={{alignItems: 'center', justifyContent: 'center'}}>
             <Button rounded onPress={this.toggleModal}>
               <Text>{I18n.t('screen.profile.save')}</Text>
@@ -165,27 +129,13 @@ export default class ChangeInfo extends Component {
         </Content>
 
         {/* Modal Save */}
-        <View>
-          <Modal isVisible={this.state.isModalVisible}>
-            <View style={{backgroundColor: '#ffffff', padding: 30}}>
-              <Button transparent block>
-                <Text>{I18n.t('screen.profile.wantSave')}</Text>
-              </Button>
-              <CardItem>
-                <Left>
-                  <Button block rounded danger onPress={this.toggleModal}>
-                    <Text>{I18n.t('cancel')}</Text>
-                  </Button>
-                </Left>
-                <Body>
-                  <Button block rounded onPress={this.save}>
-                    <Text>{I18n.t('screen.profile.save')}</Text>
-                  </Button>
-                </Body>
-              </CardItem>
-            </View>
-          </Modal>
-        </View>
+        <CustomConfirmModal
+          isModalVisible={this.state.isModalVisible}
+          message={I18n.t('screen.profile.wantSave')}
+          actionName={I18n.t('screen.profile.save')}
+          onPressMainAction={this.save}
+          onPressToggleModal={this.toggleModal}
+        />
       </Container>
     );
   }
