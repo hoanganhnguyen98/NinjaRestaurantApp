@@ -68,6 +68,7 @@ export default class Login extends Component {
         .then((response) => response.json())
         .then((json) => {
           //end loading modal
+          console.log('Tracking ...');
           this.setState({
             requestIsSending: false,
           });
@@ -128,8 +129,12 @@ export default class Login extends Component {
             </Button>
             <Button
               transparent
+              bordered
+              rounded
               block
-              style={{marginTop: 50}}
+              style={{
+                marginTop: 80,
+              }}
               onPress={() => this.props.navigation.navigate('ResetPassword')}>
               <Text>
                 {I18n.t('screen.home.main.forgetPassword')}

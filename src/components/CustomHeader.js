@@ -1,8 +1,8 @@
 import React from 'react';
 import {Header, Button, Left, Right, Body, Title} from 'native-base';
-import {Image, View} from 'react-native';
+import {Image, View, StatusBar} from 'react-native';
 
-import {Styles} from '../common';
+import {Styles, Colors} from '../common';
 
 const CustomHeader = (props) => {
   const {headerTitle} = props;
@@ -10,6 +10,7 @@ const CustomHeader = (props) => {
   return (
     <View>
       <Header>
+        <StatusBar barStyle={'default'} backgroundColor={Colors.appColor} />
         <Left>
           <Button transparent>
             <Image

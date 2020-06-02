@@ -142,7 +142,7 @@ export default class ResetPassword extends Component {
         <Content>
           <LoadingModal requestIsSending={this.state.requestIsSending} />
           {!this.state.activeResetForm ? (
-            <Card style={{marginTop: 100}}>
+            <Card>
               <CustomListItemLabel
                 iconName="envelope-o"
                 label={I18n.t('screen.home.reset.enterYourEmail')}

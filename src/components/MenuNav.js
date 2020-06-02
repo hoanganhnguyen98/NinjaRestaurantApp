@@ -1,6 +1,12 @@
 /* eslint-disable no-alert */
 import React, {Component} from 'react';
-import {ActivityIndicator, FlatList, View, Image} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  View,
+  Image,
+  StatusBar,
+} from 'react-native';
 import {
   Container,
   Tab,
@@ -166,6 +172,10 @@ export default class MenuNav extends Component {
     return (
       <Container>
         <Header>
+          <StatusBar
+            barStyle={'light-content'}
+            backgroundColor={Colors.appColor}
+          />
           <Left>
             <Button transparent>
               <Image
@@ -200,6 +210,10 @@ export default class MenuNav extends Component {
         </Header>
         {!this.state.activeSearch ? null : (
           <Header searchBar rounded>
+            <StatusBar
+              barStyle={'light-content'}
+              backgroundColor={Colors.appColor}
+            />
             <Item>
               <FAIcon
                 name="filter"
