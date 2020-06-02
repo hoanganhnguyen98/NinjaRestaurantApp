@@ -54,6 +54,7 @@ export default class CurrentTab extends Component {
     };
 
     this.GetData();
+    this.onRefresh = this.onRefresh.bind(this);
   }
 
   getPrice = (a, b) => {
@@ -61,6 +62,7 @@ export default class CurrentTab extends Component {
   };
 
   GetData = async () => {
+    this.setState({isLoading: true});
     var userId = await AsyncStorage.getItem('userId');
 
     fetch(Urls.APIUrl + 'cart/currentcart/' + userId)
@@ -282,32 +284,30 @@ export default class CurrentTab extends Component {
           </Right>
         </Header>
         <Container>
-          {this.state.totalPrice === 0 ? (
-            <Button danger block transparent style={{marginTop: 100}}>
-              <Text>{I18n.t('screen.cart.cartIsEmpty')}</Text>
-            </Button>
-          ) : (
-            <List>
-              {isLoading ? (
-                <ActivityIndicator />
-              ) : (
-                <FlatList
-                  data={data.sort((after, before) =>
-                    after.created_at.localeCompare(before.created_at),
-                  )}
-                  keyExtractor={({id}, index) => id}
-                  renderItem={(item) => this.renderItem(item)}
-                  refreshControl={
-                    <RefreshControl
-                      //refresh control used for the Pull to Refresh
-                      refreshing={this.state.refreshing}
-                      onRefresh={this.onRefresh.bind(this)}
-                    />
-                  }
-                />
-              )}
-            </List>
-          )}
+          <List>
+            {isLoading ? (
+              <ActivityIndicator />
+            ) : this.state.totalPrice === 0 ? (
+              <Button danger block transparent style={{marginTop: 100}}>
+                <Text>{I18n.t('screen.cart.cartIsEmpty')}</Text>
+              </Button>
+            ) : (
+              <FlatList
+                data={data.sort((after, before) =>
+                  before.created_at.localeCompare(after.created_at),
+                )}
+                keyExtractor={({id}, index) => id}
+                renderItem={(item) => this.renderItem(item)}
+                refreshControl={
+                  <RefreshControl
+                    //refresh control used for the Pull to Refresh
+                    refreshing={this.state.refreshing}
+                    onRefresh={this.onRefresh.bind(this)}
+                  />
+                }
+              />
+            )}
+          </List>
         </Container>
 
         {/* Modal to confirm to remove food */}

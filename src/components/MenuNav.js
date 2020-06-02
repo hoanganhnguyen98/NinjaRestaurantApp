@@ -26,26 +26,6 @@ import {Styles, Colors, Urls} from '../common';
 import CustomFoodTab from './CustomFoodTab';
 import I18n from '../i18n/i18n';
 
-// const options = [
-//   <Text>
-//     <FAIcon name="sort-alpha-asc" size={20} />
-//     {I18n.t('screen.menu.name')}
-//   </Text>,
-//   <Text>
-//     <FAIcon name="sort-alpha-desc" size={20} />
-//     {I18n.t('screen.menu.name')}
-//   </Text>,
-//   <Text>
-//     <FAIcon name="sort-numeric-asc" size={20} />
-//     {I18n.t('screen.menu.price')}
-//   </Text>,
-//   <Text>
-//     <FAIcon name="sort-numeric-desc" size={20} />
-//     {I18n.t('screen.menu.price')}
-//   </Text>,
-//   <Text style={{color: 'red'}}>{I18n.t('cancel')}</Text>,
-// ];
-
 export default class MenuNav extends Component {
   constructor(props) {
     super(props);
@@ -78,6 +58,14 @@ export default class MenuNav extends Component {
           isLoading: false,
         });
       });
+  };
+
+  componentDidUpdate = () => {
+    if (this.state.index === 1) {
+      console.log(1);
+    } else if (this.state.index === 0) {
+      console.log(0);
+    }
   };
 
   SearchFilterFunction = (food) => {
