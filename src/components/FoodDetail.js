@@ -63,18 +63,6 @@ export default class FoodDetail extends Component {
             I18n.t('success.addToCart.ok'),
             I18n.t('success.addToCart.message'),
           );
-          // const setParamsAction = NavigationActions.setParams({
-          //   title: 'Menu',
-          //   params: {index: 1},
-          // });
-          // this.props.navigation.dispatch(setParamsAction);
-          // this.props.navigation.reset({
-          //   index: 1,
-          //   routes: [{name: 'Menu'}],
-          // });
-          this.props.navigation.setParams({
-            addFoodToCart: true,
-          });
         } else {
           showMessage(
             I18n.t('errors.addToCart.fail'),

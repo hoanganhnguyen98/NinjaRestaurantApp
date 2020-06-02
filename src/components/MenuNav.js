@@ -60,14 +60,6 @@ export default class MenuNav extends Component {
       });
   };
 
-  componentDidUpdate = () => {
-    if (this.state.index === 1) {
-      console.log(1);
-    } else if (this.state.index === 0) {
-      console.log(0);
-    }
-  };
-
   SearchFilterFunction = (food) => {
     //passing the inserted text in text input
     const newData = this.arrayholder.filter(function (item) {
