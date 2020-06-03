@@ -1,6 +1,12 @@
 /* eslint-disable no-alert */
 import React, {Component} from 'react';
-import {ActivityIndicator, FlatList, View, Image} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  View,
+  Image,
+  StatusBar,
+} from 'react-native';
 import {
   Container,
   Tab,
@@ -25,26 +31,6 @@ import NumberFormat from 'react-number-format';
 import {Styles, Colors, Urls} from '../common';
 import CustomFoodTab from './CustomFoodTab';
 import I18n from '../i18n/i18n';
-
-// const options = [
-//   <Text>
-//     <FAIcon name="sort-alpha-asc" size={20} />
-//     {I18n.t('screen.menu.name')}
-//   </Text>,
-//   <Text>
-//     <FAIcon name="sort-alpha-desc" size={20} />
-//     {I18n.t('screen.menu.name')}
-//   </Text>,
-//   <Text>
-//     <FAIcon name="sort-numeric-asc" size={20} />
-//     {I18n.t('screen.menu.price')}
-//   </Text>,
-//   <Text>
-//     <FAIcon name="sort-numeric-desc" size={20} />
-//     {I18n.t('screen.menu.price')}
-//   </Text>,
-//   <Text style={{color: 'red'}}>{I18n.t('cancel')}</Text>,
-// ];
 
 export default class MenuNav extends Component {
   constructor(props) {
@@ -186,6 +172,10 @@ export default class MenuNav extends Component {
     return (
       <Container>
         <Header>
+          <StatusBar
+            barStyle={'light-content'}
+            backgroundColor={Colors.appColor}
+          />
           <Left>
             <Button transparent>
               <Image
@@ -220,6 +210,10 @@ export default class MenuNav extends Component {
         </Header>
         {!this.state.activeSearch ? null : (
           <Header searchBar rounded>
+            <StatusBar
+              barStyle={'light-content'}
+              backgroundColor={Colors.appColor}
+            />
             <Item>
               <FAIcon
                 name="filter"

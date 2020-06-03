@@ -95,6 +95,14 @@ export default class Register extends Component {
           });
 
           if (json.success === true) {
+            this.setState({
+              name: '',
+              phone: '',
+              address: '',
+              email: '',
+              password: '',
+              repassword: '',
+            });
             // success register
             showMessage(
               I18n.t('success.register.ok'),
@@ -102,7 +110,7 @@ export default class Register extends Component {
             );
 
             //redirect to login
-            this.props.navigation.navigate('Home');
+            // this.props.navigation.navigate('Home');
           } else {
             // fail
             showMessage(
@@ -123,22 +131,30 @@ export default class Register extends Component {
           <Form>
             <Item floatingLabel>
               <Label>{I18n.t('screen.home.main.fullName')}</Label>
-              <Input onChangeText={(name) => this.setState({name})} />
+              <Input
+                value={this.state.name}
+                onChangeText={(name) => this.setState({name})}
+              />
             </Item>
             <Item floatingLabel>
               <Label>{I18n.t('screen.home.main.phoneNumber')}</Label>
               <Input
+                value={this.state.phone}
                 onChangeText={(phone) => this.setState({phone})}
                 maxLength={10}
               />
             </Item>
             <Item floatingLabel>
               <Label>{I18n.t('screen.home.main.address')}</Label>
-              <Input onChangeText={(address) => this.setState({address})} />
+              <Input
+                value={this.state.address}
+                onChangeText={(address) => this.setState({address})}
+              />
             </Item>
             <Item floatingLabel>
               <Label>{I18n.t('email')}</Label>
               <Input
+                value={this.state.email}
                 keyboardType="email-address"
                 autoCapitalize="none"
                 onChangeText={(email) => this.setState({email})}
@@ -147,6 +163,7 @@ export default class Register extends Component {
             <Item floatingLabel>
               <Label>{I18n.t('screen.home.main.password')}</Label>
               <Input
+                value={this.state.password}
                 secureTextEntry={true}
                 onChangeText={(password) => this.setState({password})}
               />
@@ -154,6 +171,7 @@ export default class Register extends Component {
             <Item floatingLabel>
               <Label>{I18n.t('screen.home.main.repassword')}</Label>
               <Input
+                value={this.state.repassword}
                 secureTextEntry={true}
                 onChangeText={(repassword) => this.setState({repassword})}
               />

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View} from 'react-native';
+import {NavigationActions} from 'react-navigation';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
   Content,

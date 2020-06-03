@@ -190,6 +190,7 @@ export default class ProfileNav extends Component {
                 changeEmail: this.state.email,
               })
             }
+            noBorder={true}
             iconName="lock"
             label={I18n.t('screen.profile.changePassword')}
           />
