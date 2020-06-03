@@ -10,7 +10,10 @@ const CustomHeader = (props) => {
   return (
     <View>
       <Header>
-        <StatusBar barStyle={'default'} backgroundColor={Colors.appColor} />
+        <StatusBar
+          barStyle={'light-content'}
+          backgroundColor={Colors.appColor}
+        />
         <Left>
           <Button transparent>
             <Image
